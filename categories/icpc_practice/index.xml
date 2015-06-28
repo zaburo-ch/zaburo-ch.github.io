@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Icpc_practice on ZABURO app</title>
+    <link>/categories/icpc_practice/</link>
+    <description>Recent content in Icpc_practice on ZABURO app</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja</language>
+    <lastBuildDate>Thu, 03 Jul 2014 20:16:51 +0900</lastBuildDate>
+    <atom:link href="/categories/icpc_practice/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>AOJ 2224 Save your cat</title>
+      <link>/post/20140703_2/</link>
+      <pubDate>Thu, 03 Jul 2014 20:16:51 +0900</pubDate>
+      
+      <guid>/post/20140703_2/</guid>
+      <description>&lt;p&gt;フェンスを辺と考え、閉路をなくせばよいので、&lt;br /&gt;
+閉路をなくす　→　全域木の辺の数を最小にする&lt;br /&gt;
+壊す長さを最小に　→　長い辺から使っていく&lt;br /&gt;
+と考えると最小全域木と同じような解き方で解けます。&lt;/p&gt;
+
+&lt;p&gt;UnionFind木を使ったクラスカル法で解く場合。&lt;br /&gt;
+fenceをcostの大きさで降順にソートして、&lt;br /&gt;
+使わなかったfenceのcostの和を出力します。&lt;br /&gt;
+&lt;script  src=&#34;http://gist-it.appspot.com/github/zaburo-ch/icpc_practice/blob/master/aoj2224union.cpp&#34;&gt;&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;プリム法で解く場合。&lt;br /&gt;
+プリム法は最小全域&amp;rdquo;木&amp;rdquo;をつくるので、森をつくるため、&lt;br /&gt;
+使われていない頂点に対して何度かプリム法で木を作ります。&lt;br /&gt;
+(森に対してプリム法を使う方法これしかおもいつかない……)&lt;br /&gt;
+あと、この実装方法だと同じ辺を何度もみることがあるので&lt;br /&gt;
+クラスカル法の時のように素直にsumを出力できません。&lt;/p&gt;
+
+&lt;script  src=&#34;http://gist-it.appspot.com/github/zaburo-ch/icpc_practice/blob/master/aoj2224prim.cpp&#34;&gt;&lt;/script&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>AOJ 2200 Mr. Rito Post Office</title>
+      <link>/post/20140703_1/</link>
+      <pubDate>Thu, 03 Jul 2014 16:17:45 +0900</pubDate>
+      
+      <guid>/post/20140703_1/</guid>
+      <description>&lt;p&gt;わからなくてぐぐりました。&lt;br /&gt;
+&lt;a href=&#34;http://d.hatena.ne.jp/sune2/20120719/1342723320&#34; target=&#34;_blank&#34; title=&#34;蟻本の練習問題埋め2-5(1)&#34;&gt;&lt;a href=&#34;http://d.hatena.ne.jp/sune2/20120719/1342723320&#34;&gt;http://d.hatena.ne.jp/sune2/20120719/1342723320&lt;/a&gt;&lt;/a&gt;&lt;br /&gt;
+&lt;blockquote&gt;&lt;p&gt;z[i]からz[i+1]に移動するとき、&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;陸路のみ  
+陸路　→　海路　→　陸路  
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;のうち、どちらかのタイプの経路を辿る。&lt;/p&gt;&lt;/blockquote&gt;この考え方で実装するとうまくいきます。&lt;br /&gt;
+dp[i][j]に対して、i-1のとき船があった場所をkとし&lt;br /&gt;
+z[i-1] →(陸路)→ k →(海路)→ j →(陸路)→ z[i]&lt;br /&gt;
+と進む事で船を場所jに移し自分はz[i]に移動することができます。&lt;br /&gt;
+k==jのとき、すなわち船を移動させる必要がないときは、&lt;br /&gt;
+必ずしもkを経由する必要がないのでz[i-1]からz[i]の陸最短路で良い。&lt;br /&gt;
+これがわからなくて何回かWAくらった。&lt;/p&gt;
+
+&lt;script  src=&#34;http://gist-it.appspot.com/github/zaburo-ch/icpc_practice/blob/master/aoj2200ans.cpp&#34;&gt;&lt;/script&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>AOJ 2249 Road Construction</title>
+      <link>/post/20140703_0/</link>
+      <pubDate>Thu, 03 Jul 2014 01:13:49 +0900</pubDate>
+      
+      <guid>/post/20140703_0/</guid>
+      <description>&lt;p&gt;ある町に最短で行く経路は複数あり、&lt;br /&gt;
+そのうち最低のコストのものだけ残せば良い。&lt;br /&gt;
+そこで最短経路で進んだ場合の&lt;br /&gt;
+ある町とその一つ前の町をつなぐ道をpreに保存し&lt;br /&gt;
+preのコストが最小になるように更新していく。&lt;br /&gt;
+&lt;script  src=&#34;http://gist-it.appspot.com/github/zaburo-ch/icpc_practice/blob/master/aoj2249.cpp&#34;&gt;&lt;/script&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>AOJ 0189 Convenient Location</title>
+      <link>/post/20140702_0/</link>
+      <pubDate>Wed, 02 Jul 2014 22:34:19 +0900</pubDate>
+      
+      <guid>/post/20140702_0/</guid>
+      <description>&lt;p&gt;全点最短路問題です。&lt;br /&gt;
+ワーシャル・フロイド法を用いて解きます。&lt;br /&gt;
+cost[i][i]を0にするのをお忘れなく！&lt;br /&gt;
+&lt;script  src=&#34;http://gist-it.appspot.com/github/zaburo-ch/icpc_practice/blob/master/aoj0189w.cpp&#34;&gt;&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;町の総数が10以下と十分に小さく、負の辺がないため&lt;br /&gt;
+ひとつずつダイクストラ法で最短距離を求めることもできます。&lt;br /&gt;
+うまく書けてるかはわかりませんがこんな感じ。&lt;/p&gt;
+
+&lt;script  src=&#34;http://gist-it.appspot.com/github/zaburo-ch/icpc_practice/blob/master/aoj0189d.cpp&#34;&gt;&lt;/script&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>AOJ 0118 Property Distribution</title>
+      <link>/post/20140624_4/</link>
+      <pubDate>Tue, 24 Jun 2014 18:40:44 +0900</pubDate>
+      
+      <guid>/post/20140624_4/</guid>
+      <description>&lt;p&gt;蟻本に載ってたPOJ2386とだいたい同じ。&lt;br /&gt;
+同じグループを消してく。&lt;br /&gt;
+&lt;script  src=&#34;http://gist-it.appspot.com/github/zaburo-ch/icpc_practice/blob/master/aoj0118.cpp&#34;&gt;&lt;/script&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>AOJ 0525 Osenbei</title>
+      <link>/post/20140624_3/</link>
+      <pubDate>Tue, 24 Jun 2014 18:30:38 +0900</pubDate>
+      
+      <guid>/post/20140624_3/</guid>
+      <description>&lt;p&gt;0の個数を最大にするとき、どの行をひっくり返すか決めると&lt;br /&gt;
+ひっくり返すべき列とそれで得られる0の個数が一意的に決まる。&lt;br /&gt;
+Rが十分に小さいので行のひっくり返し方を全通り試し&lt;br /&gt;
+そのひっくり返し方に対応する0の個数の最大を出力する。&lt;br /&gt;
+行のひっくり返し方を再帰で書くとこんな感じ&lt;br /&gt;
+&lt;script  src=&#34;http://gist-it.appspot.com/github/zaburo-ch/icpc_practice/blob/master/aoj0525rec.cpp&#34;&gt;&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;再帰を使わないで蟻本っぽく解くならこんな感じ？&lt;br /&gt;
+通ったから一応あってると思う。&lt;/p&gt;
+
+&lt;script  src=&#34;http://gist-it.appspot.com/github/zaburo-ch/icpc_practice/blob/master/aoj0525for.cpp&#34;&gt;&lt;/script&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>AOJ 0121 Seven Puzzle</title>
+      <link>/post/20140624_2/</link>
+      <pubDate>Tue, 24 Jun 2014 18:11:41 +0900</pubDate>
+      
+      <guid>/post/20140624_2/</guid>
+      <description>&lt;p&gt;幅優先探索の問題&lt;br /&gt;
+まず考えたのは、初期状態から0をどんどん移動させて行く方法。&lt;br /&gt;
+パズルの状態はstringで表現している。&lt;br /&gt;
+mapで状態とそこまでの最短距離を対応させ、&lt;br /&gt;
+mapに存在するかどうかでたどり着いたことがあるかを確認。&lt;br /&gt;
+ただ、これだとTLEをくらう。&lt;br /&gt;
+&lt;script  src=&#34;http://gist-it.appspot.com/github/zaburo-ch/icpc_practice/blob/master/aoj0121.cpp&#34;&gt;&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;inputは１０００個まで与えられるので、&lt;br /&gt;
+毎回一から探索していっているのでは無駄が多い。&lt;br /&gt;
+そもそも、ありえる状態は8!通りしかないから&lt;br /&gt;
+そろった状態からたどりつけるすべての状態への最短距離を計算しておき&lt;br /&gt;
+inputに対応した最短距離を出力するほうがいい。&lt;br /&gt;
+同じようにmapを使って状態と最短距離を対応させる。&lt;/p&gt;
+
+&lt;script  src=&#34;http://gist-it.appspot.com/github/zaburo-ch/icpc_practice/blob/master/aoj0121memo.cpp&#34;&gt;&lt;/script&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>AOJ 0033 Ball</title>
+      <link>/post/20140624_1/</link>
+      <pubDate>Tue, 24 Jun 2014 17:54:02 +0900</pubDate>
+      
+      <guid>/post/20140624_1/</guid>
+      <description>&lt;p&gt;初めて書いた(?)深さ優先探索&lt;br /&gt;
+条件がかなり緩いので全探索可能&lt;/p&gt;
+
+&lt;script  src=&#34;http://gist-it.appspot.com/github/zaburo-ch/icpc_practice/blob/master/aoj0033.cpp&#34;&gt;&lt;/script&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

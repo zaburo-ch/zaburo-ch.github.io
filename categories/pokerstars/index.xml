@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Pokerstars on ZABURO app</title>
+    <link>/categories/pokerstars/</link>
+    <description>Recent content in Pokerstars on ZABURO app</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja</language>
+    <lastBuildDate>Fri, 27 Mar 2015 15:19:16 +0900</lastBuildDate>
+    <atom:link href="/categories/pokerstars/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>【PokerStars】無料で使えるHUD更新した【ver0.3】</title>
+      <link>/post/20150327_1/</link>
+      <pubDate>Fri, 27 Mar 2015 15:19:16 +0900</pubDate>
+      
+      <guid>/post/20150327_1/</guid>
+      <description>&lt;p&gt;右下の白いタイルが動かないバグがあったため修正しました。&lt;/p&gt;
+
+&lt;p&gt;こちらからアクセスしてダウンロードしてください！&lt;a href=&#34;https://github.com/zaburo-ch/poker_tool&#34; target=&#34;_blank&#34; title=&#34;zaburo-ch/poker_tool&#34;&gt;&lt;br /&gt;
+zaburo-ch/poker_tool&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>【PokerStars】無料で使えるHUD更新した【ver0.2】</title>
+      <link>/post/20150327_0/</link>
+      <pubDate>Fri, 27 Mar 2015 00:51:38 +0900</pubDate>
+      
+      <guid>/post/20150327_0/</guid>
+      <description>&lt;p&gt;同じデスクトップ内での多面打ちに対応しました。&lt;/p&gt;
+
+&lt;p&gt;終了ボタンがあるウィンドウとHUD部分とを&lt;br /&gt;
+別々のデスクトップおく事が出来ないため&lt;br /&gt;
+同じデスクトップ内のみですが、複数のHUDを出せるようにしました。&lt;br /&gt;
+プレイ画面を並べて多面する際に使って下さい！&lt;/p&gt;
+
+&lt;p&gt;また、更新する度に使い方を載せるのは見づらくなるだけだと思ったので&lt;br /&gt;
+GitHub上に使い方などを書いたREADME.mdと&lt;br /&gt;
+アプリ本体をおく場所をつくりました。&lt;br /&gt;
+こちらからアクセスしてダウンロードしてください！&lt;a href=&#34;https://github.com/zaburo-ch/poker_tool&#34; target=&#34;_blank&#34; title=&#34;zaburo-ch/poker_tool&#34;&gt;&lt;br /&gt;
+zaburo-ch/poker_tool&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>【PokerStars】無料で使えるHUDつくった【ver0.1】</title>
+      <link>/post/20150326_0/</link>
+      <pubDate>Thu, 26 Mar 2015 20:37:03 +0900</pubDate>
+      
+      <guid>/post/20150326_0/</guid>
+      <description>&lt;p&gt;つくりました。&lt;/p&gt;
+
+&lt;p&gt;自分の環境で2週間程度使ってみて&lt;br /&gt;
+そこそこまともに動くし、そこそこ使えると感じたので&lt;br /&gt;
+アプリとして公開してみようと思います。&lt;/p&gt;
+
+&lt;p&gt;実装したのがまだまだ限定的な機能だけなので&lt;br /&gt;
+ベータ版という感じです。名前も開発中のもの。&lt;br /&gt;
+実装してほしい機能、指標などがあれば&lt;br /&gt;
+記事へのコメント等で教えて頂ければと思います。&lt;br /&gt;
+いつ実装されるか定かではありませんけどね！&lt;/p&gt;
+
+&lt;p&gt;Windowsが入ってるPCを持っていないため、&lt;br /&gt;
+今回はMac用しか公開することができませんでしたが、&lt;br /&gt;
+中身はPythonなので希望があればexeファイルつくります。&lt;br /&gt;
+希望がなくてもいずれつくります。&lt;/p&gt;
+
+&lt;p&gt;以下アプリの説明になります。&lt;br /&gt;
+ダウンロードは記事の一番下です。&lt;/p&gt;
+
+&lt;p&gt;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&lt;/p&gt;
+
+&lt;p&gt;【使用する前に】&lt;br /&gt;
+PokerStarsのハンド履歴から情報を読み取っているため、&lt;br /&gt;
+使用するにあたって設定を変更しなければならない場合があります。&lt;br /&gt;
+以下の項目をご確認ください。&lt;br /&gt;
+・言語設定が日本語になっているか&lt;br /&gt;
+・ハンド履歴を保存する設定になっているか&lt;br /&gt;
+・テーブルテーマがMercuryになっているか&lt;br /&gt;
+・画面中央の席に座る設定になっているか&lt;/p&gt;
+
+&lt;p&gt;【使い方】&lt;br /&gt;
+1. 「履歴ファイルを選択」から読み込みたいファイルを選ぶ&lt;br /&gt;
+まだそのトーナメントで1度もハンドをプレイしていないと、&lt;br /&gt;
+履歴ファイルが作成されないため1ハンド以上プレイしてから行って下さい。&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;プレイ画面にあわせる。&lt;br /&gt;
+ハンド履歴を選択するとテーブルの人数分の黒いタイルと&lt;br /&gt;
+2つの小さくて白いタイルが表示されます。&lt;br /&gt;
+画面を移動させたいときは黒いタイルを、&lt;br /&gt;
+画面を拡大縮小させたいときは白いタイルをドラッグして&lt;br /&gt;
+プレイ画面の左上と右下に白いタイルがくるように動かして下さい。&lt;br /&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;黒いタイルに各プレイヤーの情報が表示されます。&lt;/p&gt;
+
+&lt;p&gt;【プレイヤーの情報の見方】&lt;br /&gt;
+黒いタイルに表示される情報は次のとおりです。&lt;/p&gt;
+
+&lt;p&gt;名前(プレイしたハンド数)&lt;br /&gt;
+VPIP/PFR/PFA/WTSD&lt;/p&gt;
+
+&lt;p&gt;【指標の定義】&lt;br /&gt;
+ここで、参加はテーブルにつきカードをもらうことを言います。&lt;br /&gt;
+VPIP : 1度でもポッドにお金を入れたハンド / 参加したハンド&lt;br /&gt;
+PFR  : プリフロップで(自分がまだお金を出していない状態から)レイズしたハンド / 参加したハンド&lt;br /&gt;
+PFA  : ポストフロップでレイズorベットした回数 / コールした回数&lt;br /&gt;
+WTSD : ショウダウンまで行った回数 / ポストフロップまで行った回数&lt;/p&gt;
+
+&lt;p&gt;【多面したい場合】&lt;br /&gt;
+ターミナルで&lt;br /&gt;
+open -n ≪アプリの場所≫&lt;br /&gt;
+とすると同じアプリを複数開けるのでこれをご利用ください&lt;br /&gt;
+アプリをApplicationsにコピーした場合は&lt;br /&gt;
+open -n &amp;ldquo;/Applications/MyPoker Beta-0.1.app&amp;rdquo;&lt;br /&gt;
+となります。&lt;br /&gt;
+&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&lt;/p&gt;
+
+&lt;p&gt;アプリの説明は以上です。&lt;br /&gt;
+追加したいと思っている機能がいくつかあるので&lt;br /&gt;
+それをメモしておきます。&lt;br /&gt;
+・他の指標に対応する&lt;br /&gt;
+・黒いタイルに表示する指標をユーザーが設定できるようにする&lt;br /&gt;
+・多面にアプリ側で対応する&lt;br /&gt;
+・自動で画面にあわせられるようにする&lt;br /&gt;
+・PokerStars以外のアプリと重なったとき上にこないようにする&lt;/p&gt;
+
+&lt;p&gt;こんな指標が欲しい！などコメント頂ければ&lt;br /&gt;
+できるだけ対応するつもりです。&lt;br /&gt;
+またこんな環境で動いた、動かないなど&lt;br /&gt;
+動作確認のコメント頂けると大変有り難いです。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;こちらからダウンロードしてご利用ください↓&lt;/strong&gt;&lt;a href=&#34;https://github.com/zaburo-ch/poker_tool/raw/master/MyPoker-Beta-0.1.dmg&#34; target=&#34;_blank&#34; title=&#34;MyPoker-Beta-0.1.dmgをダウンロード&#34;&gt;&lt;br /&gt;
+MyPoker-Beta-0.1.dmgをダウンロード&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

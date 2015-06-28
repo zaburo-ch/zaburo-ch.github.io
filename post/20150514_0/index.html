@@ -1,0 +1,178 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+
+  
+  <meta charset="UTF-8">
+  <title>
+    【Python】PageRankアルゴリズム | ZABURO app
+  </title>
+
+
+  
+  <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
+
+
+  
+  <link rel="stylesheet" href="/css/sanitize.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/highlight_monokai.css">
+  <link rel="stylesheet/less" href="/css/theme.less">
+  <link rel="stylesheet" href="/css/custom.css">
+
+
+  
+  <script src="/js/less.js" type="text/javascript"></script>
+
+
+</head>
+
+
+
+<body>
+<div class="container">
+
+  
+  <header role="banner">
+    <div class="row gutters">
+      <div id="site-title" class="col span_6">
+        <h1><a href="/">ZABURO app</a></h1>
+        <h2>アプリ作ったり、なんやかんや</h2>
+      </div>
+      <div id="social" class="col span_6">
+        <ul>
+          <li><a href="/about/" target="_blank">About</a></li>
+          
+          
+          <li><a href="http://zaburo-ch.github.io/zaburo_app" target="_blank">GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+
+  
+  <main id="single" role="main">
+    <div class="article-header">
+      <h1>【Python】PageRankアルゴリズム</h1>
+      <div class="meta">
+        May 14, 2015 &nbsp;
+        
+      </div>
+    </div>
+    <article>
+      <p>PageRankというアルゴリズム、<br />
+以前からなんとなくは知ってはいたのですが、<br />
+ランダムサーファーモデルで計算する方法を聞いて、<br />
+めちゃくちゃ賢いなこれーって思ったので実際にやってみました。</p>
+
+<p>ひとまずPageRankについて調べたことを纏めます。</p>
+
+<p>PageRankは基本的に次の２つの考え方でページの重要度を推定します。<br />
+・多くのページからリンクされているページの質は高い<br />
+・質の高いページからリンクされているページの質は高い</p>
+
+<p>これを数学的に考えるのにランダムサーファーモデルを利用します。<br />
+ランダムサーファーモデルでは<br />
+ページのリンク関係を有向グラフとして考え、<br />
+人(サーファー)にこの有向グラフをランダムに辿らせたとき、<br />
+人が居る確率が高いページを重要とします。</p>
+
+<p>まず、ページの総数をNとし、N次正方行列<strong>M</strong>を<br />
+<strong>M</strong>[i][j] = ページjにいるサーファーがページiに移動する確率<br />
+と定義します。<br />
+例えばページ0にページ1とページ5へのリンクしかないとすると、<br />
+サーファーはランダムに移動するので<br />
+<strong>M</strong>[i][0]は i=1or5 のとき1/2 となりそれ以外のiでは0となります。</p>
+
+<p>また、ベクトル<strong>P</strong>(t)を時刻tに各ページに人がいる確率とすると<br />
+<strong>P</strong>(0)は全ての要素が 1/N のベクトルとなり<br />
+<strong>P</strong>(t+1)は<strong>M</strong>と<strong>P</strong>(t)の積を取ることで計算できます。</p>
+
+<p>有向グラフが強連結のとき、この遷移を無限に繰り返すことで<br />
+<strong>P</strong>はtに依らない一定の値に収束します。よってこの<strong>P</strong>は<br />
+<strong>M P</strong> = <strong>P</strong><br />
+の解を要素の和が1になるよう正規化してあげることにより求められます。</p>
+
+<p>この<strong>P</strong>の大きさが各ページの重要度となります。</p>
+
+<p>行列計算において <strong>Ax</strong> = λ<strong>x</strong> を解く、というのは固有値問題と言って<br />
+色々な方法が考えられているらしいのですが、ここについては<br />
+<a href="http://www.cms-initiative.jp/ja/events/0627yamamoto.pdf" target="_blank" title="行列計算における高速アルゴリズム">行列計算における高速アルゴリズム<br />
+<a href="http://www.cms-initiative.jp/ja/events/0627yamamoto.pdf">http://www.cms-initiative.jp/ja/events/0627yamamoto.pdf</a><br />
+</a>こちらのページが詳しいです。<br />
+Pythonではscipy.sparse.linalg.eigsを使うと<br />
+Implicitly Restarted Arnoldi で計算してくれます。<br />
+ただ、<strong>M P</strong> = <strong>P</strong> を解くだけのためにこれらを使うのが速いのかは<br />
+勉強不足で僕もよくわかっていません。</p>
+
+<p>実際のウェブページでは、ページ間の関係を有効グラフにしても<br />
+必ずしも上で述べたような強連結になるわけではありません。<br />
+そのため「一定の確率でサーファーはリンクを辿らずにランダムに移動する」<br />
+という考えを新たに導入します。その時はMにあたるものを<br />
+全ての要素が 1/N である N次正方行列Uと普通にリンクを辿る確率αを用いて<br />
+(α<strong>M</strong> + (1-α)<strong>U</strong>) として計算することによって<strong>P</strong>が求められます。</p>
+
+<p>次の図のようなリンク関係にあるページのPageRankを<br />
+Pythonを利用して実際に計算してみます。<br />
+正しく計算できれば図の通りの値が得られるはずです。</p>
+
+<p><img src="/images/Linkstruct2.gif" alt="Linkstruct2.gif" border="0" width="400" height="368" /><br />
+<span style="font-size:x-small;"><br />
+The original uploader was <a title="wikipedia:User:Gnix" href="//en.wikipedia.org/wiki/User:Gnix">Gnix</a> at <a title="wikipedia:" href="//en.wikipedia.org/wiki/">English Wikipedia</a>[<a href="http://www.gnu.org/copyleft/fdl.html" target="_blank" title="GFDL">GFDL</a> or <a href="http://creativecommons.org/licenses/by-sa/3.0/" target="_blank" title="CC-BY-SA-3.0">CC-BY-SA-3.0</a>]</span></p>
+
+<p>コードはこちら<br />
+<a href="https://github.com/zaburo-ch/wikipedia_analysis/blob/master/pagerank.py" target="_blank" title="zaburo-ch/wikipedia_analysis/master/pagerank.py">zaburo-ch/wikipedia_analysis/master/pagerank.py</a></p>
+
+<p>get_pagerankではScipyを用いて固有ベクトルを計算しています。<br />
+get_pagerank_simpleではもっと単純に<br />
+<strong>P</strong>(0)に何度も<strong>M</strong>をかけていき、<br />
+かける前との差が十分小さくなるまで繰り返しています。</p>
+
+<p>実行結果はこんな感じです。<br />
+<img src="/images/pagerankresult.png" alt="pagerankresult.png" border="0" width="273" height="258" /></p>
+
+<p>図の値とかなり一致していますね！<br />
+2つの方法どちらもほぼ同じ値になっているので<br />
+get_pagerank_simpleの方法でも十分実用に足りそうです。</p>
+
+    </article>
+    
+ <aside><div id="disqus_thread"></div></aside> 
+
+<script type="text/javascript">
+     
+    var disqus_shortname = 'zaburoapp';
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+  </main>
+
+
+  
+  <footer role="contentinfo">
+    <div style="text-align:center;">
+      
+      Written by ZABURO
+    </div>
+  </footer>
+
+
+</div>
+
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+</body>
+</html>
+

@@ -1,0 +1,138 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+
+  
+  <meta charset="UTF-8">
+  <title>
+    【AndEngine】onPauseでNullPointerException | ZABURO app
+  </title>
+
+
+  
+  <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
+
+
+  
+  <link rel="stylesheet" href="/css/sanitize.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/highlight_monokai.css">
+  <link rel="stylesheet/less" href="/css/theme.less">
+  <link rel="stylesheet" href="/css/custom.css">
+
+
+  
+  <script src="/js/less.js" type="text/javascript"></script>
+
+
+</head>
+
+
+
+<body>
+<div class="container">
+
+  
+  <header role="banner">
+    <div class="row gutters">
+      <div id="site-title" class="col span_6">
+        <h1><a href="/">ZABURO app</a></h1>
+        <h2>アプリ作ったり、なんやかんや</h2>
+      </div>
+      <div id="social" class="col span_6">
+        <ul>
+          <li><a href="/about/" target="_blank">About</a></li>
+          
+          
+          <li><a href="http://zaburo-ch.github.io/zaburo_app" target="_blank">GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+
+  
+  <main id="single" role="main">
+    <div class="article-header">
+      <h1>【AndEngine】onPauseでNullPointerException</h1>
+      <div class="meta">
+        Nov 17, 2013 &nbsp;
+        
+      </div>
+    </div>
+    <article>
+      <p>一部機種において(Androidのバージョンの問題？)<br />
+起動直後に強制終了してしまうバグに悩まされたのでメモ。</p>
+
+<p>logcatでシステムのログを確認すると<br />
+SimpleLayoutGameActivityを継承しているMainActivityが<br />
+謎の挙動をしている模様。</p>
+
+<p>onCreate,onResumeの後になぜかonPauseが呼び出され<br />
+NullPointerExceptionで強制終了していました。</p>
+
+<p>MainActivityのメンバとして以下を定義し<br />
+<pre><code>private boolean isGoing = false;</code></pre>onPauseの処理をisGoingがtrueのときにしかしないように<br />
+ifで指定してやることで解決。<br />
+onCreateSceneでisGoingをtrueにしてます。</p>
+
+<p>onResumeの後にonPauseが呼ばれるなんて<br />
+ライフサイクル無視しすぎやん！ってすごく困ったんですが、<br />
+どうやらonResumeあたりでエラーが発生して<br />
+AndEngineがアプリを再起動しようとした結果<br />
+onPauseが呼ばれていたみたいです。<br />
+で、onCreateSceneあたりで生成する予定のオブジェクトは<br />
+ここでonPauseが呼ばれたときにはまだ生成されていないので<br />
+それらのオブジェクトを操作する処理がonPauseにかかれていると<br />
+NullPointerExceptionで落ちるというわけでした。</p>
+
+<p>ちなみにそのエラーには以下のようなコメントがついていて<br />
+<blockquote><p>UpdateThread interrupted. Don&rsquo;t worry - this EngineDestroyedException is most likely expected!</p></blockquote>UpdateThreadが中断されちゃったよ！<br />
+まあこのEngineが落ちちゃう例外はよくあることだから安心して！<br />
+ってなわけなのでどうやらAndEngine側に問題がある模様。</p>
+
+<p>Forumなどを探して見たところ<br />
+ソースはありませんでしたが「99.999%そのエラーは起きるよ」<br />
+というコメントがあるほどで私の技術力では何ともしがたい問題のようです。<br />
+なんだかなー</p>
+
+    </article>
+    
+ <aside><div id="disqus_thread"></div></aside> 
+
+<script type="text/javascript">
+     
+    var disqus_shortname = 'zaburoapp';
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+  </main>
+
+
+  
+  <footer role="contentinfo">
+    <div style="text-align:center;">
+      
+      Written by ZABURO
+    </div>
+  </footer>
+
+
+</div>
+
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+</body>
+</html>
+

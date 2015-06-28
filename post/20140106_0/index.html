@@ -1,0 +1,192 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+
+  
+  <meta charset="UTF-8">
+  <title>
+    【Android】NDK から OpenCV を使うプロジェクトを作る手順 | ZABURO app
+  </title>
+
+
+  
+  <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
+
+
+  
+  <link rel="stylesheet" href="/css/sanitize.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/highlight_monokai.css">
+  <link rel="stylesheet/less" href="/css/theme.less">
+  <link rel="stylesheet" href="/css/custom.css">
+
+
+  
+  <script src="/js/less.js" type="text/javascript"></script>
+
+
+</head>
+
+
+
+<body>
+<div class="container">
+
+  
+  <header role="banner">
+    <div class="row gutters">
+      <div id="site-title" class="col span_6">
+        <h1><a href="/">ZABURO app</a></h1>
+        <h2>アプリ作ったり、なんやかんや</h2>
+      </div>
+      <div id="social" class="col span_6">
+        <ul>
+          <li><a href="/about/" target="_blank">About</a></li>
+          
+          
+          <li><a href="http://zaburo-ch.github.io/zaburo_app" target="_blank">GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+
+  
+  <main id="single" role="main">
+    <div class="article-header">
+      <h1>【Android】NDK から OpenCV を使うプロジェクトを作る手順</h1>
+      <div class="meta">
+        Jan 6, 2014 &nbsp;
+        
+      </div>
+    </div>
+    <article>
+      <p>久しぶりにAndroidでOpenCVを使おうとしたら<br />
+書き始めるまでに必要な準備を忘れていたのでメモ。<br />
+コメントを書き入れている部分は<br />
+「ここにかかなければいけない、というわけではないけど<br />
+ここに書いておくのが便利」という部分です</p>
+
+<p>環境 Eclipse 3.7.2</p>
+
+<p>・「プロパティ」→「Android」からOpenCVのライブラリを登録</p>
+
+<p>・OpenCVを使うActivityのメンバに以下を追加し<br />
+<pre><code>private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
+    @Override
+    public void onManagerConnected(int status) {
+        switch (status) {
+        case LoaderCallbackInterface.SUCCESS:
+            //ここで後で自分で作成するC/C++でopencvを動かすライブラリをロードしておく
+            System.loadLibrary(&ldquo;my_opencv_method&rdquo;);
+            //ロードが成功した場合にのみボタンを有効にする
+            mButton.setEnabled(true);
+            break;
+        default:
+            super.onManagerConnected(status);
+            break;
+        }
+    }
+};</code></pre>onResumeを以下のようにオーバーライド<br />
+<pre><code>@Override
+public void onResume()
+{
+    super.onResume();
+    //ボタンはロード成功するまでは無効化しておく
+    mButton1.setEnabled(false);
+    OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_2_4_3, this, mLoaderCallback);
+}</code></pre>・プロジェクトを右クリック→「Android ツール」→「Add native support」</p>
+
+<p>・プロジェクトを右クリック→「プロパティ」→「C/C++一般」→「パスおよびシンボル」→「インクルード」タブ→「追加」ボタン<br />
+で最低でも以下の３つを登録<br />
+/opt/OpenCV-2.4.6-android-sdk/sdk/native/jni/include<br />
+/opt/android-ndk-r9/sources/cxx-stl/gnu-libstdc++/4.6/include<br />
+/opt/android-ndk-r9/sources/cxx-stl/gnu-libstdc++/4.6/libs/armeabi-v7a/include<br />
+(僕は/optに各ライブラリを置いているのでそのへんは適宜修正)</p>
+
+<p>・jniフォルダを作成して、Android.mkとApplication.mkを用意<br />
+(他のプロジェクトからコピペして編集)<br />
+Android.mk<br />
+<pre><code>LOCAL_PATH := $(call my-dir)
+include $(CLEAR_VARS)
+#OPENCV_CAMERA_MODULES:=off
+#OPENCV_INSTALL_MODULES:=off
+#OPENCV_LIB_TYPE:=SHARED
+include /opt/OpenCV-2.4.6-android-sdk/sdk/native/jni/OpenCV.mk
+LOCAL_SRC_FILES  := my_opencv_method.cpp
+LOCAL_C_INCLUDES += $(LOCAL_PATH)
+LOCAL_LDLIBS     += -llog -ldl
+LOCAL_MODULE     := my_opencv_method
+include $(BUILD_SHARED_LIBRARY)
+</pre></code>
+Application.mk<br />
+<pre><code>APP_STL := gnustl_static
+APP_CPPFLAGS := -frtti -fexceptions
+APP_ABI := armeabi-v7a
+APP_PLATFORM := android-8</code></pre><br />
+・Activityにnativeメソッドを記載<br />
+例<br />
+<pre><code>public static native void threshold(long matAddr);
+public static native int[] findContours(long matAddr);</code></pre><br />
+・プロジェクトのAndroidManifest.xmlなどが保存してあるディレクトリに移動し以下のコマンドを実行<br />
+<pre><code>javah -classpath src -o jni/my_opencv_method.h {package name}.MainActivity</code></pre>jniにmy_opencv_method.hが生成される</p>
+
+<p>・my_opencv_method.hからメソッドをコピー<br />
+<pre><code>JNIEXPORT void JNICALL Java_com_fc2_blog_zaburoapp_markerdetection_MainActivity_threshold (JNIEnv *, jclass, jlong);</code></pre></p>
+
+<p>・my_opencv_method.cppを作成してペーストし、以下のincludeを加える<br />
+<pre><code>#include &lt;jni.h&gt;
+#include &lt;vector&gt;
+#include &lt;opencv2/core/core.hpp&gt;
+#include &lt;opencv2/imgproc/imgproc.hpp&gt;
+#include &lt;opencv2/objdetect/objdetect.hpp&gt;
+#include &lt;opencv2/highgui/highgui.hpp&gt;
+#include &lt;opencv2/calib3d/calib3d.hpp&gt;
+#include &lt;android/log.h&gt;
+#include &lt;my_opencv_method.h&gt;
+</code></pre>このへんがあれば十分<br />
+(JNIEnv *, jclass, jlong)→(JNIEnv * jenv, jclass, jlong matAddr)みたいな感じで<br />
+変数名を指定するのを忘れずに。</p>
+
+<p>・コードを書いて実行</p>
+
+    </article>
+    
+ <aside><div id="disqus_thread"></div></aside> 
+
+<script type="text/javascript">
+     
+    var disqus_shortname = 'zaburoapp';
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+  </main>
+
+
+  
+  <footer role="contentinfo">
+    <div style="text-align:center;">
+      
+      Written by ZABURO
+    </div>
+  </footer>
+
+
+</div>
+
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+</body>
+</html>
+

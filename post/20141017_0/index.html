@@ -1,0 +1,204 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+
+  
+  <meta charset="UTF-8">
+  <title>
+    Wikipediaのアクセス上位10000ページの距離を計算した話 | ZABURO app
+  </title>
+
+
+  
+  <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
+
+
+  
+  <link rel="stylesheet" href="/css/sanitize.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/highlight_monokai.css">
+  <link rel="stylesheet/less" href="/css/theme.less">
+  <link rel="stylesheet" href="/css/custom.css">
+
+
+  
+  <script src="/js/less.js" type="text/javascript"></script>
+
+
+</head>
+
+
+
+<body>
+<div class="container">
+
+  
+  <header role="banner">
+    <div class="row gutters">
+      <div id="site-title" class="col span_6">
+        <h1><a href="/">ZABURO app</a></h1>
+        <h2>アプリ作ったり、なんやかんや</h2>
+      </div>
+      <div id="social" class="col span_6">
+        <ul>
+          <li><a href="/about/" target="_blank">About</a></li>
+          
+          
+          <li><a href="http://zaburo-ch.github.io/zaburo_app" target="_blank">GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+
+  
+  <main id="single" role="main">
+    <div class="article-header">
+      <h1>Wikipediaのアクセス上位10000ページの距離を計算した話</h1>
+      <div class="meta">
+        Oct 17, 2014 &nbsp;
+        
+      </div>
+    </div>
+    <article>
+      <p>先日の記事の続きです。</p>
+
+<p><a href="/post/20141003_0/" target="_blank" title="Wikipediaでリンクを辿って遊ぶ">Wikipediaでリンクを辿って遊ぶ</a></p>
+
+<p>今回探したのはWikipediaに存在する記事のうち<br />
+最も距離のはなれている記事の組み合わせです。</p>
+
+<p>ここで言う距離とは、ある記事から記事内のリンクのみを辿って行く時<br />
+何回リンクを踏めばその記事に辿り着くかを表した数字です。<br />
+複数あるルートのうち最も短いものをその組の距離としました。</p>
+
+<p>さて、Wikipediaについてですが、<br />
+<a href="http://ja.wikipedia.org/wiki/Wikipedia:%E5%85%A8%E8%A8%80%E8%AA%9E%E7%89%88%E3%81%AE%E7%B5%B1%E8%A8%88" target="_blank" title="Wikipedia:全言語版の統計">Wikipedia:全言語版の統計<br />
+<a href="http://ja.wikipedia.org/wiki/Wikipedia:%E5%85%A8%E8%A8%80%E8%AA%9E%E7%89%88%E3%81%AE%E7%B5%B1%E8%A8%88">http://ja.wikipedia.org/wiki/Wikipedia:%E5%85%A8%E8%A8%80%E8%AA%9E%E7%89%88%E3%81%AE%E7%B5%B1%E8%A8%88</a></a><br />
+によれば、2014年10月17日現在<br />
+純記事数は全言語総計でなんと<strong>33,448,472</strong>もあるそうです。<br />
+日本語のものだけで<strong>930,619</strong>もあるので<br />
+これをすべて解析するとなると人生が終わるまでに<br />
+計算し終わるかという問題が出てきます。</p>
+
+<p>というわけで今回は、日本語版Wikipediaの記事のうち<br />
+ある日の閲覧数が上位の記事を一定数とって来て<br />
+その記事のみを対象にページ間距離を計算しました。</p>
+
+<p>技術的なことは後日記事にするとして<br />
+早速結果を書いていきたいと思います。</p>
+
+<p>まず2014年9月1日の閲覧数上位1000位に限定した場合の結果。<br />
+上位20位のみを抜粋しました。<br />
+&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&ndash;</p>
+
+<p>List of longest distance between Wikipedia pages<br />
+20140901 : Page view Top 1000</p>
+
+<p>1:  8 続柄 -&gt; 近江友里恵<br />
+   2:  8 続柄 -&gt; たちかぜ自衛官いじめ自殺事件<br />
+   3:  8 国鉄105系電車 -&gt; たちかぜ自衛官いじめ自殺事件<br />
+   4:  8 七草 -&gt; 近江友里恵<br />
+   5:  8 七草 -&gt; たちかぜ自衛官いじめ自殺事件<br />
+   6:  8 カルトの集団自殺 -&gt; 近江友里恵<br />
+   7:  8 カルトの集団自殺 -&gt; たちかぜ自衛官いじめ自殺事件<br />
+   8:  8 特別:最近の更新 -&gt; 近江友里恵<br />
+   9:  8 特別:最近の更新 -&gt; たちかぜ自衛官いじめ自殺事件<br />
+  10:  8 カツオノカンムリ -&gt; 近江友里恵<br />
+  11:  8 カツオノカンムリ -&gt; たちかぜ自衛官いじめ自殺事件<br />
+  12:  8 城井鎮房 -&gt; たちかぜ自衛官いじめ自殺事件<br />
+  13:  8 奇皇后 -&gt; 近江友里恵<br />
+  14:  8 奇皇后 -&gt; たちかぜ自衛官いじめ自殺事件<br />
+  15:  8 標準偏差 -&gt; 近江友里恵<br />
+  16:  8 標準偏差 -&gt; たちかぜ自衛官いじめ自殺事件<br />
+  17:  8 青春18きっぷ -&gt; たちかぜ自衛官いじめ自殺事件<br />
+  18:  8 特別:検索 -&gt; 近江友里恵<br />
+  19:  8 特別:検索 -&gt; たちかぜ自衛官いじめ自殺事件<br />
+  20:  8 龍虎 -&gt; たちかぜ自衛官いじめ自殺事件</p>
+
+<p>&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&ndash;</p>
+
+<p>たちかぜ自衛官いじめ自殺事件の存在感が半端ないですね。<br />
+8回リンク踏むだけでいけちゃうということで<br />
+案外短くてがっかりしました。<br />
+105位まで距離8がありその後2500位くらいまで距離7が続きます。</p>
+
+<p>思った以上に大したことが無い結果が出てしまったので<br />
+上位10000ページでもやりたいところですが、<br />
+上位1000ページでさえ20分程度時間がかかっていて、<br />
+最短距離の計算につかったアルゴリズムの計算量がO(n^3)なので<br />
+約1000倍の時間がかかることになります。</p>
+
+<p>終わるまでの時間を計算してみた結果、<br />
+まあ現実的な時間で終わるだろうという数字が出たので<br />
+ここ数日ずっとパソコンをフル稼働させて計算していました。</p>
+
+<p>そして、その結果が今日、出ました！<br />
+利用したデータは2014年10月1日の閲覧数上位10000ページ。<br />
+要した時間なんと<span style="font-size:large;"><strong>261時間！</strong></span><br />
+その結果は！</p>
+
+<p><span style="font-size:x-large;"><strong>保存できませんでした！</strong></span></p>
+
+<p>というのも使ったパソコンには4GBしかメモリが積まれていないので<br />
+ターミナルの出力をコピーしようとした瞬間<br />
+ターミナルがフリーズして永遠の眠りについてしまいました。<br />
+何とかログの復旧を試みたのですが<br />
+89129689位以降というまったく意味のないデータしか復元できませんでした。</p>
+
+<p><strong><span style="font-size:large;">最も離れている距離は6</span></strong>だったのは確認しました。<br />
+1000ページの時より小さい結果となりましたが、<br />
+ページが増える事で新しいより短いルートが生まれたのだと思います。</p>
+
+<p>結果が公開できないのは大変残念ですが、<br />
+そもそもいけないページを除けば、<br />
+6回リンクを踏むだけで大体のページ同士はいけてしまうというのは<br />
+10000ページに限られてるとはいえなかなか面白い結果だと思います。<br />
+普段みるようなページは大体10000ページの中に含まれていますしね。</p>
+
+<p>250時間以上ずっと電源をつけて、ファンがまわるほど計算させていたので<br />
+使ったMacbook Airのバッテリーが心配になりました。<br />
+二度とやりません！</p>
+
+<p>詳しい方法等はソースコードとともに後日記事にしたいと思います。</p>
+
+    </article>
+    
+ <aside><div id="disqus_thread"></div></aside> 
+
+<script type="text/javascript">
+     
+    var disqus_shortname = 'zaburoapp';
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+  </main>
+
+
+  
+  <footer role="contentinfo">
+    <div style="text-align:center;">
+      
+      Written by ZABURO
+    </div>
+  </footer>
+
+
+</div>
+
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+</body>
+</html>
+

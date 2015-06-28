@@ -1,0 +1,120 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+
+  
+  <meta charset="UTF-8">
+  <title>
+    Xcode6でサンプルコードSonofGrabのビルドができない | ZABURO app
+  </title>
+
+
+  
+  <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
+
+
+  
+  <link rel="stylesheet" href="/css/sanitize.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/highlight_monokai.css">
+  <link rel="stylesheet/less" href="/css/theme.less">
+  <link rel="stylesheet" href="/css/custom.css">
+
+
+  
+  <script src="/js/less.js" type="text/javascript"></script>
+
+
+</head>
+
+
+
+<body>
+<div class="container">
+
+  
+  <header role="banner">
+    <div class="row gutters">
+      <div id="site-title" class="col span_6">
+        <h1><a href="/">ZABURO app</a></h1>
+        <h2>アプリ作ったり、なんやかんや</h2>
+      </div>
+      <div id="social" class="col span_6">
+        <ul>
+          <li><a href="/about/" target="_blank">About</a></li>
+          
+          
+          <li><a href="http://zaburo-ch.github.io/zaburo_app" target="_blank">GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+
+  
+  <main id="single" role="main">
+    <div class="article-header">
+      <h1>Xcode6でサンプルコードSonofGrabのビルドができない</h1>
+      <div class="meta">
+        Mar 7, 2015 &nbsp;
+        
+      </div>
+    </div>
+    <article>
+      <p>実行中のウィンドウのリストを取得する方法が知りたくて<br />
+SonofGrab というサンプルに行き着いたのですが<br />
+エラーでちゃいました。</p>
+
+<p>環境は OSX10.9.4 Xcode6.1.1 です。</p>
+
+<p>まず、古いSDKが指定されたままでビルドができないので<br />
+Build SettingsからBase SDKを自分のOSにあったものにします。<br />
+するとビルドが行われますがそこでもエラーがおきます。<br />
+適当にぐぐると以下のページが見つかります。</p>
+
+<p><a href="http://stackoverflow.com/questions/12844729/linking-error-for-inline-functions" target="_blank" title="objective c - Linking error for inline functions - Stack Overflow">objective c - Linking error for inline functions - Stack Overflow<br />
+<a href="http://stackoverflow.com/questions/12844729/linking-error-for-inline-functions">http://stackoverflow.com/questions/12844729/linking-error-for-inline-functions</a></a></p>
+
+<p>具体的には<br />
+Controller.mの71行目のinlineの前にstaticをつけるだけです。</p>
+
+    </article>
+    
+ <aside><div id="disqus_thread"></div></aside> 
+
+<script type="text/javascript">
+     
+    var disqus_shortname = 'zaburoapp';
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+  </main>
+
+
+  
+  <footer role="contentinfo">
+    <div style="text-align:center;">
+      
+      Written by ZABURO
+    </div>
+  </footer>
+
+
+</div>
+
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+</body>
+</html>
+

@@ -1,0 +1,121 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+
+  
+  <meta charset="UTF-8">
+  <title>
+    AOJ 2200 Mr. Rito Post Office | ZABURO app
+  </title>
+
+
+  
+  <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
+
+
+  
+  <link rel="stylesheet" href="/css/sanitize.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/highlight_monokai.css">
+  <link rel="stylesheet/less" href="/css/theme.less">
+  <link rel="stylesheet" href="/css/custom.css">
+
+
+  
+  <script src="/js/less.js" type="text/javascript"></script>
+
+
+</head>
+
+
+
+<body>
+<div class="container">
+
+  
+  <header role="banner">
+    <div class="row gutters">
+      <div id="site-title" class="col span_6">
+        <h1><a href="/">ZABURO app</a></h1>
+        <h2>アプリ作ったり、なんやかんや</h2>
+      </div>
+      <div id="social" class="col span_6">
+        <ul>
+          <li><a href="/about/" target="_blank">About</a></li>
+          
+          
+          <li><a href="http://zaburo-ch.github.io/zaburo_app" target="_blank">GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+
+  
+  <main id="single" role="main">
+    <div class="article-header">
+      <h1>AOJ 2200 Mr. Rito Post Office</h1>
+      <div class="meta">
+        Jul 3, 2014 &nbsp;
+        
+      </div>
+    </div>
+    <article>
+      <p>わからなくてぐぐりました。<br />
+<a href="http://d.hatena.ne.jp/sune2/20120719/1342723320" target="_blank" title="蟻本の練習問題埋め2-5(1)"><a href="http://d.hatena.ne.jp/sune2/20120719/1342723320">http://d.hatena.ne.jp/sune2/20120719/1342723320</a></a><br />
+<blockquote><p>z[i]からz[i+1]に移動するとき、</p>
+
+<pre><code>陸路のみ  
+陸路　→　海路　→　陸路  
+</code></pre>
+
+<p>のうち、どちらかのタイプの経路を辿る。</p></blockquote>この考え方で実装するとうまくいきます。<br />
+dp[i][j]に対して、i-1のとき船があった場所をkとし<br />
+z[i-1] →(陸路)→ k →(海路)→ j →(陸路)→ z[i]<br />
+と進む事で船を場所jに移し自分はz[i]に移動することができます。<br />
+k==jのとき、すなわち船を移動させる必要がないときは、<br />
+必ずしもkを経由する必要がないのでz[i-1]からz[i]の陸最短路で良い。<br />
+これがわからなくて何回かWAくらった。</p>
+
+<script  src="http://gist-it.appspot.com/github/zaburo-ch/icpc_practice/blob/master/aoj2200ans.cpp"></script>
+
+    </article>
+    
+ <aside><div id="disqus_thread"></div></aside> 
+
+<script type="text/javascript">
+     
+    var disqus_shortname = 'zaburoapp';
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+  </main>
+
+
+  
+  <footer role="contentinfo">
+    <div style="text-align:center;">
+      
+      Written by ZABURO
+    </div>
+  </footer>
+
+
+</div>
+
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+</body>
+</html>
+

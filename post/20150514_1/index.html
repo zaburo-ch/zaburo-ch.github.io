@@ -1,0 +1,158 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+
+  
+  <meta charset="UTF-8">
+  <title>
+    Wikipediaの記事でPageRankを計算してみた。 | ZABURO app
+  </title>
+
+
+  
+  <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
+
+
+  
+  <link rel="stylesheet" href="/css/sanitize.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/highlight_monokai.css">
+  <link rel="stylesheet/less" href="/css/theme.less">
+  <link rel="stylesheet" href="/css/custom.css">
+
+
+  
+  <script src="/js/less.js" type="text/javascript"></script>
+
+
+</head>
+
+
+
+<body>
+<div class="container">
+
+  
+  <header role="banner">
+    <div class="row gutters">
+      <div id="site-title" class="col span_6">
+        <h1><a href="/">ZABURO app</a></h1>
+        <h2>アプリ作ったり、なんやかんや</h2>
+      </div>
+      <div id="social" class="col span_6">
+        <ul>
+          <li><a href="/about/" target="_blank">About</a></li>
+          
+          
+          <li><a href="http://zaburo-ch.github.io/zaburo_app" target="_blank">GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+
+  
+  <main id="single" role="main">
+    <div class="article-header">
+      <h1>Wikipediaの記事でPageRankを計算してみた。</h1>
+      <div class="meta">
+        May 14, 2015 &nbsp;
+        
+      </div>
+    </div>
+    <article>
+      <p>PageRankの記事の続きです。</p>
+
+<p><a href="/post/20150514_1/" target="_blank" title="【Python】PageRankアルゴリズム">【Python】PageRankアルゴリズム</a></p>
+
+<p>PageRank実装だけして終わるのももったいないので<br />
+Wikipediaのページ内でPageRank計算してみました。</p>
+
+<p>コードはこちら<br />
+<a href="https://github.com/zaburo-ch/wikipedia_analysis" target="_blank" title="zaburo-ch/wikipedia_analysis">zaburo-ch/wikipedia_analysis<br />
+<a href="https://github.com/zaburo-ch/wikipedia_analysis">https://github.com/zaburo-ch/wikipedia_analysis</a></a><br />
+前に作ったwikipedia.pyのコードとまとめてレポジトリにしました。</p>
+
+<p>pagerank_wiki.pyを実行すると次のような動作をします。<br />
+・<a href="http://dumps.wikimedia.org" target="_blank" title="http://dumps.wikimedia.org"><a href="http://dumps.wikimedia.org">http://dumps.wikimedia.org</a></a>より1日分のデータを取得<br />
+・国コードがjaのもののうち閲覧数上位10000ページを取り出す<br />
+・各ページの記事内のリンクをエッジとした有向グラフつくる<br />
+・有向グラフ内でPageRankを計算し大きい順に出力する</p>
+
+<p>やってることはかなりwikipedia.pyに近いですが、<br />
+見返してみるとあまりにもなコードだったのでかなり書き換えました。<br />
+他にもリンク抽出にHTMLParser使ってみたりいろいろ変えてます。</p>
+
+<p>前のやつと違って計算の部分にそれほど時間がかからないので<br />
+スペック次第ですが少なくとも寝てる間くらいには終わると思います。<br />
+リンク解析もこっちのほうがかなり早いです。</p>
+
+<p>さて、肝心の実行結果はこんな感じです。<br />
+<a href="/images/pagerankwikiresult.png/" target="_blank"><img src="/images/pagerankwikiresult.png" alt="pagerankwikiresult.png" border="0" width="435" height="400" /></a><br />
+<a href="https://github.com/zaburo-ch/wikipedia_analysis/blob/master/pagerank_wiki_data/result.txt" target="_blank" title="wikipedia_analysis/pagerank_wiki_data/result.txt">wikipedia_analysis/pagerank_wiki_data/result.txt</a></p>
+
+<p>「特別:カテゴリ」がぶっちぎりで大きいですね。<br />
+確認してみたところほぼ全てのページの一番下に<br />
+「特別:カテゴリ」へのリンクがあったのでたぶんそのせいです。<br />
+「Wikipedia:出典を明記する」とかもこの類いかな。</p>
+
+<p>「日本」や年がおおいのは人とか何かの作品の記事の<br />
+テンプレート化している右の枠内で登場することが多いためだと思います。</p>
+
+<p>テレビ局が上位に多いのはテレビ番組からほぼ確実にリンクされているのと<br />
+閲覧数上位10000ページで限定しているため<br />
+そのなかでテレビ番組が多かったためではないかと考えています。</p>
+
+<p>上位はほとんどが誰でも知っているような一般的な言葉なんですが、<br />
+101位のインターネット・ムービー・データベースってやつ、<br />
+全然何のことかわからないです。<br />
+「集英社」とか「台湾」より上なので、<br />
+かなり多くページがここにリンクしてるはずなんですが、<br />
+これどんなページからリンクされてるんでしょう？</p>
+
+<p>全体的にPageRankはWikipediaのページの重要性判断としては<br />
+あまり向いていないように思いました。<br />
+WikipediaにはPageRankの基本的な考え方が合ってないですしね。<br />
+ほかのWebサイトでも試してみればもっと面白い結果が得られるかもしれません。<br />
+機会があればやってみたいと思います。</p>
+
+    </article>
+    
+ <aside><div id="disqus_thread"></div></aside> 
+
+<script type="text/javascript">
+     
+    var disqus_shortname = 'zaburoapp';
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+  </main>
+
+
+  
+  <footer role="contentinfo">
+    <div style="text-align:center;">
+      
+      Written by ZABURO
+    </div>
+  </footer>
+
+
+</div>
+
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+</body>
+</html>
+

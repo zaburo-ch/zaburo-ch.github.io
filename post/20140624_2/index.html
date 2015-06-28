@@ -1,0 +1,120 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+
+  
+  <meta charset="UTF-8">
+  <title>
+    AOJ 0121 Seven Puzzle | ZABURO app
+  </title>
+
+
+  
+  <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
+
+
+  
+  <link rel="stylesheet" href="/css/sanitize.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/highlight_monokai.css">
+  <link rel="stylesheet/less" href="/css/theme.less">
+  <link rel="stylesheet" href="/css/custom.css">
+
+
+  
+  <script src="/js/less.js" type="text/javascript"></script>
+
+
+</head>
+
+
+
+<body>
+<div class="container">
+
+  
+  <header role="banner">
+    <div class="row gutters">
+      <div id="site-title" class="col span_6">
+        <h1><a href="/">ZABURO app</a></h1>
+        <h2>アプリ作ったり、なんやかんや</h2>
+      </div>
+      <div id="social" class="col span_6">
+        <ul>
+          <li><a href="/about/" target="_blank">About</a></li>
+          
+          
+          <li><a href="http://zaburo-ch.github.io/zaburo_app" target="_blank">GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+
+  
+  <main id="single" role="main">
+    <div class="article-header">
+      <h1>AOJ 0121 Seven Puzzle</h1>
+      <div class="meta">
+        Jun 24, 2014 &nbsp;
+        
+      </div>
+    </div>
+    <article>
+      <p>幅優先探索の問題<br />
+まず考えたのは、初期状態から0をどんどん移動させて行く方法。<br />
+パズルの状態はstringで表現している。<br />
+mapで状態とそこまでの最短距離を対応させ、<br />
+mapに存在するかどうかでたどり着いたことがあるかを確認。<br />
+ただ、これだとTLEをくらう。<br />
+<script  src="http://gist-it.appspot.com/github/zaburo-ch/icpc_practice/blob/master/aoj0121.cpp"></script></p>
+
+<p>inputは１０００個まで与えられるので、<br />
+毎回一から探索していっているのでは無駄が多い。<br />
+そもそも、ありえる状態は8!通りしかないから<br />
+そろった状態からたどりつけるすべての状態への最短距離を計算しておき<br />
+inputに対応した最短距離を出力するほうがいい。<br />
+同じようにmapを使って状態と最短距離を対応させる。</p>
+
+<script  src="http://gist-it.appspot.com/github/zaburo-ch/icpc_practice/blob/master/aoj0121memo.cpp"></script>
+
+    </article>
+    
+ <aside><div id="disqus_thread"></div></aside> 
+
+<script type="text/javascript">
+     
+    var disqus_shortname = 'zaburoapp';
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+  </main>
+
+
+  
+  <footer role="contentinfo">
+    <div style="text-align:center;">
+      
+      Written by ZABURO
+    </div>
+  </footer>
+
+
+</div>
+
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+</body>
+</html>
+
