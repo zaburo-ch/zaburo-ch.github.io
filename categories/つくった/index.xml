@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>つくった on ZABURO app</title>
-    <link>/categories/%E3%81%A4%E3%81%8F%E3%81%A3%E3%81%9F/</link>
+    <link>https://zaburo-ch.github.io/categories/%E3%81%A4%E3%81%8F%E3%81%A3%E3%81%9F/</link>
     <description>Recent content in つくった on ZABURO app</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
     <lastBuildDate>Thu, 14 May 2015 22:36:00 +0900</lastBuildDate>
-    <atom:link href="/categories/%E3%81%A4%E3%81%8F%E3%81%A3%E3%81%9F/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://zaburo-ch.github.io/categories/%E3%81%A4%E3%81%8F%E3%81%A3%E3%81%9F/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Wikipediaの記事でPageRankを計算してみた。</title>
-      <link>/post/20150514_1/</link>
+      <link>https://zaburo-ch.github.io/post/20150514_1/</link>
       <pubDate>Thu, 14 May 2015 22:36:00 +0900</pubDate>
       
-      <guid>/post/20150514_1/</guid>
+      <guid>https://zaburo-ch.github.io/post/20150514_1/</guid>
       <description>&lt;p&gt;PageRankの記事の続きです。&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&#34;/post/20150514_1/&#34; target=&#34;_blank&#34; title=&#34;【Python】PageRankアルゴリズム&#34;&gt;【Python】PageRankアルゴリズム&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://zaburo-ch.github.io/post/20150514_1/&#34; target=&#34;_blank&#34; title=&#34;【Python】PageRankアルゴリズム&#34;&gt;【Python】PageRankアルゴリズム&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;PageRank実装だけして終わるのももったいないので&lt;br /&gt;
 Wikipediaのページ内でPageRank計算してみました。&lt;/p&gt;
@@ -42,7 +42,7 @@ Wikipediaのページ内でPageRank計算してみました。&lt;/p&gt;
 リンク解析もこっちのほうがかなり早いです。&lt;/p&gt;
 
 &lt;p&gt;さて、肝心の実行結果はこんな感じです。&lt;br /&gt;
-&lt;a href=&#34;/images/pagerankwikiresult.png/&#34; target=&#34;_blank&#34;&gt;&lt;img src=&#34;/images/pagerankwikiresult.png&#34; alt=&#34;pagerankwikiresult.png&#34; border=&#34;0&#34; width=&#34;435&#34; height=&#34;400&#34; /&gt;&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;https://zaburo-ch.github.io/images/pagerankwikiresult.png/&#34; target=&#34;_blank&#34;&gt;&lt;img src=&#34;https://zaburo-ch.github.io/images/pagerankwikiresult.png&#34; alt=&#34;pagerankwikiresult.png&#34; border=&#34;0&#34; width=&#34;435&#34; height=&#34;400&#34; /&gt;&lt;/a&gt;&lt;br /&gt;
 &lt;a href=&#34;https://github.com/zaburo-ch/wikipedia_analysis/blob/master/pagerank_wiki_data/result.txt&#34; target=&#34;_blank&#34; title=&#34;wikipedia_analysis/pagerank_wiki_data/result.txt&#34;&gt;wikipedia_analysis/pagerank_wiki_data/result.txt&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;「特別:カテゴリ」がぶっちぎりで大きいですね。&lt;br /&gt;
@@ -74,10 +74,10 @@ WikipediaにはPageRankの基本的な考え方が合ってないですしね。
     
     <item>
       <title>【Python】PageRankアルゴリズム</title>
-      <link>/post/20150514_0/</link>
+      <link>https://zaburo-ch.github.io/post/20150514_0/</link>
       <pubDate>Thu, 14 May 2015 20:54:05 +0900</pubDate>
       
-      <guid>/post/20150514_0/</guid>
+      <guid>https://zaburo-ch.github.io/post/20150514_0/</guid>
       <description>&lt;p&gt;PageRankというアルゴリズム、&lt;br /&gt;
 以前からなんとなくは知ってはいたのですが、&lt;br /&gt;
 ランダムサーファーモデルで計算する方法を聞いて、&lt;br /&gt;
@@ -134,7 +134,7 @@ Implicitly Restarted Arnoldi で計算してくれます。&lt;br /&gt;
 Pythonを利用して実際に計算してみます。&lt;br /&gt;
 正しく計算できれば図の通りの値が得られるはずです。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;/images/Linkstruct2.gif&#34; alt=&#34;Linkstruct2.gif&#34; border=&#34;0&#34; width=&#34;400&#34; height=&#34;368&#34; /&gt;&lt;br /&gt;
+&lt;p&gt;&lt;img src=&#34;https://zaburo-ch.github.io/images/Linkstruct2.gif&#34; alt=&#34;Linkstruct2.gif&#34; border=&#34;0&#34; width=&#34;400&#34; height=&#34;368&#34; /&gt;&lt;br /&gt;
 &lt;span style=&#34;font-size:x-small;&#34;&gt;&lt;br /&gt;
 The original uploader was &lt;a title=&#34;wikipedia:User:Gnix&#34; href=&#34;//en.wikipedia.org/wiki/User:Gnix&#34;&gt;Gnix&lt;/a&gt; at &lt;a title=&#34;wikipedia:&#34; href=&#34;//en.wikipedia.org/wiki/&#34;&gt;English Wikipedia&lt;/a&gt;[&lt;a href=&#34;http://www.gnu.org/copyleft/fdl.html&#34; target=&#34;_blank&#34; title=&#34;GFDL&#34;&gt;GFDL&lt;/a&gt; or &lt;a href=&#34;http://creativecommons.org/licenses/by-sa/3.0/&#34; target=&#34;_blank&#34; title=&#34;CC-BY-SA-3.0&#34;&gt;CC-BY-SA-3.0&lt;/a&gt;]&lt;/span&gt;&lt;/p&gt;
 
@@ -147,7 +147,7 @@ get_pagerank_simpleではもっと単純に&lt;br /&gt;
 かける前との差が十分小さくなるまで繰り返しています。&lt;/p&gt;
 
 &lt;p&gt;実行結果はこんな感じです。&lt;br /&gt;
-&lt;img src=&#34;/images/pagerankresult.png&#34; alt=&#34;pagerankresult.png&#34; border=&#34;0&#34; width=&#34;273&#34; height=&#34;258&#34; /&gt;&lt;/p&gt;
+&lt;img src=&#34;https://zaburo-ch.github.io/images/pagerankresult.png&#34; alt=&#34;pagerankresult.png&#34; border=&#34;0&#34; width=&#34;273&#34; height=&#34;258&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;図の値とかなり一致していますね！&lt;br /&gt;
 2つの方法どちらもほぼ同じ値になっているので&lt;br /&gt;
@@ -157,10 +157,10 @@ get_pagerank_simpleの方法でも十分実用に足りそうです。&lt;/p&gt;
     
     <item>
       <title>Mac OS Xで時々ジェスチャーが反応しなくなる</title>
-      <link>/post/20150324_0/</link>
+      <link>https://zaburo-ch.github.io/post/20150324_0/</link>
       <pubDate>Tue, 24 Mar 2015 17:21:45 +0900</pubDate>
       
-      <guid>/post/20150324_0/</guid>
+      <guid>https://zaburo-ch.github.io/post/20150324_0/</guid>
       <description>&lt;p&gt;普段ウインドウの切り替えはMission Controlでやっているのですが、&lt;br /&gt;
 ときどきジェスチャーが反応しなくなってしまって、&lt;br /&gt;
 仮想デスクトップの切り替えもできなくなるものですから&lt;br /&gt;
@@ -175,7 +175,7 @@ OSまるごと再起動しなくてもDockを再起動させてやるだけで&l
 面倒なので実行ファイルへの変換の勉強がてら&lt;br /&gt;
 ちょっと書いてアプリにしてみました。&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&#34;/images/a.png/&#34; target=&#34;_blank&#34;&gt;&lt;img src=&#34;/images/a.png&#34; alt=&#34;a.png&#34; border=&#34;0&#34; width=&#34;139&#34; height=&#34;102&#34; /&gt;&lt;/a&gt;&lt;br /&gt;
+&lt;p&gt;&lt;a href=&#34;https://zaburo-ch.github.io/images/a.png/&#34; target=&#34;_blank&#34;&gt;&lt;img src=&#34;https://zaburo-ch.github.io/images/a.png&#34; alt=&#34;a.png&#34; border=&#34;0&#34; width=&#34;139&#34; height=&#34;102&#34; /&gt;&lt;/a&gt;&lt;br /&gt;
 こんな感じでDockに配置して使っています。&lt;/p&gt;
 
 &lt;p&gt;アイコン画像は以下のものを利用させて頂きました。&lt;br /&gt;
@@ -191,10 +191,10 @@ OSまるごと再起動しなくてもDockを再起動させてやるだけで&l
     
     <item>
       <title>Wikipediaのページ解析に使ったpythonコード</title>
-      <link>/post/20141130_0/</link>
+      <link>https://zaburo-ch.github.io/post/20141130_0/</link>
       <pubDate>Sun, 30 Nov 2014 01:36:54 +0900</pubDate>
       
-      <guid>/post/20141130_0/</guid>
+      <guid>https://zaburo-ch.github.io/post/20141130_0/</guid>
       <description>&lt;p&gt;すっかりわすれていましたがソースコードです。&lt;br /&gt;
 とりあえずpython触ってみようくらいの気持ちで書いたコードなので&lt;br /&gt;
 pythonに慣習みたいなものがあるならたぶんそれには従えていません。&lt;br /&gt;
@@ -223,13 +223,13 @@ Gistを使ってみました。綺麗に表示してくれますね。&lt;br /&g
     
     <item>
       <title>Wikipediaのアクセス上位10000ページの距離を計算した話</title>
-      <link>/post/20141017_0/</link>
+      <link>https://zaburo-ch.github.io/post/20141017_0/</link>
       <pubDate>Fri, 17 Oct 2014 23:44:17 +0900</pubDate>
       
-      <guid>/post/20141017_0/</guid>
+      <guid>https://zaburo-ch.github.io/post/20141017_0/</guid>
       <description>&lt;p&gt;先日の記事の続きです。&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&#34;/post/20141003_0/&#34; target=&#34;_blank&#34; title=&#34;Wikipediaでリンクを辿って遊ぶ&#34;&gt;Wikipediaでリンクを辿って遊ぶ&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://zaburo-ch.github.io/post/20141003_0/&#34; target=&#34;_blank&#34; title=&#34;Wikipediaでリンクを辿って遊ぶ&#34;&gt;Wikipediaでリンクを辿って遊ぶ&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;今回探したのはWikipediaに存在する記事のうち&lt;br /&gt;
 最も距離のはなれている記事の組み合わせです。&lt;/p&gt;
@@ -332,15 +332,15 @@ Gistを使ってみました。綺麗に表示してくれますね。&lt;br /&g
     
     <item>
       <title>とんぺーのミスコンにエントリーした気分になれるブックマークレットつくった</title>
-      <link>/post/20141007_0/</link>
+      <link>https://zaburo-ch.github.io/post/20141007_0/</link>
       <pubDate>Tue, 07 Oct 2014 22:40:04 +0900</pubDate>
       
-      <guid>/post/20141007_0/</guid>
+      <guid>https://zaburo-ch.github.io/post/20141007_0/</guid>
       <description>&lt;p&gt;使い方&lt;/p&gt;
 
 &lt;p&gt;1.幅140px高さ260pxの画像を用意する。&lt;/p&gt;
 
-&lt;p&gt;2.画像のURLをこのテキストボックスに入れる。&lt;script src=&#34;/code/fc2_fes4.js&#34;&gt;&lt;/script&gt;&lt;br /&gt;
+&lt;p&gt;2.画像のURLをこのテキストボックスに入れる。&lt;script src=&#34;https://zaburo-ch.github.io/code/fc2_fes4.js&#34;&gt;&lt;/script&gt;&lt;br /&gt;
 &lt;input type=&#34;text&#34; size=&#34;80px&#34; value=&#34;ここに画像のURLを入れて下さい&#34; id=&#34;imgurl&#34; onblur=&#34;onb();&#34;&gt;&lt;/input&gt;&lt;/p&gt;
 
 &lt;p&gt;3.このリンクを右クリックしてブックマーク&lt;br /&gt;

@@ -2,19 +2,19 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>お知らせなど on ZABURO app</title>
-    <link>/categories/%E3%81%8A%E7%9F%A5%E3%82%89%E3%81%9B%E3%81%AA%E3%81%A9/</link>
+    <link>https://zaburo-ch.github.io/categories/%E3%81%8A%E7%9F%A5%E3%82%89%E3%81%9B%E3%81%AA%E3%81%A9/</link>
     <description>Recent content in お知らせなど on ZABURO app</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
     <lastBuildDate>Thu, 17 Jul 2014 12:58:46 +0900</lastBuildDate>
-    <atom:link href="/categories/%E3%81%8A%E7%9F%A5%E3%82%89%E3%81%9B%E3%81%AA%E3%81%A9/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://zaburo-ch.github.io/categories/%E3%81%8A%E7%9F%A5%E3%82%89%E3%81%9B%E3%81%AA%E3%81%A9/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>GitHubアカウント作りました</title>
-      <link>/post/20140717_0/</link>
+      <link>https://zaburo-ch.github.io/post/20140717_0/</link>
       <pubDate>Thu, 17 Jul 2014 12:58:46 +0900</pubDate>
       
-      <guid>/post/20140717_0/</guid>
+      <guid>https://zaburo-ch.github.io/post/20140717_0/</guid>
       <description>&lt;p&gt;つくりました。&lt;br /&gt;
 この間参加したイベントでGitHubで公開できるWebページで&lt;br /&gt;
 WebRTCを試せるという話を聞いたのでつくってみました。&lt;br /&gt;
@@ -34,10 +34,10 @@ WebRTCを試せるという話を聞いたのでつくってみました。&lt;b
     
     <item>
       <title>蟻本やってます</title>
-      <link>/post/20140624_0/</link>
+      <link>https://zaburo-ch.github.io/post/20140624_0/</link>
       <pubDate>Tue, 24 Jun 2014 17:44:49 +0900</pubDate>
       
-      <guid>/post/20140624_0/</guid>
+      <guid>https://zaburo-ch.github.io/post/20140624_0/</guid>
       <description>&lt;p&gt;７月にあるICPC国内予選に向けて蟻本を解いています。&lt;br /&gt;
 せっかく書いたソースコードをそのままにしておくのももったいないので&lt;br /&gt;
 ここにガシガシ載っけていこうかなと思います。&lt;/p&gt;
@@ -46,10 +46,10 @@ WebRTCを試せるという話を聞いたのでつくってみました。&lt;b
     
     <item>
       <title>ブログ作りました。</title>
-      <link>/post/20131106_0/</link>
+      <link>https://zaburo-ch.github.io/post/20131106_0/</link>
       <pubDate>Wed, 06 Nov 2013 20:21:01 +0900</pubDate>
       
-      <guid>/post/20131106_0/</guid>
+      <guid>https://zaburo-ch.github.io/post/20131106_0/</guid>
       <description>&lt;p&gt;つくったゲームをGoogle playで公開するにあたり、&lt;br /&gt;
 自分が情報を発信する場所を持っておこうという事で、&lt;br /&gt;
 ウェブサイト代わりにブログ作りました。&lt;/p&gt;

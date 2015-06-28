@@ -2,19 +2,19 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Andengine on ZABURO app</title>
-    <link>/categories/andengine/</link>
+    <link>https://zaburo-ch.github.io/categories/andengine/</link>
     <description>Recent content in Andengine on ZABURO app</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
     <lastBuildDate>Sun, 17 Nov 2013 18:13:44 +0900</lastBuildDate>
-    <atom:link href="/categories/andengine/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://zaburo-ch.github.io/categories/andengine/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>【AndEngine】onPauseでNullPointerException</title>
-      <link>/post/20131117_0/</link>
+      <link>https://zaburo-ch.github.io/post/20131117_0/</link>
       <pubDate>Sun, 17 Nov 2013 18:13:44 +0900</pubDate>
       
-      <guid>/post/20131117_0/</guid>
+      <guid>https://zaburo-ch.github.io/post/20131117_0/</guid>
       <description>&lt;p&gt;一部機種において(Androidのバージョンの問題？)&lt;br /&gt;
 起動直後に強制終了してしまうバグに悩まされたのでメモ。&lt;/p&gt;
 

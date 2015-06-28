@@ -6,7 +6,7 @@
   
   <meta charset="UTF-8">
   <title>
-    AOJ 2224 Save your cat | ZABURO app
+    ASOBI&#43;のソースコードを公開しました。 | ZABURO app
   </title>
 
 
@@ -56,31 +56,27 @@
   
   <main id="single" role="main">
     <div class="article-header">
-      <h1>AOJ 2224 Save your cat</h1>
+      <h1>ASOBI&#43;のソースコードを公開しました。</h1>
       <div class="meta">
-        Jul 3, 2014 &nbsp;
+        Jun 29, 2015 &nbsp;
+        
+          #<a href="/tags/webrtc">WebRTC</a>&nbsp;
+        
+          #<a href="/tags/web%E3%82%A2%E3%83%97%E3%83%AA">Webアプリ</a>&nbsp;
         
       </div>
     </div>
     <article>
-      <p>フェンスを辺と考え、閉路をなくせばよいので、<br />
-閉路をなくす　→　全域木の辺の数を最小にする<br />
-壊す長さを最小に　→　長い辺から使っていく<br />
-と考えると最小全域木と同じような解き方で解けます。</p>
+      <p>去年の10月頃公開した<a href="http://asobi.herokuapp.com/">ASOBI+</a>ですが、<br />
+最近はブラッシュアップすることもなくなり放置状態になっていたので、<br />
+Githubでソースコード、アイコン等を公開しました。</p>
 
-<p>UnionFind木を使ったクラスカル法で解く場合。<br />
-fenceをcostの大きさで降順にソートして、<br />
-使わなかったfenceのcostの和を出力します。<br />
-<script  src="http://gist-it.appspot.com/github/zaburo-ch/icpc_practice/blob/master/aoj2224union.cpp"></script></p>
+<p><a href="https://github.com/zaburo-ch/asobi_plus">zaburo-ch/asobi_plus</a></p>
 
-<p>プリム法で解く場合。<br />
-プリム法は最小全域&rdquo;木&rdquo;をつくるので、森をつくるため、<br />
-使われていない頂点に対して何度かプリム法で木を作ります。<br />
-(森に対してプリム法を使う方法これしかおもいつかない……)<br />
-あと、この実装方法だと同じ辺を何度もみることがあるので<br />
-クラスカル法の時のように素直にsumを出力できません。</p>
+<p>Herokuで動いているものをほぼそのまま公開した形ですが、<br />
+APIkeyの部分だけ変えてあるのでそこ変えないと動きません。</p>
 
-<script  src="http://gist-it.appspot.com/github/zaburo-ch/icpc_practice/blob/master/aoj2224prim.cpp"></script>
+<p>WebRTCを使ったWebアプリ等を作る際に役立てて頂ければと思います。</p>
 
     </article>
     

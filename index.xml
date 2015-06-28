@@ -2,19 +2,38 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>ZABURO app</title>
-    <link>/</link>
+    <link>https://zaburo-ch.github.io/</link>
     <description>Recent content on ZABURO app</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Wed, 17 Jun 2015 02:48:23 +0900</lastBuildDate>
-    <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 29 Jun 2015 00:28:20 +0900</lastBuildDate>
+    <atom:link href="https://zaburo-ch.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>ASOBI&#43;のソースコードを公開しました。</title>
+      <link>https://zaburo-ch.github.io/post/publishing_asobi_plus/</link>
+      <pubDate>Mon, 29 Jun 2015 00:28:20 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/post/publishing_asobi_plus/</guid>
+      <description>&lt;p&gt;去年の10月頃公開した&lt;a href=&#34;http://asobi.herokuapp.com/&#34;&gt;ASOBI+&lt;/a&gt;ですが、&lt;br /&gt;
+最近はブラッシュアップすることもなくなり放置状態になっていたので、&lt;br /&gt;
+Githubでソースコード、アイコン等を公開しました。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/zaburo-ch/asobi_plus&#34;&gt;zaburo-ch/asobi_plus&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Herokuで動いているものをほぼそのまま公開した形ですが、&lt;br /&gt;
+APIkeyの部分だけ変えてあるのでそこ変えないと動きません。&lt;/p&gt;
+
+&lt;p&gt;WebRTCを使ったWebアプリ等を作る際に役立てて頂ければと思います。&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>【C&#43;&#43;】mainなどの関数の中では大きな配列を確保できない</title>
-      <link>/post/20150617_0/</link>
+      <link>https://zaburo-ch.github.io/post/20150617_0/</link>
       <pubDate>Wed, 17 Jun 2015 02:48:23 +0900</pubDate>
       
-      <guid>/post/20150617_0/</guid>
+      <guid>https://zaburo-ch.github.io/post/20150617_0/</guid>
       <description>&lt;p&gt;これがSegmentation faultになるのに対して&lt;br /&gt;
 &lt;script src=&#34;https://gist.github.com/zaburo-ch/f7a91485933876727a59.js&#34;&gt;&lt;/script&gt;&lt;br /&gt;
 これは正しく実行される。&lt;br /&gt;
@@ -34,10 +53,10 @@ bool型は1byteなので配列のサイズは10000001/1024≒9765KBとなり&lt;
     
     <item>
       <title>【C&#43;&#43;】vectorは==で比較できる</title>
-      <link>/post/20150518_0/</link>
+      <link>https://zaburo-ch.github.io/post/20150518_0/</link>
       <pubDate>Mon, 18 May 2015 19:18:45 +0900</pubDate>
       
-      <guid>/post/20150518_0/</guid>
+      <guid>https://zaburo-ch.github.io/post/20150518_0/</guid>
       <description>&lt;p&gt;知らなかったのでメモ&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&#34;http://www.cppll.jp/cppreference/cppvector_details.html&#34; target=&#34;_blank&#34; title=&#34;C++ ベクタ&#34;&gt;C++ ベクタ&lt;br /&gt;
@@ -51,13 +70,13 @@ Javaでのオブジェクトの比較みたいに&lt;br /&gt;
     
     <item>
       <title>Wikipediaの記事でPageRankを計算してみた。</title>
-      <link>/post/20150514_1/</link>
+      <link>https://zaburo-ch.github.io/post/20150514_1/</link>
       <pubDate>Thu, 14 May 2015 22:36:00 +0900</pubDate>
       
-      <guid>/post/20150514_1/</guid>
+      <guid>https://zaburo-ch.github.io/post/20150514_1/</guid>
       <description>&lt;p&gt;PageRankの記事の続きです。&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&#34;/post/20150514_1/&#34; target=&#34;_blank&#34; title=&#34;【Python】PageRankアルゴリズム&#34;&gt;【Python】PageRankアルゴリズム&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://zaburo-ch.github.io/post/20150514_1/&#34; target=&#34;_blank&#34; title=&#34;【Python】PageRankアルゴリズム&#34;&gt;【Python】PageRankアルゴリズム&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;PageRank実装だけして終わるのももったいないので&lt;br /&gt;
 Wikipediaのページ内でPageRank計算してみました。&lt;/p&gt;
@@ -82,7 +101,7 @@ Wikipediaのページ内でPageRank計算してみました。&lt;/p&gt;
 リンク解析もこっちのほうがかなり早いです。&lt;/p&gt;
 
 &lt;p&gt;さて、肝心の実行結果はこんな感じです。&lt;br /&gt;
-&lt;a href=&#34;/images/pagerankwikiresult.png/&#34; target=&#34;_blank&#34;&gt;&lt;img src=&#34;/images/pagerankwikiresult.png&#34; alt=&#34;pagerankwikiresult.png&#34; border=&#34;0&#34; width=&#34;435&#34; height=&#34;400&#34; /&gt;&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;https://zaburo-ch.github.io/images/pagerankwikiresult.png/&#34; target=&#34;_blank&#34;&gt;&lt;img src=&#34;https://zaburo-ch.github.io/images/pagerankwikiresult.png&#34; alt=&#34;pagerankwikiresult.png&#34; border=&#34;0&#34; width=&#34;435&#34; height=&#34;400&#34; /&gt;&lt;/a&gt;&lt;br /&gt;
 &lt;a href=&#34;https://github.com/zaburo-ch/wikipedia_analysis/blob/master/pagerank_wiki_data/result.txt&#34; target=&#34;_blank&#34; title=&#34;wikipedia_analysis/pagerank_wiki_data/result.txt&#34;&gt;wikipedia_analysis/pagerank_wiki_data/result.txt&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;「特別:カテゴリ」がぶっちぎりで大きいですね。&lt;br /&gt;
@@ -114,10 +133,10 @@ WikipediaにはPageRankの基本的な考え方が合ってないですしね。
     
     <item>
       <title>【Python】PageRankアルゴリズム</title>
-      <link>/post/20150514_0/</link>
+      <link>https://zaburo-ch.github.io/post/20150514_0/</link>
       <pubDate>Thu, 14 May 2015 20:54:05 +0900</pubDate>
       
-      <guid>/post/20150514_0/</guid>
+      <guid>https://zaburo-ch.github.io/post/20150514_0/</guid>
       <description>&lt;p&gt;PageRankというアルゴリズム、&lt;br /&gt;
 以前からなんとなくは知ってはいたのですが、&lt;br /&gt;
 ランダムサーファーモデルで計算する方法を聞いて、&lt;br /&gt;
@@ -174,7 +193,7 @@ Implicitly Restarted Arnoldi で計算してくれます。&lt;br /&gt;
 Pythonを利用して実際に計算してみます。&lt;br /&gt;
 正しく計算できれば図の通りの値が得られるはずです。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;/images/Linkstruct2.gif&#34; alt=&#34;Linkstruct2.gif&#34; border=&#34;0&#34; width=&#34;400&#34; height=&#34;368&#34; /&gt;&lt;br /&gt;
+&lt;p&gt;&lt;img src=&#34;https://zaburo-ch.github.io/images/Linkstruct2.gif&#34; alt=&#34;Linkstruct2.gif&#34; border=&#34;0&#34; width=&#34;400&#34; height=&#34;368&#34; /&gt;&lt;br /&gt;
 &lt;span style=&#34;font-size:x-small;&#34;&gt;&lt;br /&gt;
 The original uploader was &lt;a title=&#34;wikipedia:User:Gnix&#34; href=&#34;//en.wikipedia.org/wiki/User:Gnix&#34;&gt;Gnix&lt;/a&gt; at &lt;a title=&#34;wikipedia:&#34; href=&#34;//en.wikipedia.org/wiki/&#34;&gt;English Wikipedia&lt;/a&gt;[&lt;a href=&#34;http://www.gnu.org/copyleft/fdl.html&#34; target=&#34;_blank&#34; title=&#34;GFDL&#34;&gt;GFDL&lt;/a&gt; or &lt;a href=&#34;http://creativecommons.org/licenses/by-sa/3.0/&#34; target=&#34;_blank&#34; title=&#34;CC-BY-SA-3.0&#34;&gt;CC-BY-SA-3.0&lt;/a&gt;]&lt;/span&gt;&lt;/p&gt;
 
@@ -187,7 +206,7 @@ get_pagerank_simpleではもっと単純に&lt;br /&gt;
 かける前との差が十分小さくなるまで繰り返しています。&lt;/p&gt;
 
 &lt;p&gt;実行結果はこんな感じです。&lt;br /&gt;
-&lt;img src=&#34;/images/pagerankresult.png&#34; alt=&#34;pagerankresult.png&#34; border=&#34;0&#34; width=&#34;273&#34; height=&#34;258&#34; /&gt;&lt;/p&gt;
+&lt;img src=&#34;https://zaburo-ch.github.io/images/pagerankresult.png&#34; alt=&#34;pagerankresult.png&#34; border=&#34;0&#34; width=&#34;273&#34; height=&#34;258&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;図の値とかなり一致していますね！&lt;br /&gt;
 2つの方法どちらもほぼ同じ値になっているので&lt;br /&gt;
@@ -197,10 +216,10 @@ get_pagerank_simpleの方法でも十分実用に足りそうです。&lt;/p&gt;
     
     <item>
       <title>動的時間伸縮法(DTW)をPythonで試してみた</title>
-      <link>/post/20150406_0/</link>
+      <link>https://zaburo-ch.github.io/post/20150406_0/</link>
       <pubDate>Mon, 06 Apr 2015 18:36:47 +0900</pubDate>
       
-      <guid>/post/20150406_0/</guid>
+      <guid>https://zaburo-ch.github.io/post/20150406_0/</guid>
       <description>&lt;p&gt;ここ数ヶ月くらい、ある時系列データを集めていたのですが、&lt;br /&gt;
 そのデータを扱うにあたってまずデータを分類したいと思い&lt;br /&gt;
 クラスタリングについて調べたところ&lt;br /&gt;
@@ -233,10 +252,10 @@ PythonでRのデータセット利用する方法については&lt;br /&gt;
     
     <item>
       <title>【PokerStars】無料で使えるHUD更新した【ver0.3】</title>
-      <link>/post/20150327_1/</link>
+      <link>https://zaburo-ch.github.io/post/20150327_1/</link>
       <pubDate>Fri, 27 Mar 2015 15:19:16 +0900</pubDate>
       
-      <guid>/post/20150327_1/</guid>
+      <guid>https://zaburo-ch.github.io/post/20150327_1/</guid>
       <description>&lt;p&gt;右下の白いタイルが動かないバグがあったため修正しました。&lt;/p&gt;
 
 &lt;p&gt;こちらからアクセスしてダウンロードしてください！&lt;a href=&#34;https://github.com/zaburo-ch/poker_tool&#34; target=&#34;_blank&#34; title=&#34;zaburo-ch/poker_tool&#34;&gt;&lt;br /&gt;
@@ -246,10 +265,10 @@ zaburo-ch/poker_tool&lt;/a&gt;&lt;/p&gt;
     
     <item>
       <title>【PokerStars】無料で使えるHUD更新した【ver0.2】</title>
-      <link>/post/20150327_0/</link>
+      <link>https://zaburo-ch.github.io/post/20150327_0/</link>
       <pubDate>Fri, 27 Mar 2015 00:51:38 +0900</pubDate>
       
-      <guid>/post/20150327_0/</guid>
+      <guid>https://zaburo-ch.github.io/post/20150327_0/</guid>
       <description>&lt;p&gt;同じデスクトップ内での多面打ちに対応しました。&lt;/p&gt;
 
 &lt;p&gt;終了ボタンがあるウィンドウとHUD部分とを&lt;br /&gt;
@@ -267,10 +286,10 @@ zaburo-ch/poker_tool&lt;/a&gt;&lt;/p&gt;
     
     <item>
       <title>【PokerStars】無料で使えるHUDつくった【ver0.1】</title>
-      <link>/post/20150326_0/</link>
+      <link>https://zaburo-ch.github.io/post/20150326_0/</link>
       <pubDate>Thu, 26 Mar 2015 20:37:03 +0900</pubDate>
       
-      <guid>/post/20150326_0/</guid>
+      <guid>https://zaburo-ch.github.io/post/20150326_0/</guid>
       <description>&lt;p&gt;つくりました。&lt;/p&gt;
 
 &lt;p&gt;自分の環境で2週間程度使ってみて&lt;br /&gt;
@@ -361,10 +380,10 @@ MyPoker-Beta-0.1.dmgをダウンロード&lt;/a&gt;&lt;/p&gt;
     
     <item>
       <title>Mac OS Xで時々ジェスチャーが反応しなくなる</title>
-      <link>/post/20150324_0/</link>
+      <link>https://zaburo-ch.github.io/post/20150324_0/</link>
       <pubDate>Tue, 24 Mar 2015 17:21:45 +0900</pubDate>
       
-      <guid>/post/20150324_0/</guid>
+      <guid>https://zaburo-ch.github.io/post/20150324_0/</guid>
       <description>&lt;p&gt;普段ウインドウの切り替えはMission Controlでやっているのですが、&lt;br /&gt;
 ときどきジェスチャーが反応しなくなってしまって、&lt;br /&gt;
 仮想デスクトップの切り替えもできなくなるものですから&lt;br /&gt;
@@ -379,7 +398,7 @@ OSまるごと再起動しなくてもDockを再起動させてやるだけで&l
 面倒なので実行ファイルへの変換の勉強がてら&lt;br /&gt;
 ちょっと書いてアプリにしてみました。&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&#34;/images/a.png/&#34; target=&#34;_blank&#34;&gt;&lt;img src=&#34;/images/a.png&#34; alt=&#34;a.png&#34; border=&#34;0&#34; width=&#34;139&#34; height=&#34;102&#34; /&gt;&lt;/a&gt;&lt;br /&gt;
+&lt;p&gt;&lt;a href=&#34;https://zaburo-ch.github.io/images/a.png/&#34; target=&#34;_blank&#34;&gt;&lt;img src=&#34;https://zaburo-ch.github.io/images/a.png&#34; alt=&#34;a.png&#34; border=&#34;0&#34; width=&#34;139&#34; height=&#34;102&#34; /&gt;&lt;/a&gt;&lt;br /&gt;
 こんな感じでDockに配置して使っています。&lt;/p&gt;
 
 &lt;p&gt;アイコン画像は以下のものを利用させて頂きました。&lt;br /&gt;
@@ -395,10 +414,10 @@ OSまるごと再起動しなくてもDockを再起動させてやるだけで&l
     
     <item>
       <title>Xcode6でサンプルコードSonofGrabのビルドができない</title>
-      <link>/post/20150307_0/</link>
+      <link>https://zaburo-ch.github.io/post/20150307_0/</link>
       <pubDate>Sat, 07 Mar 2015 21:50:12 +0900</pubDate>
       
-      <guid>/post/20150307_0/</guid>
+      <guid>https://zaburo-ch.github.io/post/20150307_0/</guid>
       <description>&lt;p&gt;実行中のウィンドウのリストを取得する方法が知りたくて&lt;br /&gt;
 SonofGrab というサンプルに行き着いたのですが&lt;br /&gt;
 エラーでちゃいました。&lt;/p&gt;
@@ -420,10 +439,10 @@ Controller.mの71行目のinlineの前にstaticをつけるだけです。&lt;/p
     
     <item>
       <title>【python】文字列のバイト数を取得する</title>
-      <link>/post/20150228_0/</link>
+      <link>https://zaburo-ch.github.io/post/20150228_0/</link>
       <pubDate>Sat, 28 Feb 2015 16:18:09 +0900</pubDate>
       
-      <guid>/post/20150228_0/</guid>
+      <guid>https://zaburo-ch.github.io/post/20150228_0/</guid>
       <description>&lt;p&gt;str型の文字列sならlen(s)とするだけでバイト数が取得できます。&lt;br /&gt;
 てっきり文字数が返ってくるものだと思っていたのでメモ。&lt;/p&gt;
 
@@ -434,10 +453,10 @@ Controller.mの71行目のinlineの前にstaticをつけるだけです。&lt;/p
     
     <item>
       <title>JQuery mobileでPhonegap(Cordova)アプリをつくる</title>
-      <link>/post/20141218_0/</link>
+      <link>https://zaburo-ch.github.io/post/20141218_0/</link>
       <pubDate>Thu, 18 Dec 2014 21:51:43 +0900</pubDate>
       
-      <guid>/post/20141218_0/</guid>
+      <guid>https://zaburo-ch.github.io/post/20141218_0/</guid>
       <description>&lt;p&gt;cordova4.1.2で動作確認しております。&lt;/p&gt;
 
 &lt;p&gt;基本的には普通にJQuery mobile使って書くだけなんですが、&lt;br /&gt;
@@ -458,10 +477,10 @@ $ cordova plugin add org.apache.cordova.device&lt;/p&gt;
     
     <item>
       <title>【matplotlib】図の余白を設定する</title>
-      <link>/post/20141217_0/</link>
+      <link>https://zaburo-ch.github.io/post/20141217_0/</link>
       <pubDate>Wed, 17 Dec 2014 17:35:15 +0900</pubDate>
       
-      <guid>/post/20141217_0/</guid>
+      <guid>https://zaburo-ch.github.io/post/20141217_0/</guid>
       <description>&lt;p&gt;subplots_adjustが何者か調べたのでメモ。&lt;br /&gt;
 matplotlib(1.4.2)で動作確認しました。&lt;/p&gt;
 
@@ -490,10 +509,10 @@ hspace : 0.2&lt;/p&gt;
     
     <item>
       <title>Wikipediaのページ解析に使ったpythonコード</title>
-      <link>/post/20141130_0/</link>
+      <link>https://zaburo-ch.github.io/post/20141130_0/</link>
       <pubDate>Sun, 30 Nov 2014 01:36:54 +0900</pubDate>
       
-      <guid>/post/20141130_0/</guid>
+      <guid>https://zaburo-ch.github.io/post/20141130_0/</guid>
       <description>&lt;p&gt;すっかりわすれていましたがソースコードです。&lt;br /&gt;
 とりあえずpython触ってみようくらいの気持ちで書いたコードなので&lt;br /&gt;
 pythonに慣習みたいなものがあるならたぶんそれには従えていません。&lt;br /&gt;
@@ -517,115 +536,6 @@ multiprocessing、numpy、pandasあたりをちゃんと使えば&lt;br /&gt;
 Gistを使ってみました。綺麗に表示してくれますね。&lt;br /&gt;
 過去の物をGistに置き換えたりはしませんが&lt;br /&gt;
 今後はできるだけこれをつかっていこうと思います。&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Wikipediaのアクセス上位10000ページの距離を計算した話</title>
-      <link>/post/20141017_0/</link>
-      <pubDate>Fri, 17 Oct 2014 23:44:17 +0900</pubDate>
-      
-      <guid>/post/20141017_0/</guid>
-      <description>&lt;p&gt;先日の記事の続きです。&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;/post/20141003_0/&#34; target=&#34;_blank&#34; title=&#34;Wikipediaでリンクを辿って遊ぶ&#34;&gt;Wikipediaでリンクを辿って遊ぶ&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;今回探したのはWikipediaに存在する記事のうち&lt;br /&gt;
-最も距離のはなれている記事の組み合わせです。&lt;/p&gt;
-
-&lt;p&gt;ここで言う距離とは、ある記事から記事内のリンクのみを辿って行く時&lt;br /&gt;
-何回リンクを踏めばその記事に辿り着くかを表した数字です。&lt;br /&gt;
-複数あるルートのうち最も短いものをその組の距離としました。&lt;/p&gt;
-
-&lt;p&gt;さて、Wikipediaについてですが、&lt;br /&gt;
-&lt;a href=&#34;http://ja.wikipedia.org/wiki/Wikipedia:%E5%85%A8%E8%A8%80%E8%AA%9E%E7%89%88%E3%81%AE%E7%B5%B1%E8%A8%88&#34; target=&#34;_blank&#34; title=&#34;Wikipedia:全言語版の統計&#34;&gt;Wikipedia:全言語版の統計&lt;br /&gt;
-&lt;a href=&#34;http://ja.wikipedia.org/wiki/Wikipedia:%E5%85%A8%E8%A8%80%E8%AA%9E%E7%89%88%E3%81%AE%E7%B5%B1%E8%A8%88&#34;&gt;http://ja.wikipedia.org/wiki/Wikipedia:%E5%85%A8%E8%A8%80%E8%AA%9E%E7%89%88%E3%81%AE%E7%B5%B1%E8%A8%88&lt;/a&gt;&lt;/a&gt;&lt;br /&gt;
-によれば、2014年10月17日現在&lt;br /&gt;
-純記事数は全言語総計でなんと&lt;strong&gt;33,448,472&lt;/strong&gt;もあるそうです。&lt;br /&gt;
-日本語のものだけで&lt;strong&gt;930,619&lt;/strong&gt;もあるので&lt;br /&gt;
-これをすべて解析するとなると人生が終わるまでに&lt;br /&gt;
-計算し終わるかという問題が出てきます。&lt;/p&gt;
-
-&lt;p&gt;というわけで今回は、日本語版Wikipediaの記事のうち&lt;br /&gt;
-ある日の閲覧数が上位の記事を一定数とって来て&lt;br /&gt;
-その記事のみを対象にページ間距離を計算しました。&lt;/p&gt;
-
-&lt;p&gt;技術的なことは後日記事にするとして&lt;br /&gt;
-早速結果を書いていきたいと思います。&lt;/p&gt;
-
-&lt;p&gt;まず2014年9月1日の閲覧数上位1000位に限定した場合の結果。&lt;br /&gt;
-上位20位のみを抜粋しました。&lt;br /&gt;
-&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;ndash;&lt;/p&gt;
-
-&lt;p&gt;List of longest distance between Wikipedia pages&lt;br /&gt;
-20140901 : Page view Top 1000&lt;/p&gt;
-
-&lt;p&gt;1:  8 続柄 -&amp;gt; 近江友里恵&lt;br /&gt;
-   2:  8 続柄 -&amp;gt; たちかぜ自衛官いじめ自殺事件&lt;br /&gt;
-   3:  8 国鉄105系電車 -&amp;gt; たちかぜ自衛官いじめ自殺事件&lt;br /&gt;
-   4:  8 七草 -&amp;gt; 近江友里恵&lt;br /&gt;
-   5:  8 七草 -&amp;gt; たちかぜ自衛官いじめ自殺事件&lt;br /&gt;
-   6:  8 カルトの集団自殺 -&amp;gt; 近江友里恵&lt;br /&gt;
-   7:  8 カルトの集団自殺 -&amp;gt; たちかぜ自衛官いじめ自殺事件&lt;br /&gt;
-   8:  8 特別:最近の更新 -&amp;gt; 近江友里恵&lt;br /&gt;
-   9:  8 特別:最近の更新 -&amp;gt; たちかぜ自衛官いじめ自殺事件&lt;br /&gt;
-  10:  8 カツオノカンムリ -&amp;gt; 近江友里恵&lt;br /&gt;
-  11:  8 カツオノカンムリ -&amp;gt; たちかぜ自衛官いじめ自殺事件&lt;br /&gt;
-  12:  8 城井鎮房 -&amp;gt; たちかぜ自衛官いじめ自殺事件&lt;br /&gt;
-  13:  8 奇皇后 -&amp;gt; 近江友里恵&lt;br /&gt;
-  14:  8 奇皇后 -&amp;gt; たちかぜ自衛官いじめ自殺事件&lt;br /&gt;
-  15:  8 標準偏差 -&amp;gt; 近江友里恵&lt;br /&gt;
-  16:  8 標準偏差 -&amp;gt; たちかぜ自衛官いじめ自殺事件&lt;br /&gt;
-  17:  8 青春18きっぷ -&amp;gt; たちかぜ自衛官いじめ自殺事件&lt;br /&gt;
-  18:  8 特別:検索 -&amp;gt; 近江友里恵&lt;br /&gt;
-  19:  8 特別:検索 -&amp;gt; たちかぜ自衛官いじめ自殺事件&lt;br /&gt;
-  20:  8 龍虎 -&amp;gt; たちかぜ自衛官いじめ自殺事件&lt;/p&gt;
-
-&lt;p&gt;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;ndash;&lt;/p&gt;
-
-&lt;p&gt;たちかぜ自衛官いじめ自殺事件の存在感が半端ないですね。&lt;br /&gt;
-8回リンク踏むだけでいけちゃうということで&lt;br /&gt;
-案外短くてがっかりしました。&lt;br /&gt;
-105位まで距離8がありその後2500位くらいまで距離7が続きます。&lt;/p&gt;
-
-&lt;p&gt;思った以上に大したことが無い結果が出てしまったので&lt;br /&gt;
-上位10000ページでもやりたいところですが、&lt;br /&gt;
-上位1000ページでさえ20分程度時間がかかっていて、&lt;br /&gt;
-最短距離の計算につかったアルゴリズムの計算量がO(n^3)なので&lt;br /&gt;
-約1000倍の時間がかかることになります。&lt;/p&gt;
-
-&lt;p&gt;終わるまでの時間を計算してみた結果、&lt;br /&gt;
-まあ現実的な時間で終わるだろうという数字が出たので&lt;br /&gt;
-ここ数日ずっとパソコンをフル稼働させて計算していました。&lt;/p&gt;
-
-&lt;p&gt;そして、その結果が今日、出ました！&lt;br /&gt;
-利用したデータは2014年10月1日の閲覧数上位10000ページ。&lt;br /&gt;
-要した時間なんと&lt;span style=&#34;font-size:large;&#34;&gt;&lt;strong&gt;261時間！&lt;/strong&gt;&lt;/span&gt;&lt;br /&gt;
-その結果は！&lt;/p&gt;
-
-&lt;p&gt;&lt;span style=&#34;font-size:x-large;&#34;&gt;&lt;strong&gt;保存できませんでした！&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
-
-&lt;p&gt;というのも使ったパソコンには4GBしかメモリが積まれていないので&lt;br /&gt;
-ターミナルの出力をコピーしようとした瞬間&lt;br /&gt;
-ターミナルがフリーズして永遠の眠りについてしまいました。&lt;br /&gt;
-何とかログの復旧を試みたのですが&lt;br /&gt;
-89129689位以降というまったく意味のないデータしか復元できませんでした。&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;span style=&#34;font-size:large;&#34;&gt;最も離れている距離は6&lt;/span&gt;&lt;/strong&gt;だったのは確認しました。&lt;br /&gt;
-1000ページの時より小さい結果となりましたが、&lt;br /&gt;
-ページが増える事で新しいより短いルートが生まれたのだと思います。&lt;/p&gt;
-
-&lt;p&gt;結果が公開できないのは大変残念ですが、&lt;br /&gt;
-そもそもいけないページを除けば、&lt;br /&gt;
-6回リンクを踏むだけで大体のページ同士はいけてしまうというのは&lt;br /&gt;
-10000ページに限られてるとはいえなかなか面白い結果だと思います。&lt;br /&gt;
-普段みるようなページは大体10000ページの中に含まれていますしね。&lt;/p&gt;
-
-&lt;p&gt;250時間以上ずっと電源をつけて、ファンがまわるほど計算させていたので&lt;br /&gt;
-使ったMacbook Airのバッテリーが心配になりました。&lt;br /&gt;
-二度とやりません！&lt;/p&gt;
-
-&lt;p&gt;詳しい方法等はソースコードとともに後日記事にしたいと思います。&lt;/p&gt;
 </description>
     </item>
     
