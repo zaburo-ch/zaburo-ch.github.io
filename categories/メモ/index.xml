@@ -29,6 +29,13 @@ bool型は1byteなので配列のサイズは10000001/1024≒9765KBとなり&lt;
 
 &lt;p&gt;[参考]&lt;br /&gt;
 &lt;a href=&#34;http://homepage2.nifty.com/well/Variable.html&#34; target=&#34;_blank&#34; title=&#34;http://homepage2.nifty.com/well/Variable.html&#34;&gt;&lt;a href=&#34;http://homepage2.nifty.com/well/Variable.html&#34;&gt;http://homepage2.nifty.com/well/Variable.html&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;[2015/6/30 追記]&lt;br /&gt;
+newでもいけるということをコメントで教えて頂きました。&lt;br /&gt;
+なるほど確かにnewでもヒープに確保されますね。&lt;br /&gt;
+newでいけるということは中でnew使ってくれてるvectorでもいけます。&lt;br /&gt;
+&lt;script src=&#34;https://gist.github.com/zaburo-ch/a976a83edecd0eb952e9.js&#34;&gt;&lt;/script&gt;
+ご指摘ありがとうございました！&lt;/p&gt;
 </description>
     </item>
     
