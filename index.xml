@@ -6,8 +6,74 @@
     <description>Recent content on ZABURO app</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Thu, 06 Aug 2015 01:41:08 +0900</lastBuildDate>
+    <lastBuildDate>Thu, 27 Aug 2015 14:00:00 +0900</lastBuildDate>
     <atom:link href="https://zaburo-ch.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>RecruitHoldingsInternship02</title>
+      <link>https://zaburo-ch.github.io/post/recruitholdingsinternship02/</link>
+      <pubDate>Thu, 27 Aug 2015 14:00:00 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/post/recruitholdingsinternship02/</guid>
+      <description>
+
+&lt;h2 id=&#34;共通認識にしておきたいところ:e9757815c05e1a89bf83cb56ff845e99&#34;&gt;共通認識にしておきたいところ&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;■ 農家側のターゲットのペルソナ 【Customer Seguments】&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;次のような問題意識を持っている農家&lt;br /&gt;
+
+&lt;ul&gt;
+&lt;li&gt;JAにおろしているだけじゃ所得が少ない&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;将来の不安がある。贅沢ができない&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;■ 農家側のターゲットの欲&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;もっと所得を増やしたい&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;別に作物をつくって売る事で収入を増やしたい (&amp;lt;- 我々はこの欲を満たしてあげたい)&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;最終的にはその作物が注目されてボロ儲けしたい&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;■ 農家側のターゲットの抱えている問題&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;独自性のある作物をつくったが、売る先(販路)はつくれていない、つくれない &lt;strong&gt;【Problem】&lt;/strong&gt;&lt;br /&gt;
+
+&lt;ul&gt;
+&lt;li&gt;時間がないから、営業の勉強をしていないから、距離的な問題があるから、実績がないから&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;つまり、&lt;/strong&gt;我々は販路をつくってあげたいけど、それをビジネスにして継続的にするのには工夫が必要&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;レストランが困っているところにつけ込んだら販路をつくれるはず！&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;■ レストラン側のペルソナ 【Customer Seguments】&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;特異な材料はほしい
+//- PCは使えない&lt;/li&gt;
+&lt;li&gt;個人契約を人づてで探してる程度&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;■ レストラン側の欲&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;特異な材料はほしい
+
+&lt;ul&gt;
+&lt;li&gt;独自性を出したいから&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
     
     <item>
       <title>Google Picker API を使ってみる</title>
@@ -565,38 +631,6 @@ $ cordova plugin add org.apache.cordova.device&lt;/p&gt;
 
 &lt;p&gt;ソースは以下の通り。&lt;br /&gt;
 &lt;script src=&#34;https://gist.github.com/zaburo-ch/0beb1ac8d6d02de69726.js&#34;&gt;&lt;/script&gt;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>【matplotlib】図の余白を設定する</title>
-      <link>https://zaburo-ch.github.io/post/20141217_0/</link>
-      <pubDate>Wed, 17 Dec 2014 17:35:15 +0900</pubDate>
-      
-      <guid>https://zaburo-ch.github.io/post/20141217_0/</guid>
-      <description>&lt;p&gt;subplots_adjustが何者か調べたのでメモ。&lt;br /&gt;
-matplotlib(1.4.2)で動作確認しました。&lt;/p&gt;
-
-&lt;p&gt;subplots_adjustは図の位置を設定するメソッドです。&lt;br /&gt;
-これを使う事で余白を変更指定する事が出来ます。たぶん。&lt;br /&gt;
-&lt;a href=&#34;http://matplotlib.org/api/figure_api.html#matplotlib.figure.Figure.subplots_adjust&#34; target=&#34;_blank&#34;&gt;&lt;a href=&#34;http://matplotlib.org/api/figure_api.html#matplotlib.figure.Figure.subplots_adjust&#34;&gt;http://matplotlib.org/api/figure_api.html#matplotlib.figure.Figure.subplots_adjust&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;図の大きさを1として、&lt;br /&gt;
-topとbottomは下から、leftとrightは左からの長さを指定します。&lt;br /&gt;
-wspaceとhspaceは複数のグラフがまとまっているときの余白とかそんな感じ。&lt;/p&gt;
-
-&lt;p&gt;デフォルトの値は下記の通り&lt;br /&gt;
-left : 0.125&lt;br /&gt;
-right : 0.9&lt;br /&gt;
-bottom : 0.1&lt;br /&gt;
-top : 0.9&lt;br /&gt;
-wspace : 0.2&lt;br /&gt;
-hspace : 0.2&lt;/p&gt;
-
-&lt;p&gt;以下のサンプルでは、デフォルトのままのグラフと&lt;br /&gt;
-各値を0.05(5%分)減らしたグラフを表示するようにしました。&lt;/p&gt;
-
-&lt;script src=&#34;https://gist.github.com/zaburo-ch/733528b92d5e95be4b86.js&#34;&gt;&lt;/script&gt;
 </description>
     </item>
     
