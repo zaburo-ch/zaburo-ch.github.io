@@ -6,8 +6,53 @@
     <description>Recent content in Posts on ZABURO app</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Thu, 06 Aug 2015 01:41:08 +0900</lastBuildDate>
+    <lastBuildDate>Sat, 12 Sep 2015 00:08:08 +0900</lastBuildDate>
     <atom:link href="https://zaburo-ch.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Go言語でリダイレクト先のURLを取得する</title>
+      <link>https://zaburo-ch.github.io/post/get-redirect-url-in-go/</link>
+      <pubDate>Sat, 12 Sep 2015 00:08:08 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/post/get-redirect-url-in-go/</guid>
+      <description>
+
+&lt;p&gt;タイトルのとおりGoでリダイレクト先のURLを取得します。&lt;br /&gt;
+Goでは普通にClientを使ってGETやらHEADリクエストを行うと、&lt;br /&gt;
+リダイレクトがあったとき自動的にリダイレクト先の内容をとってくるようになっているので、&lt;br /&gt;
+今回のようにリダイレクト先に行く必要の無い特殊なケースでは、&lt;br /&gt;
+リダイレクト時の動作を変更するか、より低レベルのメソッドを利用することで対応します。&lt;/p&gt;
+
+&lt;p&gt;参考にしたページ&lt;br /&gt;
+&lt;a href=&#34;http://stackoverflow.com/questions/23297520/how-can-i-make-the-go-http-client-not-follow-redirects-automatically&#34;&gt;rest - How Can I Make the Go HTTP Client NOT Follow Redirects Automatically? - Stack Overflow&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;リダイレクト時の動作を変更する:7a97346472b573b7ec258a58d0cd30e4&#34;&gt;リダイレクト時の動作を変更する&lt;/h2&gt;
+
+&lt;p&gt;&lt;code&gt;Client.CheckRedirect func(req *Request, via []*Request) error&lt;/code&gt;&lt;br /&gt;
+がリダイレクト時の動作を定めているためこれを変更します。&lt;br /&gt;
+CheckRedirectがerrorを返すと、Clientはリダイレクト先を取得する代わりに&lt;br /&gt;
+前のレスポンスの内容とそのerror(wrapped in a url.Error)を返します。&lt;/p&gt;
+
+&lt;script src=&#34;https://gist.github.com/zaburo-ch/98a1a0bfef742111020b.js&#34;&gt;&lt;/script&gt;
+
+&lt;p&gt;30行目では型アサーションを用いてRedirectAttemptedErrorが起こったかを確認しています。&lt;br /&gt;
+HEADリクエストの場合もBodyをcloseしなきゃいけないのかはちょっとわかりませんが、&lt;br /&gt;
+&lt;a href=&#34;http://golang.org/pkg/net/http/#Response&#34;&gt;これ&lt;/a&gt;を見る限りは必要そうなのでcloseしています。&lt;/p&gt;
+
+&lt;h2 id=&#34;より低レベルのメソッドを利用する:7a97346472b573b7ec258a58d0cd30e4&#34;&gt;より低レベルのメソッドを利用する&lt;/h2&gt;
+
+&lt;p&gt;http.TransportのRoundTripメソッドを使ってリクエストを行います。&lt;/p&gt;
+
+&lt;script src=&#34;https://gist.github.com/zaburo-ch/99e58cf8fa9d3d11bd6a.js&#34;&gt;&lt;/script&gt;
+
+&lt;p&gt;Transportの設定難しそうだったのでひとまずhttp.DefaultTransport使ってます。&lt;br /&gt;
+ClientはStatusCodeが301,302,303,307の時にリダイレクトの処理を行うので、&lt;br /&gt;
+たぶんこの20行目の書き方でも上手く行くはずです。&lt;br /&gt;
+複数の値のどれかと一致すればtrueみたいな書き方がわからなかったので&lt;br /&gt;
+愚直に4つ書いて並べてあります。なんかいい方法あるんでしょうか。&lt;br /&gt;
+Pythonみたいにin演算子とかあればいいんですけどね。&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Google Picker API を使ってみる</title>
@@ -565,38 +610,6 @@ $ cordova plugin add org.apache.cordova.device&lt;/p&gt;
 
 &lt;p&gt;ソースは以下の通り。&lt;br /&gt;
 &lt;script src=&#34;https://gist.github.com/zaburo-ch/0beb1ac8d6d02de69726.js&#34;&gt;&lt;/script&gt;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>【matplotlib】図の余白を設定する</title>
-      <link>https://zaburo-ch.github.io/post/20141217_0/</link>
-      <pubDate>Wed, 17 Dec 2014 17:35:15 +0900</pubDate>
-      
-      <guid>https://zaburo-ch.github.io/post/20141217_0/</guid>
-      <description>&lt;p&gt;subplots_adjustが何者か調べたのでメモ。&lt;br /&gt;
-matplotlib(1.4.2)で動作確認しました。&lt;/p&gt;
-
-&lt;p&gt;subplots_adjustは図の位置を設定するメソッドです。&lt;br /&gt;
-これを使う事で余白を変更指定する事が出来ます。たぶん。&lt;br /&gt;
-&lt;a href=&#34;http://matplotlib.org/api/figure_api.html#matplotlib.figure.Figure.subplots_adjust&#34; target=&#34;_blank&#34;&gt;&lt;a href=&#34;http://matplotlib.org/api/figure_api.html#matplotlib.figure.Figure.subplots_adjust&#34;&gt;http://matplotlib.org/api/figure_api.html#matplotlib.figure.Figure.subplots_adjust&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;図の大きさを1として、&lt;br /&gt;
-topとbottomは下から、leftとrightは左からの長さを指定します。&lt;br /&gt;
-wspaceとhspaceは複数のグラフがまとまっているときの余白とかそんな感じ。&lt;/p&gt;
-
-&lt;p&gt;デフォルトの値は下記の通り&lt;br /&gt;
-left : 0.125&lt;br /&gt;
-right : 0.9&lt;br /&gt;
-bottom : 0.1&lt;br /&gt;
-top : 0.9&lt;br /&gt;
-wspace : 0.2&lt;br /&gt;
-hspace : 0.2&lt;/p&gt;
-
-&lt;p&gt;以下のサンプルでは、デフォルトのままのグラフと&lt;br /&gt;
-各値を0.05(5%分)減らしたグラフを表示するようにしました。&lt;/p&gt;
-
-&lt;script src=&#34;https://gist.github.com/zaburo-ch/733528b92d5e95be4b86.js&#34;&gt;&lt;/script&gt;
 </description>
     </item>
     
