@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Fx on ZABURO app</title>
+    <link>https://zaburo-ch.github.io/tags/fx/</link>
+    <description>Recent content in Fx on ZABURO app</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja</language>
+    <lastBuildDate>Thu, 08 Oct 2015 00:59:54 +0900</lastBuildDate>
+    <atom:link href="https://zaburo-ch.github.io/tags/fx/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>pandasで為替データを扱う【Python】</title>
+      <link>https://zaburo-ch.github.io/post/handle-exchange-data-by-pandas/</link>
+      <pubDate>Thu, 08 Oct 2015 00:59:54 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/post/handle-exchange-data-by-pandas/</guid>
+      <description>&lt;p&gt;データ分析を本格的にやっていきたいと考えていて、&lt;br /&gt;
+その足がかりとしてpandasの使い方を勉強をしています。&lt;/p&gt;
+
+&lt;p&gt;今回は為替データを扱ってみたいと思います。&lt;br /&gt;
+&lt;a href=&#34;https://www.forexite.com/&#34;&gt;Forexite&lt;/a&gt;というサイトで分足データが無料でダウンロードできるので、これを使います。&lt;br /&gt;
+さっそく&lt;a href=&#34;https://www.forexite.com/free_forex_quotes/2015/10/061015.zip&#34;&gt;こちら(2015年10月6日分)&lt;/a&gt;からzipをダウンロードしてきて解凍すると&lt;br /&gt;
+色々な通貨のデータが一つのtxtファイルにまとまっています。&lt;/p&gt;
+
+&lt;p&gt;USDJPYのデータを抽出し5分足の終値と&lt;br /&gt;
+ボリンジャーバンド、指数加重移動平均をプロットするところまでやります。&lt;/p&gt;
+
+&lt;p&gt;IPythonで試行錯誤しながらやったものをまとめたコードが以下の通りです。
+&lt;script src=&#34;https://gist.github.com/zaburo-ch/12e9ada46ee2b7a16e5f.js&#34;&gt;&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;こんな感じのグラフが表示されます。&lt;br /&gt;
+&lt;img src=&#34;https://zaburo-ch.github.io/images/pandas_study_01.png&#34; alt=&#34;図1&#34; /&gt;&lt;br /&gt;
+&amp;lt;DTYYYYMMDD&amp;gt;と&amp;lt;TIME&amp;gt;をマージする部分の強引さが酷いですね。&lt;br /&gt;
+きっともっとスマートにできるんだろうなぁ&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
