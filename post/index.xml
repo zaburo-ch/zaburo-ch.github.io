@@ -6,8 +6,34 @@
     <description>Recent content in Posts on ZABURO app</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Thu, 08 Oct 2015 22:26:21 +0900</lastBuildDate>
+    <lastBuildDate>Wed, 09 Dec 2015 17:22:31 +0900</lastBuildDate>
     <atom:link href="https://zaburo-ch.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Androidアプリ「スマホさがし」公開しました</title>
+      <link>https://zaburo-ch.github.io/post/release-smapho-sagashi/</link>
+      <pubDate>Wed, 09 Dec 2015 17:22:31 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/post/release-smapho-sagashi/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://zaburo-ch.github.io/images/smapho_sagashi_promo1.jpg&#34; alt=&#34;プロモ画像&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;結構前の話ですが、「スマホさがし」というAndroidアプリを公開しました。&lt;br /&gt;
+Webページから紛失したスマホのアラームを鳴らせるという機能だけの簡単なアプリです。&lt;/p&gt;
+
+&lt;p&gt;最近家でスマホをなくすことが多く、同様のアプリを入れようと思ったのですが、&lt;br /&gt;
+スマホ無くて探してるのに「SMSで操作できます」みたいなアプリとか、&lt;br /&gt;
+Webページからの操作に何でも彼んでも権限与えまくってる恐怖のアプリとかしか見つからなかったので、&lt;br /&gt;
+自分用に最小限のものをサクッと作ってみました。&lt;/p&gt;
+
+&lt;p&gt;Androidアプリにハマっていたのが2年前くらいなのですが、&lt;br /&gt;
+今はEclipseじゃなくてAndroidStudioになってて便利だし、&lt;br /&gt;
+適当に作ってもそれなりのデザインになるように設計されてるしで感動ものでした。&lt;/p&gt;
+
+&lt;p&gt;ということで「スマホさがし」よろしくお願いします。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://play.google.com/store/apps/details?id=io.github.zaburo_ch.smaphosagashi&#34;&gt;&lt;img alt=&#34;Get it on Google Play&#34; src=&#34;https://developer.android.com/images/brand/en_generic_rgb_wo_45.png&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Forexiteから為替データを取得するスクリプトを書いた【Python】</title>
@@ -597,31 +623,6 @@ OSまるごと再起動しなくてもDockを再起動させてやるだけで&l
 
 &lt;p&gt;こちらからダウンロードしてご利用ください↓&lt;br /&gt;
 &lt;a href=&#34;https://github.com/zaburo-ch/DockKiller/raw/master/DockKiller-1.0.dmg&#34; target=&#34;_blank&#34; title=&#34;DockKiller-1.0.dmgをダウンロード&#34;&gt;DockKiller-1.0.dmgをダウンロード&lt;/a&gt;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Xcode6でサンプルコードSonofGrabのビルドができない</title>
-      <link>https://zaburo-ch.github.io/post/20150307_0/</link>
-      <pubDate>Sat, 07 Mar 2015 21:50:12 +0900</pubDate>
-      
-      <guid>https://zaburo-ch.github.io/post/20150307_0/</guid>
-      <description>&lt;p&gt;実行中のウィンドウのリストを取得する方法が知りたくて&lt;br /&gt;
-SonofGrab というサンプルに行き着いたのですが&lt;br /&gt;
-エラーでちゃいました。&lt;/p&gt;
-
-&lt;p&gt;環境は OSX10.9.4 Xcode6.1.1 です。&lt;/p&gt;
-
-&lt;p&gt;まず、古いSDKが指定されたままでビルドができないので&lt;br /&gt;
-Build SettingsからBase SDKを自分のOSにあったものにします。&lt;br /&gt;
-するとビルドが行われますがそこでもエラーがおきます。&lt;br /&gt;
-適当にぐぐると以下のページが見つかります。&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://stackoverflow.com/questions/12844729/linking-error-for-inline-functions&#34; target=&#34;_blank&#34; title=&#34;objective c - Linking error for inline functions - Stack Overflow&#34;&gt;objective c - Linking error for inline functions - Stack Overflow&lt;br /&gt;
-&lt;a href=&#34;http://stackoverflow.com/questions/12844729/linking-error-for-inline-functions&#34;&gt;http://stackoverflow.com/questions/12844729/linking-error-for-inline-functions&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;具体的には&lt;br /&gt;
-Controller.mの71行目のinlineの前にstaticをつけるだけです。&lt;/p&gt;
 </description>
     </item>
     
