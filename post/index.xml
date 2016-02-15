@@ -6,8 +6,73 @@
     <description>Recent content in Posts on ZABURO app</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Wed, 09 Dec 2015 17:22:31 +0900</lastBuildDate>
+    <lastBuildDate>Sun, 14 Feb 2016 14:28:18 +0900</lastBuildDate>
     <atom:link href="https://zaburo-ch.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Pythonで Q学習 を実装する</title>
+      <link>https://zaburo-ch.github.io/post/q-learning/</link>
+      <pubDate>Sun, 14 Feb 2016 14:28:18 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/post/q-learning/</guid>
+      <description>&lt;p&gt;Deep Q-Networkについて調べてみたら面白い記事を見つけました。&lt;br /&gt;
+&lt;a href=&#34;http://qiita.com/Ugo-Nama/items/08c6a5f6a571335972d5&#34;&gt;DQNの生い立ち　＋　Deep Q-NetworkをChainerで書いた&lt;br /&gt;
+http://qiita.com/Ugo-Nama/items/08c6a5f6a571335972d5&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;この記事を読んで、Deep Q-Networkが&lt;br /&gt;
+Q学習 -&amp;gt; Q-Network -&amp;gt; Deep Q-Network という流れ生まれたものだということがわかりました。&lt;br /&gt;
+この流れをPythonで実装しながら辿ってみようと思います。&lt;/p&gt;
+
+&lt;p&gt;今回はQ学習を実装します。&lt;br /&gt;
+Q学習について下記のページに詳しく載っているので割愛します。&lt;br /&gt;
+&lt;a href=&#34;http://www.sist.ac.jp/~kanakubo/research/reinforcement_learning.html&#34;&gt;強化学習&lt;br /&gt;
+http://www.sist.ac.jp/~kanakubo/research/reinforcement_learning.html&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;http://sysplan.nams.kyushu-u.ac.jp/gen/edu/RL_intro.html&#34;&gt;強化学習とは？&lt;br /&gt;
+http://sysplan.nams.kyushu-u.ac.jp/gen/edu/RL_intro.html&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;まず、Q学習で適応する環境として次のような簡単な環境を考えます。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;環境の状態は、&#39;A&#39;または&#39;B&#39;からなる長さ8の文字列で表され、  
+その文字列にはある法則により得点がつけられる。  
+プレイヤーはその法則についての知識を予め持たないが、  
+文字列中の任意の1文字を選んで&#39;A&#39;または&#39;B&#39;に置き換えることができ、  
+その結果、その操作による得点の変化量を報酬として受け取る。  
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;たぶんマルコフ決定過程になっていると思います。マルコフ性、&lt;a href=&#34;http://ibisforest.org/index.php?%E3%82%A8%E3%83%AB%E3%82%B4%E3%83%BC%E3%83%89%E6%80%A7&#34;&gt;エルゴート性&lt;/a&gt;も持つはず。&lt;/p&gt;
+
+&lt;p&gt;文字列に得点をつける法則はなんでも良いのですが、&lt;br /&gt;
+今回は、特定の文字列(単語)に次のように得点を割り当てて、&lt;br /&gt;
+{&amp;ldquo;A&amp;rdquo;: 1, &amp;ldquo;BB&amp;rdquo;: 1, &amp;ldquo;AB&amp;rdquo;: 2, &amp;ldquo;ABB&amp;rdquo;: 3, &amp;ldquo;BBA&amp;rdquo;: 3, &amp;ldquo;BBBB&amp;rdquo;: 4}&lt;br /&gt;
+文字列中に含まれる単語の合計得点を文字列の得点とするということにします。&lt;br /&gt;
+例えば&amp;rdquo;AAAAAAAA&amp;rdquo;なら8点(1 * 8)、&amp;rdquo;AAAAAAAB&amp;rdquo;なら9点(1 * 7 + 2)です。&lt;/p&gt;
+
+&lt;p&gt;環境のとりうる状態は長さ8のそれぞれに&amp;rsquo;A&amp;rsquo;, &amp;lsquo;B&amp;rsquo;の2通りあるので2^8通りあり、&lt;br /&gt;
+アクションは、何もしないのと、位置1~8のそれぞれを&amp;rsquo;A&amp;rsquo;または&amp;rsquo;B&amp;rsquo;なのでを計17通りあります。&lt;br /&gt;
+今回のコードでは状態は文字列、アクションは整数(0~16)で管理します。&lt;/p&gt;
+
+&lt;script src=&#34;https://gist.github.com/zaburo-ch/9ee5fd731d40d47c82ad.js&#34;&gt;&lt;/script&gt;
+
+&lt;p&gt;先述した強化学習の記事では、Q学習の学習中に、&lt;br /&gt;
+一定の回数遷移を繰り返した後、状態をs0に戻すものとそうでないものがあり、&lt;br /&gt;
+どちらを採用するか悩んだので QLearning(n_rounds, t_max)として&lt;br /&gt;
+2重のループにすることで一応どちらの方法でも実行できるようにしました。&lt;/p&gt;
+
+&lt;p&gt;これを実行結果はこんな感じ&lt;br /&gt;
+&lt;img src=&#34;https://zaburo-ch.github.io/images/q_learning_figure_1.png&#34; alt=&#34;/images/q_learning_figure_1.png&#34; /&gt;
+軸のラベルを書き忘れていますが、&lt;br /&gt;
+横軸が外側のループが回った数で、縦軸がそれまでに学習したQを使ってt_max回遷移した時のスコアですね。&lt;br /&gt;
+&amp;ldquo;ABBBBBBB&amp;rdquo;に遷移して終わるのとき最大値28をとるのですが、&lt;br /&gt;
+約900セット(t_max * 900回)の学習でそれを実現する遷移ができるようになっています。&lt;/p&gt;
+
+&lt;p&gt;この問題だとイマイチQ学習のイメージがつかみにくいので、&lt;br /&gt;
+素直に最短路問題とかにしとけば良かったなーと思っています。&lt;/p&gt;
+
+&lt;p&gt;最短路問題を使ったわかりやすい例はこちら&lt;br /&gt;
+&lt;a href=&#34;http://d.hatena.ne.jp/poor_code/20090628/1246176165&#34;&gt;Q学習による最短経路学習 - poor_codeの日記&lt;br /&gt;
+http://d.hatena.ne.jp/poor_code/20090628/1246176165&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Androidアプリ「スマホさがし」公開しました</title>
@@ -589,40 +654,6 @@ open -n &amp;ldquo;/Applications/MyPoker Beta-0.1.app&amp;rdquo;&lt;br /&gt;
 
 &lt;p&gt;&lt;strong&gt;こちらからダウンロードしてご利用ください↓&lt;/strong&gt;&lt;a href=&#34;https://github.com/zaburo-ch/poker_tool/raw/master/MyPoker-Beta-0.1.dmg&#34; target=&#34;_blank&#34; title=&#34;MyPoker-Beta-0.1.dmgをダウンロード&#34;&gt;&lt;br /&gt;
 MyPoker-Beta-0.1.dmgをダウンロード&lt;/a&gt;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Mac OS Xで時々ジェスチャーが反応しなくなる</title>
-      <link>https://zaburo-ch.github.io/post/20150324_0/</link>
-      <pubDate>Tue, 24 Mar 2015 17:21:45 +0900</pubDate>
-      
-      <guid>https://zaburo-ch.github.io/post/20150324_0/</guid>
-      <description>&lt;p&gt;普段ウインドウの切り替えはMission Controlでやっているのですが、&lt;br /&gt;
-ときどきジェスチャーが反応しなくなってしまって、&lt;br /&gt;
-仮想デスクトップの切り替えもできなくなるものですから&lt;br /&gt;
-再起動しなければならなくなる、というのが近頃起こります。&lt;/p&gt;
-
-&lt;p&gt;原因はよくわからないのですが、&lt;br /&gt;
-OSまるごと再起動しなくてもDockを再起動させてやるだけで&lt;br /&gt;
-なんとかなるみたいです。&lt;/p&gt;
-
-&lt;p&gt;ps -x | grep Dockで出てきたPIDを指定してkillしてやると&lt;br /&gt;
-自動で起動してくれるようなのでこれで済ませていますが&lt;br /&gt;
-面倒なので実行ファイルへの変換の勉強がてら&lt;br /&gt;
-ちょっと書いてアプリにしてみました。&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://zaburo-ch.github.io/images/a.png/&#34; target=&#34;_blank&#34;&gt;&lt;img src=&#34;https://zaburo-ch.github.io/images/a.png&#34; alt=&#34;a.png&#34; border=&#34;0&#34; width=&#34;139&#34; height=&#34;102&#34; /&gt;&lt;/a&gt;&lt;br /&gt;
-こんな感じでDockに配置して使っています。&lt;/p&gt;
-
-&lt;p&gt;アイコン画像は以下のものを利用させて頂きました。&lt;br /&gt;
-&lt;a href=&#34;http://www.easyicon.net/language.ja/1088483-stop_icon.html&#34; target=&#34;_blank&#34; title=&#34;http://www.easyicon.net/language.ja/1088483-stop_icon.html&#34;&gt;&lt;a href=&#34;http://www.easyicon.net/language.ja/1088483-stop_icon.html&#34;&gt;http://www.easyicon.net/language.ja/1088483-stop_icon.html&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;ソース等はこちら&lt;br /&gt;
-&lt;a href=&#34;https://github.com/zaburo-ch/DockKiller&#34; target=&#34;_blank&#34; title=&#34;https://github.com/zaburo-ch/DockKiller&#34;&gt;&lt;a href=&#34;https://github.com/zaburo-ch/DockKiller&#34;&gt;https://github.com/zaburo-ch/DockKiller&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;こちらからダウンロードしてご利用ください↓&lt;br /&gt;
-&lt;a href=&#34;https://github.com/zaburo-ch/DockKiller/raw/master/DockKiller-1.0.dmg&#34; target=&#34;_blank&#34; title=&#34;DockKiller-1.0.dmgをダウンロード&#34;&gt;DockKiller-1.0.dmgをダウンロード&lt;/a&gt;&lt;/p&gt;
 </description>
     </item>
     
