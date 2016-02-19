@@ -6,8 +6,76 @@
     <description>Recent content in Python on ZABURO app</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Sun, 14 Feb 2016 14:28:18 +0900</lastBuildDate>
+    <lastBuildDate>Fri, 19 Feb 2016 21:25:37 +0900</lastBuildDate>
     <atom:link href="https://zaburo-ch.github.io/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Pythonで 多層パーセプトロン を実装する</title>
+      <link>https://zaburo-ch.github.io/post/mlp/</link>
+      <pubDate>Fri, 19 Feb 2016 21:25:37 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/post/mlp/</guid>
+      <description>&lt;p&gt;前回は古典的Q学習を実装しましたが、次はニューラルネットを用いたQ学習として、&lt;br /&gt;
+&lt;a href=&#34;http://ml.informatik.uni-freiburg.de/_media/publications/rieecml05.pdf&#34;&gt;Neural Fitted Q Iteration&lt;/a&gt;を使ったQ学習を実装しようと考えています。&lt;/p&gt;
+
+&lt;p&gt;今回はその前の勉強として、&lt;br /&gt;
+誤差逆伝播法を用いた多層パーセプトロンをNumPyだけで実装してみます。&lt;br /&gt;
+誤差逆伝播法についてはこちらのスライドが詳しいです。&lt;/p&gt;
+
+&lt;p&gt;&lt;iframe src=&#34;//www.slideshare.net/slideshow/embed_code/key/1T0PJeFTRBMnCG?startSlide=32&#34; width=&#34;425&#34; height=&#34;355&#34; frameborder=&#34;0&#34; marginwidth=&#34;0&#34; marginheight=&#34;0&#34; scrolling=&#34;no&#34; style=&#34;border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;&#34; allowfullscreen&gt; &lt;/iframe&gt;&lt;br /&gt;
+&lt;a href=&#34;//www.slideshare.net/weda654/3-45366686&#34; title=&#34;わかりやすいパターン認識_3章&#34; target=&#34;_blank&#34;&gt;わかりやすいパターン認識_3章&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;コードはこんな感じ。
+&lt;script src=&#34;https://gist.github.com/zaburo-ch/7ab05a6dda71b5ccfe4f.js&#34;&gt;&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;活性化関数は全てシグモイド関数で、コスト関数は残差の平方和を用いました。&lt;br /&gt;
+各層はforwardで出力を計算して、&lt;br /&gt;
+backwardで前の層の誤差を計算しつつ W や b の更新を行います。&lt;br /&gt;
+tanhなどの層も同じような関数を実装してMLPのinitを適宜変えれば使える(はず)。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://deeplearning.net/tutorial/mlp.html&#34;&gt;DeepLearningTutorialsのMLPのコード&lt;/a&gt;っぽくしたくて、&lt;br /&gt;
+&lt;a href=&#34;http://blog.yusugomori.com/post/40250499669/python%E3%81%AB%E3%82%88%E3%82%8Bdeep-learning%E3%81%AE%E5%AE%9F%E8%A3%85deep-belief-nets-%E7%B7%A8&#34;&gt;DeepLearningTutorialsのDBNをNumPyで実装した方のコード&lt;/a&gt;とか、&lt;br /&gt;
+&lt;a href=&#34;http://aidiary.hatenablog.com/entry/20140201/1391218771&#34;&gt;NumPyでMLPを実装を実装した方のコード&lt;/a&gt;などを参考に書きました。&lt;/p&gt;
+
+&lt;p&gt;各所に載っている式を見る限りは出力層も活性化関数を使うっぽいんですが、&lt;br /&gt;
+Chainerの多層パーセプトロンのサンプルをはじめとして、&lt;br /&gt;
+出力層で線形変換するだけ(活性化関数を使わない)のものが結構あって混乱しました。&lt;br /&gt;
+たぶんシグモイド関数やtanhだと出力できる範囲が狭くて不便なので&lt;br /&gt;
+出力層だけ恒等関数使ってるんだろうという感じでとりあえず考えています。&lt;br /&gt;
+先のNFQの論文で、全ての層でシグモイドを使ったみたいなことが書いてあったので、&lt;br /&gt;
+今回は出力層にもシグモイド関数を使うことにしています。&lt;br /&gt;
+あと出力層での誤差も、出力層の活性化関数の微分をかけるのかどうかがわからなくて&lt;br /&gt;
+結構悩みましたが、スライドの式に従ってかけることにしました。&lt;/p&gt;
+
+&lt;p&gt;また、確率的勾配降下法(SGD)でミニバッチを使った学習ができるように書きましたが、&lt;br /&gt;
+ミニバッチを使う時に W や b の更新をどうやるのかがよくわからなくて、&lt;br /&gt;
+結局ループ回して学習パターン1つずつ使って更新を行うようにしました。&lt;br /&gt;
+出力層の時点で誤差の和をとってそれを伝播するんだと思ったのですが、&lt;br /&gt;
+そしたらそれと掛け合わせる前の層の出力はどうするんだ！？ってなって&lt;br /&gt;
+結局わからず、まあ結局やってること大体一緒でしょってことでこの形にしました。&lt;/p&gt;
+
+&lt;p&gt;結果はこんな感じになります。赤が教師信号、青がMLPの出力で、&lt;br /&gt;
+左が1000回反復した場合、右が10000回反復した場合です。&lt;br /&gt;
+&lt;img src=&#34;https://zaburo-ch.github.io/images/mlp_approximate_abs_1000.png&#34; width=&#34;300px&#34; /&gt;
+&lt;img src=&#34;https://zaburo-ch.github.io/images/mlp_approximate_abs_10000.png&#34; width=&#34;300px&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;たぶん学習できていると思うのですが、&lt;br /&gt;
+いまいちうまくいっているのか確証が持てなかったので、&lt;br /&gt;
+同じネットワークをChainerでも実装してみました。&lt;/p&gt;
+
+&lt;p&gt;コードは&lt;a href=&#34;https://gist.github.com/zaburo-ch/8f4fe27e898b42a38635&#34;&gt;ここ&lt;/a&gt;。Tutorialのものをちょっといじっただけです。&lt;/p&gt;
+
+&lt;p&gt;結果は次の通り。&lt;br /&gt;
+&lt;img src=&#34;https://zaburo-ch.github.io/images/mlp_approximate_abs_chainer_1000.png&#34; width=&#34;300px&#34; /&gt;
+&lt;img src=&#34;https://zaburo-ch.github.io/images/mlp_approximate_abs_chainer_10000.png&#34; width=&#34;300px&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Chainerの方が若干うまく近似できていますが、&lt;br /&gt;
+概ね同じような感じの結果が得られたので、自分で書いた方も大丈夫なはず。&lt;/p&gt;
+
+&lt;p&gt;実行時間はNumPyだけの方がかなり早いです。&lt;br /&gt;
+ただ自分で微分する必要もなく適当に層つなぐだけで出来ちゃったのでChainerすごい&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Pythonで Q学習 を実装する</title>
