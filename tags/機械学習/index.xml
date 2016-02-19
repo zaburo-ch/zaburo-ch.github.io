@@ -6,13 +6,13 @@
     <description>Recent content in 機械学習 on ZABURO app</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Fri, 19 Feb 2016 21:25:37 +0900</lastBuildDate>
+    <lastBuildDate>Sat, 20 Feb 2016 01:29:30 +0900</lastBuildDate>
     <atom:link href="https://zaburo-ch.github.io/tags/%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Pythonで 多層パーセプトロン を実装する</title>
       <link>https://zaburo-ch.github.io/post/mlp/</link>
-      <pubDate>Fri, 19 Feb 2016 21:25:37 +0900</pubDate>
+      <pubDate>Sat, 20 Feb 2016 01:29:30 +0900</pubDate>
       
       <guid>https://zaburo-ch.github.io/post/mlp/</guid>
       <description>&lt;p&gt;前回は古典的Q学習を実装しましたが、次はニューラルネットを用いたQ学習として、&lt;br /&gt;
