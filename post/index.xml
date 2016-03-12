@@ -598,36 +598,61 @@ PythonでRのデータセット利用する方法については&lt;br /&gt;
     </item>
     
     <item>
-      <title>【PokerStars】無料で使えるHUD更新した【ver0.3】</title>
-      <link>https://zaburo-ch.github.io/post/20150327_1/</link>
-      <pubDate>Fri, 27 Mar 2015 15:19:16 +0900</pubDate>
+      <title>Mac OS Xで時々ジェスチャーが反応しなくなる</title>
+      <link>https://zaburo-ch.github.io/post/20150324_0/</link>
+      <pubDate>Tue, 24 Mar 2015 17:21:45 +0900</pubDate>
       
-      <guid>https://zaburo-ch.github.io/post/20150327_1/</guid>
-      <description>&lt;p&gt;右下の白いタイルが動かないバグがあったため修正しました。&lt;/p&gt;
+      <guid>https://zaburo-ch.github.io/post/20150324_0/</guid>
+      <description>&lt;p&gt;普段ウインドウの切り替えはMission Controlでやっているのですが、&lt;br /&gt;
+ときどきジェスチャーが反応しなくなってしまって、&lt;br /&gt;
+仮想デスクトップの切り替えもできなくなるものですから&lt;br /&gt;
+再起動しなければならなくなる、というのが近頃起こります。&lt;/p&gt;
 
-&lt;p&gt;こちらからアクセスしてダウンロードしてください！&lt;a href=&#34;https://github.com/zaburo-ch/poker_tool&#34; target=&#34;_blank&#34; title=&#34;zaburo-ch/poker_tool&#34;&gt;&lt;br /&gt;
-zaburo-ch/poker_tool&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;原因はよくわからないのですが、&lt;br /&gt;
+OSまるごと再起動しなくてもDockを再起動させてやるだけで&lt;br /&gt;
+なんとかなるみたいです。&lt;/p&gt;
+
+&lt;p&gt;ps -x | grep Dockで出てきたPIDを指定してkillしてやると&lt;br /&gt;
+自動で起動してくれるようなのでこれで済ませていますが&lt;br /&gt;
+面倒なので実行ファイルへの変換の勉強がてら&lt;br /&gt;
+ちょっと書いてアプリにしてみました。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://zaburo-ch.github.io/images/a.png/&#34; target=&#34;_blank&#34;&gt;&lt;img src=&#34;https://zaburo-ch.github.io/images/a.png&#34; alt=&#34;a.png&#34; border=&#34;0&#34; width=&#34;139&#34; height=&#34;102&#34; /&gt;&lt;/a&gt;&lt;br /&gt;
+こんな感じでDockに配置して使っています。&lt;/p&gt;
+
+&lt;p&gt;アイコン画像は以下のものを利用させて頂きました。&lt;br /&gt;
+&lt;a href=&#34;http://www.easyicon.net/language.ja/1088483-stop_icon.html&#34; target=&#34;_blank&#34; title=&#34;http://www.easyicon.net/language.ja/1088483-stop_icon.html&#34;&gt;&lt;a href=&#34;http://www.easyicon.net/language.ja/1088483-stop_icon.html&#34;&gt;http://www.easyicon.net/language.ja/1088483-stop_icon.html&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;ソース等はこちら&lt;br /&gt;
+&lt;a href=&#34;https://github.com/zaburo-ch/DockKiller&#34; target=&#34;_blank&#34; title=&#34;https://github.com/zaburo-ch/DockKiller&#34;&gt;&lt;a href=&#34;https://github.com/zaburo-ch/DockKiller&#34;&gt;https://github.com/zaburo-ch/DockKiller&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;こちらからダウンロードしてご利用ください↓&lt;br /&gt;
+&lt;a href=&#34;https://github.com/zaburo-ch/DockKiller/raw/master/DockKiller-1.0.dmg&#34; target=&#34;_blank&#34; title=&#34;DockKiller-1.0.dmgをダウンロード&#34;&gt;DockKiller-1.0.dmgをダウンロード&lt;/a&gt;&lt;/p&gt;
 </description>
     </item>
     
     <item>
-      <title>【PokerStars】無料で使えるHUD更新した【ver0.2】</title>
-      <link>https://zaburo-ch.github.io/post/20150327_0/</link>
-      <pubDate>Fri, 27 Mar 2015 00:51:38 +0900</pubDate>
+      <title>Xcode6でサンプルコードSonofGrabのビルドができない</title>
+      <link>https://zaburo-ch.github.io/post/20150307_0/</link>
+      <pubDate>Sat, 07 Mar 2015 21:50:12 +0900</pubDate>
       
-      <guid>https://zaburo-ch.github.io/post/20150327_0/</guid>
-      <description>&lt;p&gt;同じデスクトップ内での多面打ちに対応しました。&lt;/p&gt;
+      <guid>https://zaburo-ch.github.io/post/20150307_0/</guid>
+      <description>&lt;p&gt;実行中のウィンドウのリストを取得する方法が知りたくて&lt;br /&gt;
+SonofGrab というサンプルに行き着いたのですが&lt;br /&gt;
+エラーでちゃいました。&lt;/p&gt;
 
-&lt;p&gt;終了ボタンがあるウィンドウとHUD部分とを&lt;br /&gt;
-別々のデスクトップおく事が出来ないため&lt;br /&gt;
-同じデスクトップ内のみですが、複数のHUDを出せるようにしました。&lt;br /&gt;
-プレイ画面を並べて多面する際に使って下さい！&lt;/p&gt;
+&lt;p&gt;環境は OSX10.9.4 Xcode6.1.1 です。&lt;/p&gt;
 
-&lt;p&gt;また、更新する度に使い方を載せるのは見づらくなるだけだと思ったので&lt;br /&gt;
-GitHub上に使い方などを書いたREADME.mdと&lt;br /&gt;
-アプリ本体をおく場所をつくりました。&lt;br /&gt;
-こちらからアクセスしてダウンロードしてください！&lt;a href=&#34;https://github.com/zaburo-ch/poker_tool&#34; target=&#34;_blank&#34; title=&#34;zaburo-ch/poker_tool&#34;&gt;&lt;br /&gt;
-zaburo-ch/poker_tool&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;まず、古いSDKが指定されたままでビルドができないので&lt;br /&gt;
+Build SettingsからBase SDKを自分のOSにあったものにします。&lt;br /&gt;
+するとビルドが行われますがそこでもエラーがおきます。&lt;br /&gt;
+適当にぐぐると以下のページが見つかります。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://stackoverflow.com/questions/12844729/linking-error-for-inline-functions&#34; target=&#34;_blank&#34; title=&#34;objective c - Linking error for inline functions - Stack Overflow&#34;&gt;objective c - Linking error for inline functions - Stack Overflow&lt;br /&gt;
+&lt;a href=&#34;http://stackoverflow.com/questions/12844729/linking-error-for-inline-functions&#34;&gt;http://stackoverflow.com/questions/12844729/linking-error-for-inline-functions&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;具体的には&lt;br /&gt;
+Controller.mの71行目のinlineの前にstaticをつけるだけです。&lt;/p&gt;
 </description>
     </item>
     
