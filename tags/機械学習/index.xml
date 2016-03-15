@@ -74,6 +74,18 @@ Chainerの多層パーセプトロンのサンプルをはじめとして、&lt;
 
 &lt;p&gt;実行時間はNumPyだけの方がかなり早いです。&lt;br /&gt;
 ただ自分で微分する必要もなく適当に層つなぐだけで出来ちゃったのでChainerすごい&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;2016/03/15 追記&lt;/strong&gt;&lt;br /&gt;
+Kerasでも試してみました。コードは&lt;a href=&#34;https://gist.github.com/zaburo-ch/13b9bfc221246b319a19&#34;&gt;ここ&lt;/a&gt;。&lt;/p&gt;
+
+&lt;p&gt;結果はだいたい同じような感じ&lt;br /&gt;
+&lt;img src=&#34;https://zaburo-ch.github.io/images/mlp_approximate_abs_keras_1000.png&#34; width=&#34;300px&#34; /&gt;
+&lt;img src=&#34;https://zaburo-ch.github.io/images/mlp_approximate_abs_keras_10000.png&#34; width=&#34;300px&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;後ろでTheanoが使われていることもありかなり速いです。&lt;br /&gt;
+まだMLP書いただけなので、もっと大規模なモデルを実装するときにどうなるかはわかりませんが、&lt;br /&gt;
+モデルの記述の仕方や、sklearnっぽいfit・predictの書き方など、&lt;br /&gt;
+結構書きやすいように感じました。もっと使ってみたい。&lt;/p&gt;
 </description>
     </item>
     
