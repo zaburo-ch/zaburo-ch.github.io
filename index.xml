@@ -6,8 +6,46 @@
     <description>Recent content on ZABURO app</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Sat, 20 Feb 2016 01:29:30 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 15 Mar 2016 21:00:44 +0900</lastBuildDate>
     <atom:link href="https://zaburo-ch.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Pythonで 倒立振子のシミュレータ を実装する</title>
+      <link>https://zaburo-ch.github.io/post/inverted-pendulum/</link>
+      <pubDate>Tue, 15 Mar 2016 21:00:44 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/post/inverted-pendulum/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;http://ml.informatik.uni-freiburg.de/_media/publications/rieecml05.pdf&#34;&gt;Neural Fitted Q Iteration&lt;/a&gt;の実験で使う倒立振子のシミュレータを書きました。&lt;br /&gt;
+論文ではCLSquareというシステムを使って実験が行われているのですが、&lt;br /&gt;
+頑張ってインストールしたものの上手く動かせなかったので自分で書きました。&lt;/p&gt;
+
+&lt;p&gt;倒立振子の運動方程式については&lt;a href=&#34;http://www.robot.mach.mie-u.ac.jp/~nkato/class/sc/Invpend_eq3.pdf&#34;&gt;こちら&lt;/a&gt;のスライドが詳しいです。&lt;br /&gt;
+今回は摩擦を無視するのでスライドでいう B と C が 0 になります。&lt;/p&gt;
+
+&lt;p&gt;台車の重さやポールの長さなどの各種定数は、NFQの論文に倣い、&lt;br /&gt;
+&lt;a href=&#34;https://scholar.google.com/citations?view_op=view_citation&amp;amp;hl=ja&amp;amp;user=VqHiIg8AAAAJ&amp;amp;citation_for_view=VqHiIg8AAAAJ:u5HHmVD_uO8C&#34;&gt;これ&lt;/a&gt;のInverted Pendulumの実験と同じにしました。&lt;/p&gt;
+
+&lt;p&gt;コードはこんな感じ。
+&lt;script src=&#34;https://gist.github.com/zaburo-ch/ebeb65b7b1e97f2ece80.js&#34;&gt;&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;アクションは[-50N, 50N, 0N]の3種類で、[0, 1, 2]で表現しました。&lt;br /&gt;
+do_action(a)でアクションが実行され t だけ時間が進みます。&lt;/p&gt;
+
+&lt;p&gt;matplotlibでビジュアライズできるようにしたので、&lt;br /&gt;
+実行すると次のようなアニメーションが表示されます。&lt;br /&gt;
+&lt;img src=&#34;https://zaburo-ch.github.io/images/pendulum01.gif&#34; alt=&#34;inverted pendulum&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;加速度がこの式で与えられるのは微分してみたらわかるけど、&lt;br /&gt;
+速度や位置(角速度や角度)をどうやって更新していいのかわからなかったので、&lt;br /&gt;
+tが小さければ高校物理のvt+&lt;sup&gt;1&lt;/sup&gt;&amp;frasl;&lt;sub&gt;2&lt;/sub&gt;*at^2で大丈夫でしょって感じで&lt;br /&gt;
+t_sum回ループ回して細かく更新することでそれっぽい結果を得ました。&lt;/p&gt;
+
+&lt;p&gt;ちゃんと検索してみると&lt;a href=&#34;https://searchcode.com/codesearch/view/34802371/&#34;&gt;C言語での実装&lt;/a&gt;が見つかったので、&lt;br /&gt;
+これを真似してupdate_stateを書き換えてみるとこんな感じ。
+&lt;script src=&#34;https://gist.github.com/zaburo-ch/70f16749efeef5beb95e.js&#34;&gt;&lt;/script&gt;
+物理が分からない自分が書いたコードより安心なので、実験ではこっちを使おうと思います。&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Pythonで 多層パーセプトロン を実装する</title>
@@ -640,31 +678,6 @@ OSまるごと再起動しなくてもDockを再起動させてやるだけで&l
 
 &lt;p&gt;こちらからダウンロードしてご利用ください↓&lt;br /&gt;
 &lt;a href=&#34;https://github.com/zaburo-ch/DockKiller/raw/master/DockKiller-1.0.dmg&#34; target=&#34;_blank&#34; title=&#34;DockKiller-1.0.dmgをダウンロード&#34;&gt;DockKiller-1.0.dmgをダウンロード&lt;/a&gt;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Xcode6でサンプルコードSonofGrabのビルドができない</title>
-      <link>https://zaburo-ch.github.io/post/20150307_0/</link>
-      <pubDate>Sat, 07 Mar 2015 21:50:12 +0900</pubDate>
-      
-      <guid>https://zaburo-ch.github.io/post/20150307_0/</guid>
-      <description>&lt;p&gt;実行中のウィンドウのリストを取得する方法が知りたくて&lt;br /&gt;
-SonofGrab というサンプルに行き着いたのですが&lt;br /&gt;
-エラーでちゃいました。&lt;/p&gt;
-
-&lt;p&gt;環境は OSX10.9.4 Xcode6.1.1 です。&lt;/p&gt;
-
-&lt;p&gt;まず、古いSDKが指定されたままでビルドができないので&lt;br /&gt;
-Build SettingsからBase SDKを自分のOSにあったものにします。&lt;br /&gt;
-するとビルドが行われますがそこでもエラーがおきます。&lt;br /&gt;
-適当にぐぐると以下のページが見つかります。&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://stackoverflow.com/questions/12844729/linking-error-for-inline-functions&#34; target=&#34;_blank&#34; title=&#34;objective c - Linking error for inline functions - Stack Overflow&#34;&gt;objective c - Linking error for inline functions - Stack Overflow&lt;br /&gt;
-&lt;a href=&#34;http://stackoverflow.com/questions/12844729/linking-error-for-inline-functions&#34;&gt;http://stackoverflow.com/questions/12844729/linking-error-for-inline-functions&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;具体的には&lt;br /&gt;
-Controller.mの71行目のinlineの前にstaticをつけるだけです。&lt;/p&gt;
 </description>
     </item>
     

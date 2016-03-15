@@ -1,0 +1,139 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+
+  
+  <meta charset="UTF-8">
+  <title>
+    Pythonで 倒立振子のシミュレータ を実装する | ZABURO app
+  </title>
+
+
+  
+  <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
+
+
+  
+  <link rel="stylesheet" href="/css/sanitize.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/highlight_monokai.css">
+  
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/theme.css">
+
+
+  
+  
+
+
+</head>
+
+
+
+<body>
+<div class="container">
+
+  
+  <header role="banner">
+    <div class="row gutters">
+      <div id="site-title" class="col span_6">
+        <h1><a href="/">ZABURO app</a></h1>
+        <h2>アプリ作ったり、なんやかんや</h2>
+      </div>
+      <div id="social" class="col span_6">
+        <ul>
+          <li><a href="/about/">About</a></li>
+          <li><a href="/product/">Product</a></li>
+          
+          
+          <li><a href="https://github.com/zaburo-ch" target="_blank">GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+
+  
+  <main id="single" role="main">
+    <div class="article-header">
+      <h1>Pythonで 倒立振子のシミュレータ を実装する</h1>
+      <div class="meta">
+        Mar 15, 2016 &nbsp;
+        
+          #<a href="/tags/python">Python</a>&nbsp;
+        
+          #<a href="/tags/numpy">NumPy</a>&nbsp;
+        
+      </div>
+    </div>
+    <article>
+      <p><a href="http://ml.informatik.uni-freiburg.de/_media/publications/rieecml05.pdf">Neural Fitted Q Iteration</a>の実験で使う倒立振子のシミュレータを書きました。<br />
+論文ではCLSquareというシステムを使って実験が行われているのですが、<br />
+頑張ってインストールしたものの上手く動かせなかったので自分で書きました。</p>
+
+<p>倒立振子の運動方程式については<a href="http://www.robot.mach.mie-u.ac.jp/~nkato/class/sc/Invpend_eq3.pdf">こちら</a>のスライドが詳しいです。<br />
+今回は摩擦を無視するのでスライドでいう B と C が 0 になります。</p>
+
+<p>台車の重さやポールの長さなどの各種定数は、NFQの論文に倣い、<br />
+<a href="https://scholar.google.com/citations?view_op=view_citation&amp;hl=ja&amp;user=VqHiIg8AAAAJ&amp;citation_for_view=VqHiIg8AAAAJ:u5HHmVD_uO8C">これ</a>のInverted Pendulumの実験と同じにしました。</p>
+
+<p>コードはこんな感じ。
+<script src="https://gist.github.com/zaburo-ch/ebeb65b7b1e97f2ece80.js"></script></p>
+
+<p>アクションは[-50N, 50N, 0N]の3種類で、[0, 1, 2]で表現しました。<br />
+do_action(a)でアクションが実行され t だけ時間が進みます。</p>
+
+<p>matplotlibでビジュアライズできるようにしたので、<br />
+実行すると次のようなアニメーションが表示されます。<br />
+<img src="/images/pendulum01.gif" alt="inverted pendulum" /></p>
+
+<p>加速度がこの式で与えられるのは微分してみたらわかるけど、<br />
+速度や位置(角速度や角度)をどうやって更新していいのかわからなかったので、<br />
+tが小さければ高校物理のvt+<sup>1</sup>&frasl;<sub>2</sub>*at^2で大丈夫でしょって感じで<br />
+t_sum回ループ回して細かく更新することでそれっぽい結果を得ました。</p>
+
+<p>ちゃんと検索してみると<a href="https://searchcode.com/codesearch/view/34802371/">C言語での実装</a>が見つかったので、<br />
+これを真似してupdate_stateを書き換えてみるとこんな感じ。
+<script src="https://gist.github.com/zaburo-ch/70f16749efeef5beb95e.js"></script>
+物理が分からない自分が書いたコードより安心なので、実験ではこっちを使おうと思います。</p>
+
+    </article>
+    
+ <aside><div id="disqus_thread"></div></aside> 
+
+<script type="text/javascript">
+     
+    var disqus_shortname = 'zaburoapp';
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+  </main>
+
+
+  
+  <footer role="contentinfo">
+    <div style="text-align:center;">
+      
+      Written by ZABURO
+    </div>
+  </footer>
+
+
+</div>
+
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+</body>
+</html>
+
