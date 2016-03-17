@@ -6,8 +6,118 @@
     <description>Recent content in 機械学習 on ZABURO app</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Sat, 20 Feb 2016 01:29:30 +0900</lastBuildDate>
+    <lastBuildDate>Thu, 17 Mar 2016 13:37:58 +0900</lastBuildDate>
     <atom:link href="https://zaburo-ch.github.io/tags/%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Pythonで Neural Fitted Q Iteration を実装する</title>
+      <link>https://zaburo-ch.github.io/post/neural-fitted-q-iteration/</link>
+      <pubDate>Thu, 17 Mar 2016 13:37:58 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/post/neural-fitted-q-iteration/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://zaburo-ch.github.io/post/mlp/&#34;&gt;前々回に実装した多層パーセプトロン&lt;/a&gt;と&lt;a href=&#34;https://zaburo-ch.github.io/post/inverted-pendulum/&#34;&gt;前回実装した倒立振子のシミュレータ&lt;/a&gt;を用いて、&lt;br /&gt;
+&lt;a href=&#34;http://ml.informatik.uni-freiburg.de/_media/publications/rieecml05.pdf&#34;&gt;Neural Fitted Q Iteration&lt;/a&gt;(NFQ)の実験を行います。&lt;/p&gt;
+
+&lt;p&gt;NFQはQ学習の最適行動価値関数を多層パーセプトロンを用いて近似する手法の一つで、&lt;br /&gt;
+学習中にはデータを追加せず、事前に集められたデータのみから学習を行います。&lt;/p&gt;
+
+&lt;p&gt;コードはこんな感じ。MLPはkerasで構築しました。&lt;br /&gt;
+&lt;script src=&#34;https://gist.github.com/zaburo-ch/f2f61a94ee722447d2d7.js&#34;&gt;&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;mはepisodeの個数にあたる変数になっていて、&lt;br /&gt;
+[50, 100, 150, 200, 300, 400]の各m対して、50回実験を行うようになっています。&lt;br /&gt;
+実験の大まかな流れは、&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;make_episodes(m)でm個のepisodeを作る&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;多層パーセプトロンを構築&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;Neural Fitted Q Iterationを実行&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;倒立振子を立たせるタスクを実行&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;停止するまでの時間を記録(t&amp;lt;299なら失敗、t==299なら成功)&lt;br /&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;という感じです。肝心の3.では、&lt;br /&gt;
+episodesの中からpattern_set_size個ずつepisodesを取り出し、&lt;br /&gt;
+その中の各cycleから入力xと教師信号tを作成して、&lt;br /&gt;
+多層パーセプトロンをこれにfitさせるのを繰り返すことで学習を行っています。&lt;br /&gt;
+episodes1周だけではうまくタスクを成功させることができなかったので、&lt;br /&gt;
+毎回取り出す順番をランダムに変えてepisodesを5周させるようにしています。&lt;/p&gt;
+
+&lt;p&gt;実験結果は次のようになりました。&lt;/p&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;m&lt;/th&gt;
+&lt;th&gt;成功した回数&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;50&lt;/td&gt;
+&lt;td&gt;25 / 50 (50%)&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;100&lt;/td&gt;
+&lt;td&gt;41 / 50 (82%)&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;150&lt;/td&gt;
+&lt;td&gt;43 / 50 (86%)&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;200&lt;/td&gt;
+&lt;td&gt;43 / 50 (86%)&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;300&lt;/td&gt;
+&lt;td&gt;48 / 50 (96%)&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;400&lt;/td&gt;
+&lt;td&gt;46 / 50 (92%)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;m = 50 の場合については論文とほぼ同程度成功できています。&lt;br /&gt;
+しかし、それ以外の場合では論文の結果よりもやや悪い数字が出てしまっています。&lt;br /&gt;
+特に m &amp;gt;= 200 では100%となるらしいのですが、100%は出ませんでした。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Rpropを使うところをSGDでやったこと(sigmoid関数がフラットになる範囲で学習が停滞する)&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;episodesの周回数(5)やpattern_set_size(=m/10)をテキトーに決めたこと&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;fitの時のepoch数が1000で固定されていること&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;あたりかなが原因なのかなと思っています。&lt;br /&gt;
+この辺りをちゃんと設定すれば100%も出せると思うのですが、&lt;br /&gt;
+まあそれほど悪くない結果が出ているのでひとまずこれで良いことにします。&lt;/p&gt;
+
+&lt;p&gt;倒立振子のアニメーションは以下のような感じ。&lt;br /&gt;
+コスト関数が単純(倒れたら1、倒れないなら0)なため、&lt;br /&gt;
+直立した状態でキープしようとするのではなく、&lt;br /&gt;
+倒れそうになってから直そうとするので台車ごとすっ飛んで行きます。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://zaburo-ch.github.io/images/pendulum_m50_fail.gif&#34; alt=&#34;m=50,失敗&#34; /&gt;
+m = 50, 失敗&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://zaburo-ch.github.io/images/pendulum_m50_success.gif&#34; alt=&#34;m=50,成功&#34; /&gt;
+m = 50, 成功(gifは10秒で打ち切り)&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://zaburo-ch.github.io/images/pendulum_m400_fail.gif&#34; alt=&#34;m=400,失敗&#34; /&gt;
+m = 400, 失敗&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://zaburo-ch.github.io/images/pendulum_m400_success.gif&#34; alt=&#34;m=400,成功&#34; /&gt;
+m = 400, 成功(gifは10秒で打ち切り)&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Pythonで 多層パーセプトロン を実装する</title>
