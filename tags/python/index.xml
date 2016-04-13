@@ -65,6 +65,9 @@ trainで訓練してvalidが最も高くなるところで止まるようにな�
 もとのデータセット全部をtrainにしてtestが高くなるところで止めるともう少し精度が上がります。(&lt;a href=&#34;https://github.com/zaburo-ch/FaxOCR/blob/master/code/faxmnist_keras_testval.py&#34;&gt;これ&lt;/a&gt;)&lt;/p&gt;
 
 &lt;p&gt;GPUマシンを持っていないので学習に時間がかかりすぎりてあんまり色々試せない&amp;hellip;&amp;hellip;&lt;/p&gt;
+
+&lt;p&gt;[追記]
+データセットのバージョンは&lt;a href=&#34;https://sites.google.com/site/faxocr2010/systemrequirements/kocr/mnist/faxocr-numbers-20160411c.zip&#34;&gt;faxocr-numbers-20160411c.zip&lt;/a&gt;のものです。&lt;/p&gt;
 </description>
     </item>
     
