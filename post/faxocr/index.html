@@ -1,0 +1,160 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+
+  
+  <meta charset="UTF-8">
+  <title>
+    FaxOCR を CNN でやってみた | ZABURO app
+  </title>
+
+
+  
+  <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
+
+
+  
+  <link rel="stylesheet" href="/css/sanitize.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/highlight_monokai.css">
+  
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/theme.css">
+
+
+  
+  
+
+
+</head>
+
+
+
+<body>
+<div class="container">
+
+  
+  <header role="banner">
+    <div class="row gutters">
+      <div id="site-title" class="col span_6">
+        <h1><a href="/">ZABURO app</a></h1>
+        <h2>アプリ作ったり、なんやかんや</h2>
+      </div>
+      <div id="social" class="col span_6">
+        <ul>
+          <li><a href="/about/">About</a></li>
+          <li><a href="/product/">Product</a></li>
+          
+          
+          <li><a href="https://github.com/zaburo-ch" target="_blank">GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+
+  
+  <main id="single" role="main">
+    <div class="article-header">
+      <h1>FaxOCR を CNN でやってみた</h1>
+      <div class="meta">
+        Apr 13, 2016 &nbsp;
+        
+          #<a href="/tags/python">Python</a>&nbsp;
+        
+          #<a href="/tags/%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92">機械学習</a>&nbsp;
+        
+      </div>
+    </div>
+    <article>
+      <p>せっかくKerasを使ってみたのでCNNもやってみたいということで、<br />
+<a href="https://sites.google.com/site/faxocr2010/systemrequirements/kocr/mnist">FaxOCR</a>というMNISTと同形式のデータセットで手書き文字認識をやってみました。<br />
+ソースコードは<a href="https://github.com/zaburo-ch/FaxOCR/blob/master/code/faxmnist_keras.py">ここ</a>にあります。</p>
+
+<p>このデータセットではtrain setがかなり小さいので、<br />
+まず最初に適当に拡大縮小や回転をして画像データの枚数を11倍に(1枚から10枚生成)しました。</p>
+
+<p>CNNのアーキテクチャは<a href="https://github.com/toshi-k/kaggle-digit-recognizer/blob/master/2_model.lua">toshi-kさんのコード</a>を参考にして適当に設定しました。<br />
+ただ、データセットが小さくて過学習してしまいそうだなーと思ったので、<br />
+上記のものに比べて小さいネットワークになっています。</p>
+
+<p>入力したテンソルがどの時点でどのサイズになっているか確認する方法がわからなかったので、<br />
+ZeroPaddingなどがこれでうまくいっているのかわかりませんが、<br />
+入力(1, 28, 28) -&gt; (64, 12, 12) -&gt; (64, 12, 12) -&gt; (256, 10, 10) -&gt; (128) -&gt; (10)出力<br />
+という形になっていると嬉しいなくらいの感じで書いています。<br />
+<a href="http://ultraist.hatenablog.com/entry/2014/08/23/144007">こういう風に</a>デバッグする方法が知りたい&hellip;&hellip;</p>
+
+<p>結果は次の通りです。</p>
+
+<table>
+<thead>
+<tr>
+<th>dataset</th>
+<th>正答率</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>train</td>
+<td>99.5%</td>
+</tr>
+
+<tr>
+<td>valid</td>
+<td>99.1%</td>
+</tr>
+
+<tr>
+<td>test</td>
+<td>93.1%</td>
+</tr>
+</tbody>
+</table>
+
+<p>増やしたデータセットのうち90%をtrain、10%をvalidとし、<br />
+trainで訓練してvalidが最も高くなるところで止まるようになっています。<br />
+もとのデータセット全部をtrainにしてtestが高くなるところで止めるともう少し精度が上がります。(<a href="https://github.com/zaburo-ch/FaxOCR/blob/master/code/faxmnist_keras_testval.py">これ</a>)</p>
+
+<p>GPUマシンを持っていないので学習に時間がかかりすぎりてあんまり色々試せない&hellip;&hellip;</p>
+
+    </article>
+    
+ <aside><div id="disqus_thread"></div></aside> 
+
+<script type="text/javascript">
+     
+    var disqus_shortname = 'zaburoapp';
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+  </main>
+
+
+  
+  <footer role="contentinfo">
+    <div style="text-align:center;">
+      
+      Written by ZABURO
+    </div>
+  </footer>
+
+
+</div>
+
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+</body>
+</html>
+

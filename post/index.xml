@@ -6,8 +6,67 @@
     <description>Recent content in Posts on ZABURO app</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Thu, 17 Mar 2016 13:37:58 +0900</lastBuildDate>
+    <lastBuildDate>Wed, 13 Apr 2016 11:32:33 +0900</lastBuildDate>
     <atom:link href="https://zaburo-ch.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>FaxOCR を CNN でやってみた</title>
+      <link>https://zaburo-ch.github.io/post/faxocr/</link>
+      <pubDate>Wed, 13 Apr 2016 11:32:33 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/post/faxocr/</guid>
+      <description>&lt;p&gt;せっかくKerasを使ってみたのでCNNもやってみたいということで、&lt;br /&gt;
+&lt;a href=&#34;https://sites.google.com/site/faxocr2010/systemrequirements/kocr/mnist&#34;&gt;FaxOCR&lt;/a&gt;というMNISTと同形式のデータセットで手書き文字認識をやってみました。&lt;br /&gt;
+ソースコードは&lt;a href=&#34;https://github.com/zaburo-ch/FaxOCR/blob/master/code/faxmnist_keras.py&#34;&gt;ここ&lt;/a&gt;にあります。&lt;/p&gt;
+
+&lt;p&gt;このデータセットではtrain setがかなり小さいので、&lt;br /&gt;
+まず最初に適当に拡大縮小や回転をして画像データの枚数を11倍に(1枚から10枚生成)しました。&lt;/p&gt;
+
+&lt;p&gt;CNNのアーキテクチャは&lt;a href=&#34;https://github.com/toshi-k/kaggle-digit-recognizer/blob/master/2_model.lua&#34;&gt;toshi-kさんのコード&lt;/a&gt;を参考にして適当に設定しました。&lt;br /&gt;
+ただ、データセットが小さくて過学習してしまいそうだなーと思ったので、&lt;br /&gt;
+上記のものに比べて小さいネットワークになっています。&lt;/p&gt;
+
+&lt;p&gt;入力したテンソルがどの時点でどのサイズになっているか確認する方法がわからなかったので、&lt;br /&gt;
+ZeroPaddingなどがこれでうまくいっているのかわかりませんが、&lt;br /&gt;
+入力(1, 28, 28) -&amp;gt; (64, 12, 12) -&amp;gt; (64, 12, 12) -&amp;gt; (256, 10, 10) -&amp;gt; (128) -&amp;gt; (10)出力&lt;br /&gt;
+という形になっていると嬉しいなくらいの感じで書いています。&lt;br /&gt;
+&lt;a href=&#34;http://ultraist.hatenablog.com/entry/2014/08/23/144007&#34;&gt;こういう風に&lt;/a&gt;デバッグする方法が知りたい&amp;hellip;&amp;hellip;&lt;/p&gt;
+
+&lt;p&gt;結果は次の通りです。&lt;/p&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;dataset&lt;/th&gt;
+&lt;th&gt;正答率&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;train&lt;/td&gt;
+&lt;td&gt;99.5%&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;valid&lt;/td&gt;
+&lt;td&gt;99.1%&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;test&lt;/td&gt;
+&lt;td&gt;93.1%&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;増やしたデータセットのうち90%をtrain、10%をvalidとし、&lt;br /&gt;
+trainで訓練してvalidが最も高くなるところで止まるようになっています。&lt;br /&gt;
+もとのデータセット全部をtrainにしてtestが高くなるところで止めるともう少し精度が上がります。(&lt;a href=&#34;https://github.com/zaburo-ch/FaxOCR/blob/master/code/faxmnist_keras_testval.py&#34;&gt;これ&lt;/a&gt;)&lt;/p&gt;
+
+&lt;p&gt;GPUマシンを持っていないので学習に時間がかかりすぎりてあんまり色々試せない&amp;hellip;&amp;hellip;&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Pythonで Neural Fitted Q Iteration を実装する</title>
@@ -718,42 +777,6 @@ get_pagerank_simpleではもっと単純に&lt;br /&gt;
 &lt;p&gt;図の値とかなり一致していますね！&lt;br /&gt;
 2つの方法どちらもほぼ同じ値になっているので&lt;br /&gt;
 get_pagerank_simpleの方法でも十分実用に足りそうです。&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>動的時間伸縮法(DTW)をPythonで試してみた</title>
-      <link>https://zaburo-ch.github.io/post/20150406_0/</link>
-      <pubDate>Mon, 06 Apr 2015 18:36:47 +0900</pubDate>
-      
-      <guid>https://zaburo-ch.github.io/post/20150406_0/</guid>
-      <description>&lt;p&gt;ここ数ヶ月くらい、ある時系列データを集めていたのですが、&lt;br /&gt;
-そのデータを扱うにあたってまずデータを分類したいと思い&lt;br /&gt;
-クラスタリングについて調べたところ&lt;br /&gt;
-どうやらクラスタリングにはまず距離を定義しなければいけないらしい。&lt;/p&gt;
-
-&lt;p&gt;時系列データの距離？は？と思っていたら&lt;br /&gt;
-このようなページがありました。&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://sinhrks.hatenablog.com/entry/2014/11/14/232603&#34; target=&#34;_blank&#34; title=&#34;動的時間伸縮法 / DTW (Dynamic Time Warping) を可視化する&#34;&gt;動的時間伸縮法 / DTW (Dynamic Time Warping) を可視化する&lt;br /&gt;
-&lt;a href=&#34;http://sinhrks.hatenablog.com/entry/2014/11/14/232603&#34;&gt;http://sinhrks.hatenablog.com/entry/2014/11/14/232603&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;Rの{TSculst}というパッケージを使えば簡単に計算できるそうですが、&lt;br /&gt;
-有り難い事にDTW距離算出の実装を載せてくれているので&lt;br /&gt;
-Python用に書き直してみました。&lt;/p&gt;
-
-&lt;p&gt;&lt;script src=&#34;https://gist.github.com/zaburo-ch/6c16ecb3a4e25ee0d076.js&#34;&gt;&lt;/script&gt;&lt;br /&gt;
-英語力低すぎて&lt;a href=&#34;http://en.wikipedia.org/wiki/Dynamic_time_warping&#34; target=&#34;_blank&#34; title=&#34;英語版Wikipedia&#34;&gt;英語版Wikipedia&lt;/a&gt;があまり理解できなかったのですが、&lt;br /&gt;
-dは点同士の距離を定義する関数(初期値は差の絶対値)となる引数で、&lt;br /&gt;
-windowは、ある点から距離を計算する対象となる点を&lt;br /&gt;
-windowで指定した範囲に制限する場合の引数であってると思います。&lt;/p&gt;
-
-&lt;p&gt;参考にさせて頂いたページにならって&lt;br /&gt;
-RのデータセットAirPassengersでテストするようにしていますが、&lt;br /&gt;
-PythonでRのデータセット利用する方法については&lt;br /&gt;
-以下のページを参照してください。めっちゃ便利です。&lt;br /&gt;
-&lt;a href=&#34;http://kumamotosan.hatenablog.com/entry/2014/03/02/231742&#34; target=&#34;_blank&#34; title=&#34;PythonでRの標準データセットを使う。http://kumamotosan.hatenablog.com/entry/2014/03/02/231742&#34;&gt;PythonでRの標準データセットを使う。&lt;br /&gt;
-&lt;a href=&#34;http://kumamotosan.hatenablog.com/entry/2014/03/02/231742&#34;&gt;http://kumamotosan.hatenablog.com/entry/2014/03/02/231742&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
 </description>
     </item>
     

@@ -6,8 +6,67 @@
     <description>Recent content in Python on ZABURO app</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Thu, 17 Mar 2016 13:37:58 +0900</lastBuildDate>
+    <lastBuildDate>Wed, 13 Apr 2016 11:32:33 +0900</lastBuildDate>
     <atom:link href="https://zaburo-ch.github.io/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>FaxOCR を CNN でやってみた</title>
+      <link>https://zaburo-ch.github.io/post/faxocr/</link>
+      <pubDate>Wed, 13 Apr 2016 11:32:33 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/post/faxocr/</guid>
+      <description>&lt;p&gt;せっかくKerasを使ってみたのでCNNもやってみたいということで、&lt;br /&gt;
+&lt;a href=&#34;https://sites.google.com/site/faxocr2010/systemrequirements/kocr/mnist&#34;&gt;FaxOCR&lt;/a&gt;というMNISTと同形式のデータセットで手書き文字認識をやってみました。&lt;br /&gt;
+ソースコードは&lt;a href=&#34;https://github.com/zaburo-ch/FaxOCR/blob/master/code/faxmnist_keras.py&#34;&gt;ここ&lt;/a&gt;にあります。&lt;/p&gt;
+
+&lt;p&gt;このデータセットではtrain setがかなり小さいので、&lt;br /&gt;
+まず最初に適当に拡大縮小や回転をして画像データの枚数を11倍に(1枚から10枚生成)しました。&lt;/p&gt;
+
+&lt;p&gt;CNNのアーキテクチャは&lt;a href=&#34;https://github.com/toshi-k/kaggle-digit-recognizer/blob/master/2_model.lua&#34;&gt;toshi-kさんのコード&lt;/a&gt;を参考にして適当に設定しました。&lt;br /&gt;
+ただ、データセットが小さくて過学習してしまいそうだなーと思ったので、&lt;br /&gt;
+上記のものに比べて小さいネットワークになっています。&lt;/p&gt;
+
+&lt;p&gt;入力したテンソルがどの時点でどのサイズになっているか確認する方法がわからなかったので、&lt;br /&gt;
+ZeroPaddingなどがこれでうまくいっているのかわかりませんが、&lt;br /&gt;
+入力(1, 28, 28) -&amp;gt; (64, 12, 12) -&amp;gt; (64, 12, 12) -&amp;gt; (256, 10, 10) -&amp;gt; (128) -&amp;gt; (10)出力&lt;br /&gt;
+という形になっていると嬉しいなくらいの感じで書いています。&lt;br /&gt;
+&lt;a href=&#34;http://ultraist.hatenablog.com/entry/2014/08/23/144007&#34;&gt;こういう風に&lt;/a&gt;デバッグする方法が知りたい&amp;hellip;&amp;hellip;&lt;/p&gt;
+
+&lt;p&gt;結果は次の通りです。&lt;/p&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;dataset&lt;/th&gt;
+&lt;th&gt;正答率&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;train&lt;/td&gt;
+&lt;td&gt;99.5%&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;valid&lt;/td&gt;
+&lt;td&gt;99.1%&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;test&lt;/td&gt;
+&lt;td&gt;93.1%&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;増やしたデータセットのうち90%をtrain、10%をvalidとし、&lt;br /&gt;
+trainで訓練してvalidが最も高くなるところで止まるようになっています。&lt;br /&gt;
+もとのデータセット全部をtrainにしてtestが高くなるところで止めるともう少し精度が上がります。(&lt;a href=&#34;https://github.com/zaburo-ch/FaxOCR/blob/master/code/faxmnist_keras_testval.py&#34;&gt;これ&lt;/a&gt;)&lt;/p&gt;
+
+&lt;p&gt;GPUマシンを持っていないので学習に時間がかかりすぎりてあんまり色々試せない&amp;hellip;&amp;hellip;&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Pythonで Neural Fitted Q Iteration を実装する</title>
