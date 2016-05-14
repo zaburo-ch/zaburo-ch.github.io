@@ -6,8 +6,25 @@
     <description>Recent content in Posts on ZABURO app</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Wed, 13 Apr 2016 11:32:33 +0900</lastBuildDate>
+    <lastBuildDate>Sat, 14 May 2016 14:45:45 +0900</lastBuildDate>
     <atom:link href="https://zaburo-ch.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>【C&#43;&#43;】コピーコンストラクタについてのメモ</title>
+      <link>https://zaburo-ch.github.io/post/cpp-copy-constructor/</link>
+      <pubDate>Sat, 14 May 2016 14:45:45 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/post/cpp-copy-constructor/</guid>
+      <description>&lt;p&gt;関数内で作成したオブジェクトをreturnして代入した場合に&lt;br /&gt;
+コピーが起こってしまうのではといつも不安になっているので試した。&lt;/p&gt;
+
+&lt;script src=&#34;https://gist.github.com/zaburo-ch/d1f55b864bd005a5c9764f97c593306d.js&#34;&gt;&lt;/script&gt;
+
+&lt;p&gt;おこらなかった！嬉しい！&lt;br /&gt;
+たぶんいい感じにポインタ的なものを差し替えてくれているのだろう。&lt;br /&gt;
+コンパイラは g++ (Homebrew gcc 4.9.2_1) 4.9.2&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>FaxOCR を CNN でやってみた</title>
@@ -697,89 +714,6 @@ Wikipediaのページ内でPageRank計算してみました。&lt;/p&gt;
 WikipediaにはPageRankの基本的な考え方が合ってないですしね。&lt;br /&gt;
 ほかのWebサイトでも試してみればもっと面白い結果が得られるかもしれません。&lt;br /&gt;
 機会があればやってみたいと思います。&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>【Python】PageRankアルゴリズム</title>
-      <link>https://zaburo-ch.github.io/post/20150514_0/</link>
-      <pubDate>Thu, 14 May 2015 20:54:05 +0900</pubDate>
-      
-      <guid>https://zaburo-ch.github.io/post/20150514_0/</guid>
-      <description>&lt;p&gt;PageRankというアルゴリズム、&lt;br /&gt;
-以前からなんとなくは知ってはいたのですが、&lt;br /&gt;
-ランダムサーファーモデルで計算する方法を聞いて、&lt;br /&gt;
-めちゃくちゃ賢いなこれーって思ったので実際にやってみました。&lt;/p&gt;
-
-&lt;p&gt;ひとまずPageRankについて調べたことを纏めます。&lt;/p&gt;
-
-&lt;p&gt;PageRankは基本的に次の２つの考え方でページの重要度を推定します。&lt;br /&gt;
-・多くのページからリンクされているページの質は高い&lt;br /&gt;
-・質の高いページからリンクされているページの質は高い&lt;/p&gt;
-
-&lt;p&gt;これを数学的に考えるのにランダムサーファーモデルを利用します。&lt;br /&gt;
-ランダムサーファーモデルでは&lt;br /&gt;
-ページのリンク関係を有向グラフとして考え、&lt;br /&gt;
-人(サーファー)にこの有向グラフをランダムに辿らせたとき、&lt;br /&gt;
-人が居る確率が高いページを重要とします。&lt;/p&gt;
-
-&lt;p&gt;まず、ページの総数をNとし、N次正方行列&lt;strong&gt;M&lt;/strong&gt;を&lt;br /&gt;
-&lt;strong&gt;M&lt;/strong&gt;[i][j] = ページjにいるサーファーがページiに移動する確率&lt;br /&gt;
-と定義します。&lt;br /&gt;
-例えばページ0にページ1とページ5へのリンクしかないとすると、&lt;br /&gt;
-サーファーはランダムに移動するので&lt;br /&gt;
-&lt;strong&gt;M&lt;/strong&gt;[i][0]は i=1or5 のとき1/2 となりそれ以外のiでは0となります。&lt;/p&gt;
-
-&lt;p&gt;また、ベクトル&lt;strong&gt;P&lt;/strong&gt;(t)を時刻tに各ページに人がいる確率とすると&lt;br /&gt;
-&lt;strong&gt;P&lt;/strong&gt;(0)は全ての要素が 1/N のベクトルとなり&lt;br /&gt;
-&lt;strong&gt;P&lt;/strong&gt;(t+1)は&lt;strong&gt;M&lt;/strong&gt;と&lt;strong&gt;P&lt;/strong&gt;(t)の積を取ることで計算できます。&lt;/p&gt;
-
-&lt;p&gt;有向グラフが強連結のとき、この遷移を無限に繰り返すことで&lt;br /&gt;
-&lt;strong&gt;P&lt;/strong&gt;はtに依らない一定の値に収束します。よってこの&lt;strong&gt;P&lt;/strong&gt;は&lt;br /&gt;
-&lt;strong&gt;M P&lt;/strong&gt; = &lt;strong&gt;P&lt;/strong&gt;&lt;br /&gt;
-の解を要素の和が1になるよう正規化してあげることにより求められます。&lt;/p&gt;
-
-&lt;p&gt;この&lt;strong&gt;P&lt;/strong&gt;の大きさが各ページの重要度となります。&lt;/p&gt;
-
-&lt;p&gt;行列計算において &lt;strong&gt;Ax&lt;/strong&gt; = λ&lt;strong&gt;x&lt;/strong&gt; を解く、というのは固有値問題と言って&lt;br /&gt;
-色々な方法が考えられているらしいのですが、ここについては&lt;br /&gt;
-&lt;a href=&#34;http://www.cms-initiative.jp/ja/events/0627yamamoto.pdf&#34; target=&#34;_blank&#34; title=&#34;行列計算における高速アルゴリズム&#34;&gt;行列計算における高速アルゴリズム&lt;br /&gt;
-&lt;a href=&#34;http://www.cms-initiative.jp/ja/events/0627yamamoto.pdf&#34;&gt;http://www.cms-initiative.jp/ja/events/0627yamamoto.pdf&lt;/a&gt;&lt;br /&gt;
-&lt;/a&gt;こちらのページが詳しいです。&lt;br /&gt;
-Pythonではscipy.sparse.linalg.eigsを使うと&lt;br /&gt;
-Implicitly Restarted Arnoldi で計算してくれます。&lt;br /&gt;
-ただ、&lt;strong&gt;M P&lt;/strong&gt; = &lt;strong&gt;P&lt;/strong&gt; を解くだけのためにこれらを使うのが速いのかは&lt;br /&gt;
-勉強不足で僕もよくわかっていません。&lt;/p&gt;
-
-&lt;p&gt;実際のウェブページでは、ページ間の関係を有効グラフにしても&lt;br /&gt;
-必ずしも上で述べたような強連結になるわけではありません。&lt;br /&gt;
-そのため「一定の確率でサーファーはリンクを辿らずにランダムに移動する」&lt;br /&gt;
-という考えを新たに導入します。その時はMにあたるものを&lt;br /&gt;
-全ての要素が 1/N である N次正方行列Uと普通にリンクを辿る確率αを用いて&lt;br /&gt;
-(α&lt;strong&gt;M&lt;/strong&gt; + (1-α)&lt;strong&gt;U&lt;/strong&gt;) として計算することによって&lt;strong&gt;P&lt;/strong&gt;が求められます。&lt;/p&gt;
-
-&lt;p&gt;次の図のようなリンク関係にあるページのPageRankを&lt;br /&gt;
-Pythonを利用して実際に計算してみます。&lt;br /&gt;
-正しく計算できれば図の通りの値が得られるはずです。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://zaburo-ch.github.io/images/Linkstruct2.gif&#34; alt=&#34;Linkstruct2.gif&#34; border=&#34;0&#34; width=&#34;400&#34; height=&#34;368&#34; /&gt;&lt;br /&gt;
-&lt;span style=&#34;font-size:x-small;&#34;&gt;&lt;br /&gt;
-The original uploader was &lt;a title=&#34;wikipedia:User:Gnix&#34; href=&#34;//en.wikipedia.org/wiki/User:Gnix&#34;&gt;Gnix&lt;/a&gt; at &lt;a title=&#34;wikipedia:&#34; href=&#34;//en.wikipedia.org/wiki/&#34;&gt;English Wikipedia&lt;/a&gt;[&lt;a href=&#34;http://www.gnu.org/copyleft/fdl.html&#34; target=&#34;_blank&#34; title=&#34;GFDL&#34;&gt;GFDL&lt;/a&gt; or &lt;a href=&#34;http://creativecommons.org/licenses/by-sa/3.0/&#34; target=&#34;_blank&#34; title=&#34;CC-BY-SA-3.0&#34;&gt;CC-BY-SA-3.0&lt;/a&gt;]&lt;/span&gt;&lt;/p&gt;
-
-&lt;p&gt;コードはこちら&lt;br /&gt;
-&lt;a href=&#34;https://github.com/zaburo-ch/wikipedia_analysis/blob/master/pagerank.py&#34; target=&#34;_blank&#34; title=&#34;zaburo-ch/wikipedia_analysis/master/pagerank.py&#34;&gt;zaburo-ch/wikipedia_analysis/master/pagerank.py&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;get_pagerankではScipyを用いて固有ベクトルを計算しています。&lt;br /&gt;
-get_pagerank_simpleではもっと単純に&lt;br /&gt;
-&lt;strong&gt;P&lt;/strong&gt;(0)に何度も&lt;strong&gt;M&lt;/strong&gt;をかけていき、&lt;br /&gt;
-かける前との差が十分小さくなるまで繰り返しています。&lt;/p&gt;
-
-&lt;p&gt;実行結果はこんな感じです。&lt;br /&gt;
-&lt;img src=&#34;https://zaburo-ch.github.io/images/pagerankresult.png&#34; alt=&#34;pagerankresult.png&#34; border=&#34;0&#34; width=&#34;273&#34; height=&#34;258&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;図の値とかなり一致していますね！&lt;br /&gt;
-2つの方法どちらもほぼ同じ値になっているので&lt;br /&gt;
-get_pagerank_simpleの方法でも十分実用に足りそうです。&lt;/p&gt;
 </description>
     </item>
     
