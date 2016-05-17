@@ -608,6 +608,55 @@ APIkeyの部分だけ変えてあるのでそこ変えないと動きません�
     </item>
     
     <item>
+      <title>ポートフォリオ</title>
+      <link>https://zaburo-ch.github.io/portfolio/</link>
+      <pubDate>Sat, 27 Jun 2015 02:10:24 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/portfolio/</guid>
+      <description>
+
+&lt;h2 id=&#34;コンテスト等への参加歴:08e0386ce22622b66038f29292f02cb1&#34;&gt;コンテスト等への参加歴&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://icpc.iisf.or.jp/2014-waseda/&#34;&gt;ACM-ICPC 2014 アジア地区予選東京大会&lt;/a&gt;出場&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://recruit-jinji.jp/code_fes2015/&#34;&gt;CODE FESTIVAL 2015本戦&lt;/a&gt;出場&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://dwango.co.jp/saiyo/procon2016/&#34;&gt;dwangoプログラミングコンテスト本選&lt;/a&gt;出場&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.kaggle.com/c/bnp-paribas-cardif-claims-management&#34;&gt;kaggleのBNP Paribas Cardif Claims Management&lt;/a&gt;で2,947チーム中87位&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://blog.numer.ai/2016/05/03/Tournament-5-Final-Standings&#34;&gt;NUMERAIのTournament 5&lt;/a&gt;で4位&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;これまでに作成したアプリ等:08e0386ce22622b66038f29292f02cb1&#34;&gt;これまでに作成したアプリ等&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://asobi.herokuapp.com/&#34;&gt;ASOBI+&lt;/a&gt; (WebRTCを利用して位置情報や音声を共有できるWebアプリ)&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://smapho-sagashi.appspot.com/&#34;&gt;スマホさがし&lt;/a&gt; (紛失したAndroidスマホをWebから鳴らせるアプリ)&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://play.google.com/store/apps/details?id=com.fc2.blog.zaburoapp.mayrecipebook&#34;&gt;うまコレ&lt;/a&gt; (クックパッドから取得したレシピを編集して保存できるAndroidアプリ)&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://play.google.com/store/apps/details?id=jp.gr.java_conf.kchubachi.iraira&#34;&gt;Don’t touch the wall&lt;/a&gt; (イライラ棒風のAndroid向けゲーム)&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;受賞歴:08e0386ce22622b66038f29292f02cb1&#34;&gt;受賞歴&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;DigitalArts Programming Contest 2013で「うまコレ」が入選&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;サイボウズ・ラボユース Hackathon 2014 夏で「KEIDORO+」が最優秀賞&lt;br /&gt;
+(「KEIDORO+」を後日ブラッシュアップし「ASOBI+」を作成した)&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;ＮＴＴ西日本　学生向けアプリ開発コンテストで「ASOBI+」が佳作&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;その他活動:08e0386ce22622b66038f29292f02cb1&#34;&gt;その他活動&lt;/h2&gt;
+
+&lt;p&gt;ブログ：&lt;a href=&#34;https://zaburo-ch.github.io/&#34;&gt;ZABURO app (https://zaburo-ch.github.io/)&lt;/a&gt;&lt;br /&gt;
+趣味で書いたコードや作成したアプリの公開をしています。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://zaburo-ch.github.io/post/neural-fitted-q-iteration/&#34;&gt;Pythonで Neural Fitted Q Iteration を実装する&lt;/a&gt;&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://zaburo-ch.github.io/post/handle-exchange-data-by-pandas/&#34;&gt;pandasで為替データを扱う【Python】&lt;/a&gt;&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://zaburo-ch.github.io/post/20141017_0/&#34;&gt;Wikipediaのアクセス上位10000ページの距離を計算した話&lt;/a&gt;&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
       <title>【C&#43;&#43;】mainなどの関数の中では大きな配列を確保できない</title>
       <link>https://zaburo-ch.github.io/post/20150617_0/</link>
       <pubDate>Wed, 17 Jun 2015 02:48:23 +0900</pubDate>
@@ -651,69 +700,6 @@ newでいけるということは中でnew使ってくれてるvectorでもい�
 &lt;p&gt;&lt;script src=&#34;https://gist.github.com/zaburo-ch/56b43044d09bac1b603d.js&#34;&gt;&lt;/script&gt;&lt;br /&gt;
 Javaでのオブジェクトの比較みたいに&lt;br /&gt;
 アドレスが比較されちゃうんだと勘違いしてた。&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Wikipediaの記事でPageRankを計算してみた。</title>
-      <link>https://zaburo-ch.github.io/post/20150514_1/</link>
-      <pubDate>Thu, 14 May 2015 22:36:00 +0900</pubDate>
-      
-      <guid>https://zaburo-ch.github.io/post/20150514_1/</guid>
-      <description>&lt;p&gt;PageRankの記事の続きです。&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://zaburo-ch.github.io/post/20150514_1/&#34; target=&#34;_blank&#34; title=&#34;【Python】PageRankアルゴリズム&#34;&gt;【Python】PageRankアルゴリズム&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;PageRank実装だけして終わるのももったいないので&lt;br /&gt;
-Wikipediaのページ内でPageRank計算してみました。&lt;/p&gt;
-
-&lt;p&gt;コードはこちら&lt;br /&gt;
-&lt;a href=&#34;https://github.com/zaburo-ch/wikipedia_analysis&#34; target=&#34;_blank&#34; title=&#34;zaburo-ch/wikipedia_analysis&#34;&gt;zaburo-ch/wikipedia_analysis&lt;br /&gt;
-&lt;a href=&#34;https://github.com/zaburo-ch/wikipedia_analysis&#34;&gt;https://github.com/zaburo-ch/wikipedia_analysis&lt;/a&gt;&lt;/a&gt;&lt;br /&gt;
-前に作ったwikipedia.pyのコードとまとめてレポジトリにしました。&lt;/p&gt;
-
-&lt;p&gt;pagerank_wiki.pyを実行すると次のような動作をします。&lt;br /&gt;
-・&lt;a href=&#34;http://dumps.wikimedia.org&#34; target=&#34;_blank&#34; title=&#34;http://dumps.wikimedia.org&#34;&gt;&lt;a href=&#34;http://dumps.wikimedia.org&#34;&gt;http://dumps.wikimedia.org&lt;/a&gt;&lt;/a&gt;より1日分のデータを取得&lt;br /&gt;
-・国コードがjaのもののうち閲覧数上位10000ページを取り出す&lt;br /&gt;
-・各ページの記事内のリンクをエッジとした有向グラフつくる&lt;br /&gt;
-・有向グラフ内でPageRankを計算し大きい順に出力する&lt;/p&gt;
-
-&lt;p&gt;やってることはかなりwikipedia.pyに近いですが、&lt;br /&gt;
-見返してみるとあまりにもなコードだったのでかなり書き換えました。&lt;br /&gt;
-他にもリンク抽出にHTMLParser使ってみたりいろいろ変えてます。&lt;/p&gt;
-
-&lt;p&gt;前のやつと違って計算の部分にそれほど時間がかからないので&lt;br /&gt;
-スペック次第ですが少なくとも寝てる間くらいには終わると思います。&lt;br /&gt;
-リンク解析もこっちのほうがかなり早いです。&lt;/p&gt;
-
-&lt;p&gt;さて、肝心の実行結果はこんな感じです。&lt;br /&gt;
-&lt;a href=&#34;https://zaburo-ch.github.io/images/pagerankwikiresult.png/&#34; target=&#34;_blank&#34;&gt;&lt;img src=&#34;https://zaburo-ch.github.io/images/pagerankwikiresult.png&#34; alt=&#34;pagerankwikiresult.png&#34; border=&#34;0&#34; width=&#34;435&#34; height=&#34;400&#34; /&gt;&lt;/a&gt;&lt;br /&gt;
-&lt;a href=&#34;https://github.com/zaburo-ch/wikipedia_analysis/blob/master/pagerank_wiki_data/result.txt&#34; target=&#34;_blank&#34; title=&#34;wikipedia_analysis/pagerank_wiki_data/result.txt&#34;&gt;wikipedia_analysis/pagerank_wiki_data/result.txt&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;「特別:カテゴリ」がぶっちぎりで大きいですね。&lt;br /&gt;
-確認してみたところほぼ全てのページの一番下に&lt;br /&gt;
-「特別:カテゴリ」へのリンクがあったのでたぶんそのせいです。&lt;br /&gt;
-「Wikipedia:出典を明記する」とかもこの類いかな。&lt;/p&gt;
-
-&lt;p&gt;「日本」や年がおおいのは人とか何かの作品の記事の&lt;br /&gt;
-テンプレート化している右の枠内で登場することが多いためだと思います。&lt;/p&gt;
-
-&lt;p&gt;テレビ局が上位に多いのはテレビ番組からほぼ確実にリンクされているのと&lt;br /&gt;
-閲覧数上位10000ページで限定しているため&lt;br /&gt;
-そのなかでテレビ番組が多かったためではないかと考えています。&lt;/p&gt;
-
-&lt;p&gt;上位はほとんどが誰でも知っているような一般的な言葉なんですが、&lt;br /&gt;
-101位のインターネット・ムービー・データベースってやつ、&lt;br /&gt;
-全然何のことかわからないです。&lt;br /&gt;
-「集英社」とか「台湾」より上なので、&lt;br /&gt;
-かなり多くページがここにリンクしてるはずなんですが、&lt;br /&gt;
-これどんなページからリンクされてるんでしょう？&lt;/p&gt;
-
-&lt;p&gt;全体的にPageRankはWikipediaのページの重要性判断としては&lt;br /&gt;
-あまり向いていないように思いました。&lt;br /&gt;
-WikipediaにはPageRankの基本的な考え方が合ってないですしね。&lt;br /&gt;
-ほかのWebサイトでも試してみればもっと面白い結果が得られるかもしれません。&lt;br /&gt;
-機会があればやってみたいと思います。&lt;/p&gt;
 </description>
     </item>
     
