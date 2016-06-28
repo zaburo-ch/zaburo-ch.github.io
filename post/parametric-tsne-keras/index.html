@@ -1,0 +1,151 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+
+  
+  <meta charset="UTF-8">
+  <title>
+    Parametric t-SNE を Keras で書いた | ZABURO app
+  </title>
+
+
+  
+  <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
+
+
+  
+  <link rel="stylesheet" href="/css/sanitize.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/highlight_monokai.css">
+  
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/theme.css">
+
+
+  
+  
+
+
+</head>
+
+
+
+<body>
+<div class="container">
+
+  
+  <header role="banner">
+    <div class="row gutters">
+      <div id="site-title" class="col span_6">
+        <h1><a href="/">ZABURO app</a></h1>
+        <h2>アプリ作ったり、なんやかんや</h2>
+      </div>
+      <div id="social" class="col span_6">
+        <ul>
+          <li><a href="/about/">About</a></li>
+          <li><a href="/product/">Product</a></li>
+          
+          
+          <li><a href="https://github.com/zaburo-ch" target="_blank">GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+
+  
+  <main id="single" role="main">
+    <div class="article-header">
+      <h1>Parametric t-SNE を Keras で書いた</h1>
+      <div class="meta">
+        Jun 28, 2016 &nbsp;
+        
+      </div>
+    </div>
+    <article>
+      <p>最近、t-SNEについていろいろ調べいて、その中で<a href="https://lvdmaaten.github.io/publications/papers/AISTATS_2009.pdf">Parametric t-SNEの論文</a>を読みました。<br />
+<a href="https://lvdmaaten.github.io/publications/papers/JMLR_2008.pdf">元のt-SNE</a>は可視化や次元削減の手法としてとても有用なのですが、
+変換後の座標を乱数で初期化し、<br />
+KLダイバージェンスが小さくなるように勾配降下で座標を調整していく感じなので、<br />
+初めの乱数次第で配置は大きく変わりますし、別なデータを同じような場所に投射するようなことができません。</p>
+
+<p>そのため、kaggleなどで前処理として使われる際には、<br />
+訓練データとテストデータをくっつけて変換するという方法が取られています。<br />
+しかし、本来見れないはずのテストデータを訓練データを変換する時にも使うというのはグレーな感じがします。</p>
+
+<p>そこで、座標を直接調整するのではなく、<br />
+元の座標をパラメトリックな関数で低次元の座標に投射するようにして、<br />
+その関数のパラメータを学習してあげようというのがParametric t-SNEです。<br />
+ここで、関数としてニューラルネットが使われます。</p>
+
+<p>論文では、RBMを重ねてpre trainingしてfine tuningというのをやっているのですが、<br />
+どうせやるならということで今風にReLUで書きました。</p>
+
+<p>コードは<a href="https://github.com/zaburo-ch/Parametric-t-SNE-in-Keras">ここ</a>に置いてあります。<br />
+とりあえず論文にも載っているMNISTで試しました。<br />
+100 epoch回すとAWS EC2のg2.2xlargeインスタンスでだいたい10分程度かかります。</p>
+
+<p>普通のMNISTなので60000件の訓練データと10000件のテストデータがあります。<br />
+学習していく過程が見れたら面白そうだなと思ったので、<br />
+各epoch終了後テストデータに対して変換を行い、散布図を書くようにしました。</p>
+
+<p>結果はこんな感じ。<br />
+<img src="/images/mnist_process.gif" alt="画像" /><br />
+(なんかgifが吐けなくてmp4をgifに変換したので画質が悪い&hellip;)</p>
+
+<p>訓練に使っていないデータに対してすごくいい感じに別けられていると思います。</p>
+
+<p>10~20 epochくらいでいい感じに別けられているので、<br />
+10 epoch毎とかにミニバッチをシャッフルしてあげるともっと良くなるかもしれません。<br />
+一応shuffle_intervalという変数が用意してあって、<br />
+shuffle_interval回のepochが回るとミニバッチがシャッフルされてPが再計算されます。</p>
+
+<p>Pを計算する部分についてもPython上でですが並列化してあるので少しは早いと思います。</p>
+
+<p>Convolutional Parametric t-SNEだー！！って言って畳み込み層を使ったものも書いたのですが、<br />
+普通のMLP版とあまり変わらなかったのでお蔵入りしました。</p>
+
+<p>いつもMNISTしてばかりなのでCIFAR-10でも試してみたのですがあまりうまくいきませんでした。<br />
+そもそもt-SNEでCIFAR-10がうまくいくのが試していないので良くわかりませんが、<br />
+これConvolutionalしてなんとか解決できないかなーと考えています。</p>
+
+    </article>
+    
+ <aside><div id="disqus_thread"></div></aside> 
+
+<script type="text/javascript">
+     
+    var disqus_shortname = 'zaburoapp';
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+  </main>
+
+
+  
+  <footer role="contentinfo">
+    <div style="text-align:center;">
+      
+      Written by ZABURO
+    </div>
+  </footer>
+
+
+</div>
+
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+</body>
+</html>
+
