@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>可視化 on ZABURO app</title>
+    <link>https://zaburo-ch.github.io/tags/%E5%8F%AF%E8%A6%96%E5%8C%96/</link>
+    <description>Recent content in 可視化 on ZABURO app</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja</language>
+    <lastBuildDate>Tue, 28 Jun 2016 22:01:32 +0900</lastBuildDate>
+    <atom:link href="https://zaburo-ch.github.io/tags/%E5%8F%AF%E8%A6%96%E5%8C%96/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Parametric t-SNE を Keras で書いた</title>
+      <link>https://zaburo-ch.github.io/post/parametric-tsne-keras/</link>
+      <pubDate>Tue, 28 Jun 2016 22:01:32 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/post/parametric-tsne-keras/</guid>
+      <description>&lt;p&gt;最近、t-SNEについていろいろ調べいて、その中で&lt;a href=&#34;https://lvdmaaten.github.io/publications/papers/AISTATS_2009.pdf&#34;&gt;Parametric t-SNEの論文&lt;/a&gt;を読みました。&lt;br /&gt;
+&lt;a href=&#34;https://lvdmaaten.github.io/publications/papers/JMLR_2008.pdf&#34;&gt;元のt-SNE&lt;/a&gt;は可視化や次元削減の手法としてとても有用なのですが、
+変換後の座標を乱数で初期化し、&lt;br /&gt;
+KLダイバージェンスが小さくなるように勾配降下で座標を調整していく感じなので、&lt;br /&gt;
+初めの乱数次第で配置は大きく変わりますし、別なデータを同じような場所に投射するようなことができません。&lt;/p&gt;
+
+&lt;p&gt;そのため、kaggleなどで前処理として使われる際には、&lt;br /&gt;
+訓練データとテストデータをくっつけて変換するという方法が取られています。&lt;br /&gt;
+しかし、本来見れないはずのテストデータを訓練データを変換する時にも使うというのはグレーな感じがします。&lt;/p&gt;
+
+&lt;p&gt;そこで、座標を直接調整するのではなく、&lt;br /&gt;
+元の座標をパラメトリックな関数で低次元の座標に投射するようにして、&lt;br /&gt;
+その関数のパラメータを学習してあげようというのがParametric t-SNEです。&lt;br /&gt;
+ここで、関数としてニューラルネットが使われます。&lt;/p&gt;
+
+&lt;p&gt;論文では、RBMを重ねてpre trainingしてfine tuningというのをやっているのですが、&lt;br /&gt;
+どうせやるならということで今風にReLUで書きました。&lt;/p&gt;
+
+&lt;p&gt;コードは&lt;a href=&#34;https://github.com/zaburo-ch/Parametric-t-SNE-in-Keras&#34;&gt;ここ&lt;/a&gt;に置いてあります。&lt;br /&gt;
+とりあえず論文にも載っているMNISTで試しました。&lt;br /&gt;
+100 epoch回すとAWS EC2のg2.2xlargeインスタンスでだいたい10分程度かかります。&lt;/p&gt;
+
+&lt;p&gt;普通のMNISTなので60000件の訓練データと10000件のテストデータがあります。&lt;br /&gt;
+学習していく過程が見れたら面白そうだなと思ったので、&lt;br /&gt;
+各epoch終了後テストデータに対して変換を行い、散布図を書くようにしました。&lt;/p&gt;
+
+&lt;p&gt;結果はこんな感じ。&lt;br /&gt;
+&lt;img src=&#34;https://zaburo-ch.github.io/images/mnist_process.gif&#34; alt=&#34;画像&#34; /&gt;&lt;br /&gt;
+(なんかgifが吐けなくてmp4をgifに変換したので画質が悪い&amp;hellip;)&lt;/p&gt;
+
+&lt;p&gt;訓練に使っていないデータに対してすごくいい感じに別けられていると思います。&lt;/p&gt;
+
+&lt;p&gt;10~20 epochくらいでいい感じに別けられているので、&lt;br /&gt;
+10 epoch毎とかにミニバッチをシャッフルしてあげるともっと良くなるかもしれません。&lt;br /&gt;
+一応shuffle_intervalという変数が用意してあって、&lt;br /&gt;
+shuffle_interval回のepochが回るとミニバッチがシャッフルされてPが再計算されます。&lt;/p&gt;
+
+&lt;p&gt;Pを計算する部分についてもPython上でですが並列化してあるので少しは早いと思います。&lt;/p&gt;
+
+&lt;p&gt;Convolutional Parametric t-SNEだー！！って言って畳み込み層を使ったものも書いたのですが、&lt;br /&gt;
+普通のMLP版とあまり変わらなかったのでお蔵入りしました。&lt;/p&gt;
+
+&lt;p&gt;いつもMNISTしてばかりなのでCIFAR-10でも試してみたのですがあまりうまくいきませんでした。&lt;br /&gt;
+そもそもt-SNEでCIFAR-10がうまくいくのが試していないので良くわかりませんが、&lt;br /&gt;
+これConvolutionalしてなんとか解決できないかなーと考えています。&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
