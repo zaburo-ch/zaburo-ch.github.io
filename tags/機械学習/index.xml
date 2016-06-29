@@ -6,8 +6,41 @@
     <description>Recent content in 機械学習 on ZABURO app</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Tue, 28 Jun 2016 22:01:32 +0900</lastBuildDate>
+    <lastBuildDate>Wed, 29 Jun 2016 13:06:24 +0900</lastBuildDate>
     <atom:link href="https://zaburo-ch.github.io/tags/%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>t-SNE の逆変換を試してみた</title>
+      <link>https://zaburo-ch.github.io/post/tsne-decode/</link>
+      <pubDate>Wed, 29 Jun 2016 13:06:24 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/post/tsne-decode/</guid>
+      <description>&lt;p&gt;Parametric t-SNEでt-SNEの変換をニューラルネットで近似することができたので、&lt;br /&gt;
+その逆についてもやってみました。&lt;/p&gt;
+
+&lt;p&gt;逆変換と言っても特に難しいことはやっておらず、&lt;br /&gt;
+まず普通にBarnes-Hut t-SNEで訓練データを2次元に変換して、&lt;br /&gt;
+変換後の座標を入力、変換前の座標を教師データとして教師あり学習を行います。&lt;/p&gt;
+
+&lt;p&gt;今回は、変換後の座標のうち訓練データにないような座標について、&lt;br /&gt;
+どのように逆変換されるのかが気になるので汎化性能を高めるためにDropoutを入れました。&lt;/p&gt;
+
+&lt;p&gt;コードは次の通りです。&lt;br /&gt;
+&lt;script src=&#34;https://gist.github.com/zaburo-ch/591fd26eda1236a1721f5be5eb06ce6a.js&#34;&gt;&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;t-SNEの結果がこんな感じで、&lt;br /&gt;
+&lt;img src=&#34;https://zaburo-ch.github.io/images/tsne-decode-img01.png&#34; alt=&#34;tsne_result.png&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;適当に座標を指定して逆変換した結果がこれ&lt;br /&gt;
+&lt;img src=&#34;https://zaburo-ch.github.io/images/tsne-decode-img02.png&#34; alt=&#34;test_result.png&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;かなり綺麗に逆変換できました。&lt;br /&gt;
+deconvolutionを使えばもっとうまく逆変換できるかもしれませんが、&lt;br /&gt;
+MNISTの結果としてはこれで十分だと思います。&lt;br /&gt;
+なんとかしてこの方針で画像生成とかできないのかなーと思っているのですが、&lt;br /&gt;
+まずはグレースケールでない画像をうまく変換できるようにt-SNE側を工夫しなければいけない気がします。&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Parametric t-SNE を Keras で書いた</title>
