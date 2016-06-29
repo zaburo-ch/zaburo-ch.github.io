@@ -60,6 +60,9 @@ shuffle_interval回のepochが回るとミニバッチがシャッフルされ�
 &lt;p&gt;いつもMNISTしてばかりなのでCIFAR-10でも試してみたのですがあまりうまくいきませんでした。&lt;br /&gt;
 そもそもt-SNEでCIFAR-10がうまくいくのが試していないので良くわかりませんが、&lt;br /&gt;
 これConvolutionalしてなんとか解決できないかなーと考えています。&lt;/p&gt;
+
+&lt;p&gt;追記：&lt;br /&gt;
+&lt;a href=&#34;https://zaburo-ch.github.io/post/tsne-decode/&#34;&gt;逆変換も試しました。&lt;/a&gt;&lt;/p&gt;
 </description>
     </item>
     

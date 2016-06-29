@@ -1,0 +1,130 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+
+  
+  <meta charset="UTF-8">
+  <title>
+    t-SNE の逆変換を試してみた | ZABURO app
+  </title>
+
+
+  
+  <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
+
+
+  
+  <link rel="stylesheet" href="/css/sanitize.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/highlight_monokai.css">
+  
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/theme.css">
+
+
+  
+  
+
+
+</head>
+
+
+
+<body>
+<div class="container">
+
+  
+  <header role="banner">
+    <div class="row gutters">
+      <div id="site-title" class="col span_6">
+        <h1><a href="/">ZABURO app</a></h1>
+        <h2>アプリ作ったり、なんやかんや</h2>
+      </div>
+      <div id="social" class="col span_6">
+        <ul>
+          <li><a href="/about/">About</a></li>
+          <li><a href="/product/">Product</a></li>
+          
+          
+          <li><a href="https://github.com/zaburo-ch" target="_blank">GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+
+  
+  <main id="single" role="main">
+    <div class="article-header">
+      <h1>t-SNE の逆変換を試してみた</h1>
+      <div class="meta">
+        Jun 29, 2016 &nbsp;
+        
+      </div>
+    </div>
+    <article>
+      <p>Parametric t-SNEでt-SNEの変換をニューラルネットで近似することができたので、<br />
+その逆についてもやってみました。</p>
+
+<p>逆変換と言っても特に難しいことはやっておらず、<br />
+まず普通にBarnes-Hut t-SNEで訓練データを2次元に変換して、<br />
+変換後の座標を入力、変換前の座標を教師データとして教師あり学習を行います。</p>
+
+<p>今回は、変換後の座標のうち訓練データにないような座標について、<br />
+どのように逆変換されるのかが気になるので汎化性能を高めるためにDropoutを入れました。</p>
+
+<p>コードは次の通りです。<br />
+<script src="https://gist.github.com/zaburo-ch/591fd26eda1236a1721f5be5eb06ce6a.js"></script></p>
+
+<p>t-SNEの結果がこんな感じで、<br />
+<img src="/images/tsne-decode-img01.png" alt="tsne_result.png" /></p>
+
+<p>適当に座標を指定して逆変換した結果がこれ<br />
+<img src="/images/tsne-decode-img02.png" alt="test_result.png" /></p>
+
+<p>かなり綺麗に逆変換できました。<br />
+deconvolutionを使えばもっとうまく逆変換できるかもしれませんが、<br />
+MNISTの結果としてはこれで十分だと思います。<br />
+なんとかしてこの方針で画像生成とかできないのかなーと思っているのですが、<br />
+まずはグレースケールでない画像をうまく変換できるようにt-SNE側を工夫しなければいけない気がします。</p>
+
+    </article>
+    
+ <aside><div id="disqus_thread"></div></aside> 
+
+<script type="text/javascript">
+     
+    var disqus_shortname = 'zaburoapp';
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+  </main>
+
+
+  
+  <footer role="contentinfo">
+    <div style="text-align:center;">
+      
+      Written by ZABURO
+    </div>
+  </footer>
+
+
+</div>
+
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+</body>
+</html>
+

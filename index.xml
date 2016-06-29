@@ -6,8 +6,41 @@
     <description>Recent content on ZABURO app</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Tue, 28 Jun 2016 22:01:32 +0900</lastBuildDate>
+    <lastBuildDate>Wed, 29 Jun 2016 13:06:24 +0900</lastBuildDate>
     <atom:link href="https://zaburo-ch.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>t-SNE の逆変換を試してみた</title>
+      <link>https://zaburo-ch.github.io/post/tsne-decode/</link>
+      <pubDate>Wed, 29 Jun 2016 13:06:24 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/post/tsne-decode/</guid>
+      <description>&lt;p&gt;Parametric t-SNEでt-SNEの変換をニューラルネットで近似することができたので、&lt;br /&gt;
+その逆についてもやってみました。&lt;/p&gt;
+
+&lt;p&gt;逆変換と言っても特に難しいことはやっておらず、&lt;br /&gt;
+まず普通にBarnes-Hut t-SNEで訓練データを2次元に変換して、&lt;br /&gt;
+変換後の座標を入力、変換前の座標を教師データとして教師あり学習を行います。&lt;/p&gt;
+
+&lt;p&gt;今回は、変換後の座標のうち訓練データにないような座標について、&lt;br /&gt;
+どのように逆変換されるのかが気になるので汎化性能を高めるためにDropoutを入れました。&lt;/p&gt;
+
+&lt;p&gt;コードは次の通りです。&lt;br /&gt;
+&lt;script src=&#34;https://gist.github.com/zaburo-ch/591fd26eda1236a1721f5be5eb06ce6a.js&#34;&gt;&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;t-SNEの結果がこんな感じで、&lt;br /&gt;
+&lt;img src=&#34;https://zaburo-ch.github.io/images/tsne-decode-img01.png&#34; alt=&#34;tsne_result.png&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;適当に座標を指定して逆変換した結果がこれ&lt;br /&gt;
+&lt;img src=&#34;https://zaburo-ch.github.io/images/tsne-decode-img02.png&#34; alt=&#34;test_result.png&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;かなり綺麗に逆変換できました。&lt;br /&gt;
+deconvolutionを使えばもっとうまく逆変換できるかもしれませんが、&lt;br /&gt;
+MNISTの結果としてはこれで十分だと思います。&lt;br /&gt;
+なんとかしてこの方針で画像生成とかできないのかなーと思っているのですが、&lt;br /&gt;
+まずはグレースケールでない画像をうまく変換できるようにt-SNE側を工夫しなければいけない気がします。&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Parametric t-SNE を Keras で書いた</title>
@@ -60,6 +93,9 @@ shuffle_interval回のepochが回るとミニバッチがシャッフルされ�
 &lt;p&gt;いつもMNISTしてばかりなのでCIFAR-10でも試してみたのですがあまりうまくいきませんでした。&lt;br /&gt;
 そもそもt-SNEでCIFAR-10がうまくいくのが試していないので良くわかりませんが、&lt;br /&gt;
 これConvolutionalしてなんとか解決できないかなーと考えています。&lt;/p&gt;
+
+&lt;p&gt;追記：&lt;br /&gt;
+&lt;a href=&#34;https://zaburo-ch.github.io/post/tsne-decode/&#34;&gt;逆変換も試しました。&lt;/a&gt;&lt;/p&gt;
 </description>
     </item>
     
@@ -707,36 +743,6 @@ APIkeyの部分だけ変えてあるのでそこ変えないと動きません�
 &lt;li&gt;&lt;a href=&#34;https://zaburo-ch.github.io/post/handle-exchange-data-by-pandas/&#34;&gt;pandasで為替データを扱う【Python】&lt;/a&gt;&lt;br /&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://zaburo-ch.github.io/post/20141017_0/&#34;&gt;Wikipediaのアクセス上位10000ページの距離を計算した話&lt;/a&gt;&lt;br /&gt;&lt;/li&gt;
 &lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>【C&#43;&#43;】mainなどの関数の中では大きな配列を確保できない</title>
-      <link>https://zaburo-ch.github.io/post/20150617_0/</link>
-      <pubDate>Wed, 17 Jun 2015 02:48:23 +0900</pubDate>
-      
-      <guid>https://zaburo-ch.github.io/post/20150617_0/</guid>
-      <description>&lt;p&gt;これがSegmentation faultになるのに対して&lt;br /&gt;
-&lt;script src=&#34;https://gist.github.com/zaburo-ch/f7a91485933876727a59.js&#34;&gt;&lt;/script&gt;&lt;br /&gt;
-これは正しく実行される。&lt;br /&gt;
-&lt;script src=&#34;https://gist.github.com/zaburo-ch/8c0bac865b2f9ddeb8f4.js&#34;&gt;&lt;/script&gt;&lt;br /&gt;
-グローバル変数はヒープに取られるのに対して、&lt;br /&gt;
-ローカル変数はスタックに積まれていく。&lt;br /&gt;
-スタックのサイズは制限されていることが多く、&lt;br /&gt;
-(bashならulimit -aで確認できる。8192KBだった)&lt;br /&gt;
-bool型は1byteなので配列のサイズは10000001/1024≒9765KBとなり&lt;br /&gt;
-スタックのサイズ制限を超えてしまうので、&lt;br /&gt;
-メモリリミットより小さいがローカル変数として確保できない。&lt;/p&gt;
-
-&lt;p&gt;[参考]&lt;br /&gt;
-&lt;a href=&#34;http://homepage2.nifty.com/well/Variable.html&#34; target=&#34;_blank&#34; title=&#34;http://homepage2.nifty.com/well/Variable.html&#34;&gt;&lt;a href=&#34;http://homepage2.nifty.com/well/Variable.html&#34;&gt;http://homepage2.nifty.com/well/Variable.html&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;[2015/6/30 追記]&lt;br /&gt;
-newでもいけるということをコメントで教えて頂きました。&lt;br /&gt;
-なるほど確かにnewでもヒープに確保されますね。&lt;br /&gt;
-newでいけるということは中でnew使ってくれてるvectorでもいけます。&lt;br /&gt;
-&lt;script src=&#34;https://gist.github.com/zaburo-ch/a976a83edecd0eb952e9.js&#34;&gt;&lt;/script&gt;
-ご指摘ありがとうございました！&lt;/p&gt;
 </description>
     </item>
     
