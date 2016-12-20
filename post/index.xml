@@ -1,13 +1,93 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on ZABURO app</title>
-    <link>https://zaburo-ch.github.io/post/</link>
-    <description>Recent content in Posts on ZABURO app</description>
+    <title>Post-rsses on ZABURO app</title>
+    <link>https://zaburo-ch.github.io/post/index.xml</link>
+    <description>Recent content in Post-rsses on ZABURO app</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Wed, 29 Jun 2016 13:06:24 +0900</lastBuildDate>
+    <copyright>Written by ZABURO</copyright>
+    <lastBuildDate>Sat, 17 Dec 2016 17:04:54 +0900</lastBuildDate>
     <atom:link href="https://zaburo-ch.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Style Transfer いろいろ</title>
+      <link>https://zaburo-ch.github.io/post/style-transfer/</link>
+      <pubDate>Sat, 17 Dec 2016 17:04:54 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/post/style-transfer/</guid>
+      <description>&lt;p&gt;研究室のゼミでStyle Transferに関して論文紹介を行った際に使用したスライドを&lt;br /&gt;
+少し修正してslide shareにアップロードしました．&lt;/p&gt;
+
+&lt;p&gt;&lt;iframe src=&#34;//www.slideshare.net/slideshow/embed_code/key/crr96NXhlx6ow9&#34; width=&#34;595&#34; height=&#34;485&#34; frameborder=&#34;0&#34; marginwidth=&#34;0&#34; marginheight=&#34;0&#34; scrolling=&#34;no&#34; style=&#34;border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;&#34; allowfullscreen&gt; &lt;/iframe&gt; &lt;div style=&#34;margin-bottom:5px&#34;&gt; &lt;strong&gt; &lt;a href=&#34;//www.slideshare.net/zaburo/style-transfer&#34; title=&#34;Style transfer&#34; target=&#34;_blank&#34;&gt;Style transfer&lt;/a&gt; &lt;/strong&gt; from &lt;strong&gt;&lt;a target=&#34;_blank&#34; href=&#34;//www.slideshare.net/zaburo&#34;&gt;zaburo&lt;/a&gt;&lt;/strong&gt; &lt;/div&gt;&lt;/p&gt;
+
+&lt;p&gt;TensorFlowの練習も兼ねて実装してみたので&lt;br /&gt;
+この記事では，実装するときに悩んだところなどついていくつか取り上げたいと思います．&lt;/p&gt;
+
+&lt;p&gt;下記の実装を参考にさせていただきました．&lt;br /&gt;
+&lt;a href=&#34;https://github.com/cysmith/neural-style-tf&#34;&gt;https://github.com/cysmith/neural-style-tf&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;https://github.com/tensorflow/magenta/tree/master/magenta/models/image_stylization&#34;&gt;https://github.com/tensorflow/magenta/tree/master/magenta/models/image_stylization&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;まずはスライド中でGatys et al. 2016aとして紹介している&lt;br /&gt;
+もっとも基本的なStyle Transferを実装します．コードは&lt;a href=&#34;https://github.com/zaburo-ch/style_transfer/blob/master/my_style_transfer.py&#34;&gt;こちら&lt;/a&gt;．&lt;/p&gt;
+
+&lt;p&gt;基本的には論文の式を実装するだけですが&lt;br /&gt;
+コンテンツの損失の式がピクセル数で割るような形になっていないのに&lt;br /&gt;
+論文に入力画像のサイズが書いていないので(見逃しているだけ？)，&lt;br /&gt;
+論文のalphaとbetaの比をそのままつかってもうまくいきませんでした．&lt;/p&gt;
+
+&lt;p&gt;そこでJohnson et al. 2016に書かれている式を使うことにしました．&lt;br /&gt;
+具体的にはコンテンツの損失で二乗和をとっているところを二乗平均にしました．&lt;br /&gt;
+ついでに，スタイルの損失についてもJohnson et al. 2016に従って修正します．&lt;br /&gt;
+ここはGram matrixを&lt;code&gt;height * width&lt;/code&gt;で割って二乗平均をとる形にしました．&lt;br /&gt;
+(Gram matrixを&lt;code&gt;channel * height * width&lt;/code&gt;で割るのと等価なはずです)&lt;/p&gt;
+
+&lt;p&gt;VGGについてはTensorFlow-Slimを使ってサクッと書きました．&lt;br /&gt;
+基本は&lt;a href=&#34;https://github.com/tensorflow/tensorflow/blob/master/tensorflow/contrib/slim/python/slim/nets/vgg.py&#34;&gt;slimの下にあるvgg_16&lt;/a&gt;から全結合層を除いたものになっています．&lt;br /&gt;
+endpointはそのままだとkeyが&lt;code&gt;vgg_16/convN/convN_M&lt;/code&gt;のような形になるので，&lt;br /&gt;
+使いやすいようにkeyを変更して使っています．&lt;br /&gt;
+slimを使うと数行でVGG16が実装できるので非常に便利でした．&lt;/p&gt;
+
+&lt;p&gt;また，損失の定義する方法としては，コンテンツ・スタイル画像をテンソルとして別々に定義し&lt;br /&gt;
+最適化の際にそれらをVGGに入力した値などを計算させるような方法も考えられますが，&lt;br /&gt;
+損失を定義する段階でコンテンツ・スタイル画像を入力した場合の計算しておき，&lt;br /&gt;
+それを定数として扱った方が高速に動作したのでそのように書きました．&lt;/p&gt;
+
+&lt;p&gt;次にGatys et al. 2016bで提案された色を保存したままStyle Transferを行う手法の1つである&lt;br /&gt;
+Luminance-only Transferを実装します．コードは&lt;a href=&#34;https://github.com/zaburo-ch/style_transfer/blob/master/luminance_only.py&#34;&gt;こちら&lt;/a&gt;&lt;br /&gt;
+これは&lt;a href=&#34;https://en.wikipedia.org/wiki/YIQ&#34;&gt;英語版WikipediaのYIQの記事&lt;/a&gt;にYIQとRGBの相互変換が載っているので&lt;br /&gt;
+これを実装すればほとんどおしまいです．&lt;/p&gt;
+
+&lt;p&gt;あとは，RGB -&amp;gt; YIQ -&amp;gt; YチャンネルはそのままでIQチャンネルを全て0にしたもの -&amp;gt; RGB&lt;br /&gt;
+という流れで変換してStyle Transferして結果のIQチャンネルを元のIQチャンネルに戻すだけです．&lt;br /&gt;
+また，コンテンツのYチャンネルとスタイルのYチャンネルの平均・分散が
+同じになるように途中でスタイルのYチャンネルを変換するとより結果がよくなるそうです．&lt;/p&gt;
+
+&lt;p&gt;Johnson et al. 2016についても&lt;a href=&#34;https://github.com/tensorflow/magenta/tree/master/magenta/models/image_stylization&#34;&gt;magentaのimage_stylization&lt;/a&gt;を参考にして実装してみましたが，&lt;br /&gt;
+いまひとつ綺麗な画像が生成できていないので要改善という感じです&amp;hellip;&lt;br /&gt;
+コードは&lt;a href=&#34;https://github.com/zaburo-ch/style_transfer/tree/master/fast_transfer&#34;&gt;こちら&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;もしかしたらTensorFlowのバージョンによって違うのかもしれませんが，&lt;br /&gt;
+&lt;code&gt;tf.image.convert_image_dtype(image, dtype=tf.float32)&lt;/code&gt;&lt;br /&gt;
+は使った段階で[0, 1)に値が丸められるので，この後で255で割る必要はないようです．&lt;br /&gt;
+参考にしたコードでは255で割っていたのでそれを真似していたらハマってしまいました&amp;hellip;&lt;/p&gt;
+
+&lt;p&gt;あとデバッグの際にはsummaryで値を眺めてみるというのもありですが，&lt;br /&gt;
+&lt;code&gt;tf.Print&lt;/code&gt;で実際の値を見るのも非常に役に立ちました．↓このへんを参考に．
+&lt;a href=&#34;http://stackoverflow.com/questions/38810424/how-does-one-debug-nan-values-in-tensorflow/38813502&#34;&gt;http://stackoverflow.com/questions/38810424/how-does-one-debug-nan-values-in-tensorflow/38813502&lt;/a&gt;
+&lt;a href=&#34;https://www.tensorflow.org/api_docs/python/control_flow_ops/debugging_operations#Print&#34;&gt;https://www.tensorflow.org/api_docs/python/control_flow_ops/debugging_operations#Print&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;とりあえず思いつくことは以上になります．&lt;br /&gt;
+ついこの間1ネットワークで任意のスタイルに適用できるという凄い論文&lt;br /&gt;
+(Chen &amp;amp; Schmidt 2016)が出たのでこれについても試してみたいですね．&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;参考文献&lt;/strong&gt;&lt;br /&gt;
+ - Gatys et al. 2016a &lt;a href=&#34;http://www.cv-foundation.org/openaccess/content_cvpr_2016/papers/Gatys_Image_Style_Transfer_CVPR_2016_paper.pdf&#34;&gt;Image Style Transfer Using Convolutional Neural Networks&lt;/a&gt;&lt;br /&gt;
+ - Gatys et al. 2016b &lt;a href=&#34;https://arxiv.org/abs/1606.05897&#34;&gt;Preserving Color in Neural Artistic Style Transfer&lt;/a&gt;&lt;br /&gt;
+ - Johnson et al. 2016 &lt;a href=&#34;https://arxiv.org/abs/1603.08155&#34;&gt;Perceptual Losses for Real-Time Style Transfer and Super-Resolution&lt;/a&gt;&lt;br /&gt;
+ - Chen &amp;amp; Schmidt 2016 &lt;a href=&#34;https://arxiv.org/abs/1612.04337&#34;&gt;Fast Patch-based Style Transfer of Arbitrary Style&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>t-SNE の逆変換を試してみた</title>
@@ -564,7 +644,7 @@ Goでは普通にClientを使ってGETやらHEADリクエストを行うと、&l
 &lt;p&gt;参考にしたページ&lt;br /&gt;
 &lt;a href=&#34;http://stackoverflow.com/questions/23297520/how-can-i-make-the-go-http-client-not-follow-redirects-automatically&#34;&gt;rest - How Can I Make the Go HTTP Client NOT Follow Redirects Automatically? - Stack Overflow&lt;/a&gt;&lt;/p&gt;
 
-&lt;h2 id=&#34;リダイレクト時の動作を変更する:7a97346472b573b7ec258a58d0cd30e4&#34;&gt;リダイレクト時の動作を変更する&lt;/h2&gt;
+&lt;h2 id=&#34;リダイレクト時の動作を変更する&#34;&gt;リダイレクト時の動作を変更する&lt;/h2&gt;
 
 &lt;p&gt;&lt;code&gt;Client.CheckRedirect func(req *Request, via []*Request) error&lt;/code&gt;&lt;br /&gt;
 がリダイレクト時の動作を定めているためこれを変更します。&lt;br /&gt;
@@ -577,7 +657,7 @@ CheckRedirectがerrorを返すと、Clientはリダイレクト先を取得す�
 HEADリクエストの場合もBodyをcloseしなきゃいけないのかはちょっとわかりませんが、&lt;br /&gt;
 &lt;a href=&#34;http://golang.org/pkg/net/http/#Response&#34;&gt;これ&lt;/a&gt;を見る限りは必要そうなのでcloseしています。&lt;/p&gt;
 
-&lt;h2 id=&#34;より低レベルのメソッドを利用する:7a97346472b573b7ec258a58d0cd30e4&#34;&gt;より低レベルのメソッドを利用する&lt;/h2&gt;
+&lt;h2 id=&#34;より低レベルのメソッドを利用する&#34;&gt;より低レベルのメソッドを利用する&lt;/h2&gt;
 
 &lt;p&gt;http.TransportのRoundTripメソッドを使ってリクエストを行います。&lt;/p&gt;
 
@@ -694,36 +774,6 @@ Githubでソースコード、アイコン等を公開しました。&lt;/p&gt;
 APIkeyの部分だけ変えてあるのでそこ変えないと動きません。&lt;/p&gt;
 
 &lt;p&gt;WebRTCを使ったWebアプリ等を作る際に役立てて頂ければと思います。&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>【C&#43;&#43;】mainなどの関数の中では大きな配列を確保できない</title>
-      <link>https://zaburo-ch.github.io/post/20150617_0/</link>
-      <pubDate>Wed, 17 Jun 2015 02:48:23 +0900</pubDate>
-      
-      <guid>https://zaburo-ch.github.io/post/20150617_0/</guid>
-      <description>&lt;p&gt;これがSegmentation faultになるのに対して&lt;br /&gt;
-&lt;script src=&#34;https://gist.github.com/zaburo-ch/f7a91485933876727a59.js&#34;&gt;&lt;/script&gt;&lt;br /&gt;
-これは正しく実行される。&lt;br /&gt;
-&lt;script src=&#34;https://gist.github.com/zaburo-ch/8c0bac865b2f9ddeb8f4.js&#34;&gt;&lt;/script&gt;&lt;br /&gt;
-グローバル変数はヒープに取られるのに対して、&lt;br /&gt;
-ローカル変数はスタックに積まれていく。&lt;br /&gt;
-スタックのサイズは制限されていることが多く、&lt;br /&gt;
-(bashならulimit -aで確認できる。8192KBだった)&lt;br /&gt;
-bool型は1byteなので配列のサイズは10000001/1024≒9765KBとなり&lt;br /&gt;
-スタックのサイズ制限を超えてしまうので、&lt;br /&gt;
-メモリリミットより小さいがローカル変数として確保できない。&lt;/p&gt;
-
-&lt;p&gt;[参考]&lt;br /&gt;
-&lt;a href=&#34;http://homepage2.nifty.com/well/Variable.html&#34; target=&#34;_blank&#34; title=&#34;http://homepage2.nifty.com/well/Variable.html&#34;&gt;&lt;a href=&#34;http://homepage2.nifty.com/well/Variable.html&#34;&gt;http://homepage2.nifty.com/well/Variable.html&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;[2015/6/30 追記]&lt;br /&gt;
-newでもいけるということをコメントで教えて頂きました。&lt;br /&gt;
-なるほど確かにnewでもヒープに確保されますね。&lt;br /&gt;
-newでいけるということは中でnew使ってくれてるvectorでもいけます。&lt;br /&gt;
-&lt;script src=&#34;https://gist.github.com/zaburo-ch/a976a83edecd0eb952e9.js&#34;&gt;&lt;/script&gt;
-ご指摘ありがとうございました！&lt;/p&gt;
 </description>
     </item>
     

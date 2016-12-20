@@ -79,7 +79,7 @@ Goでは普通にClientを使ってGETやらHEADリクエストを行うと、<b
 <p>参考にしたページ<br />
 <a href="http://stackoverflow.com/questions/23297520/how-can-i-make-the-go-http-client-not-follow-redirects-automatically">rest - How Can I Make the Go HTTP Client NOT Follow Redirects Automatically? - Stack Overflow</a></p>
 
-<h2 id="リダイレクト時の動作を変更する:7a97346472b573b7ec258a58d0cd30e4">リダイレクト時の動作を変更する</h2>
+<h2 id="リダイレクト時の動作を変更する">リダイレクト時の動作を変更する</h2>
 
 <p><code>Client.CheckRedirect func(req *Request, via []*Request) error</code><br />
 がリダイレクト時の動作を定めているためこれを変更します。<br />
@@ -92,7 +92,7 @@ CheckRedirectがerrorを返すと、Clientはリダイレクト先を取得す�
 HEADリクエストの場合もBodyをcloseしなきゃいけないのかはちょっとわかりませんが、<br />
 <a href="http://golang.org/pkg/net/http/#Response">これ</a>を見る限りは必要そうなのでcloseしています。</p>
 
-<h2 id="より低レベルのメソッドを利用する:7a97346472b573b7ec258a58d0cd30e4">より低レベルのメソッドを利用する</h2>
+<h2 id="より低レベルのメソッドを利用する">より低レベルのメソッドを利用する</h2>
 
 <p>http.TransportのRoundTripメソッドを使ってリクエストを行います。</p>
 

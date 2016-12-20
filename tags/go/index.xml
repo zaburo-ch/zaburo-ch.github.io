@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Go on ZABURO app</title>
-    <link>https://zaburo-ch.github.io/tags/go/</link>
-    <description>Recent content in Go on ZABURO app</description>
+    <title>ZABURO app</title>
+    <link>https://zaburo-ch.github.io/tags/go/index.xml</link>
+    <description>Recent content on ZABURO app</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Sat, 12 Sep 2015 00:08:08 +0900</lastBuildDate>
+    <copyright>Written by ZABURO</copyright>
     <atom:link href="https://zaburo-ch.github.io/tags/go/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
@@ -26,7 +26,7 @@ Goでは普通にClientを使ってGETやらHEADリクエストを行うと、&l
 &lt;p&gt;参考にしたページ&lt;br /&gt;
 &lt;a href=&#34;http://stackoverflow.com/questions/23297520/how-can-i-make-the-go-http-client-not-follow-redirects-automatically&#34;&gt;rest - How Can I Make the Go HTTP Client NOT Follow Redirects Automatically? - Stack Overflow&lt;/a&gt;&lt;/p&gt;
 
-&lt;h2 id=&#34;リダイレクト時の動作を変更する:7a97346472b573b7ec258a58d0cd30e4&#34;&gt;リダイレクト時の動作を変更する&lt;/h2&gt;
+&lt;h2 id=&#34;リダイレクト時の動作を変更する&#34;&gt;リダイレクト時の動作を変更する&lt;/h2&gt;
 
 &lt;p&gt;&lt;code&gt;Client.CheckRedirect func(req *Request, via []*Request) error&lt;/code&gt;&lt;br /&gt;
 がリダイレクト時の動作を定めているためこれを変更します。&lt;br /&gt;
@@ -39,7 +39,7 @@ CheckRedirectがerrorを返すと、Clientはリダイレクト先を取得す�
 HEADリクエストの場合もBodyをcloseしなきゃいけないのかはちょっとわかりませんが、&lt;br /&gt;
 &lt;a href=&#34;http://golang.org/pkg/net/http/#Response&#34;&gt;これ&lt;/a&gt;を見る限りは必要そうなのでcloseしています。&lt;/p&gt;
 
-&lt;h2 id=&#34;より低レベルのメソッドを利用する:7a97346472b573b7ec258a58d0cd30e4&#34;&gt;より低レベルのメソッドを利用する&lt;/h2&gt;
+&lt;h2 id=&#34;より低レベルのメソッドを利用する&#34;&gt;より低レベルのメソッドを利用する&lt;/h2&gt;
 
 &lt;p&gt;http.TransportのRoundTripメソッドを使ってリクエストを行います。&lt;/p&gt;
 

@@ -1,0 +1,180 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+
+  
+  <meta charset="UTF-8">
+  <title>
+    Style Transfer いろいろ | ZABURO app
+  </title>
+
+
+  
+  <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
+
+
+  
+  <link rel="stylesheet" href="/css/sanitize.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/highlight_monokai.css">
+  
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/theme.css">
+
+
+  
+  
+
+
+</head>
+
+
+
+<body>
+<div class="container">
+
+  
+  <header role="banner">
+    <div class="row gutters">
+      <div id="site-title" class="col span_6">
+        <h1><a href="/">ZABURO app</a></h1>
+        <h2>アプリ作ったり、なんやかんや</h2>
+      </div>
+      <div id="social" class="col span_6">
+        <ul>
+          <li><a href="/about/">About</a></li>
+          <li><a href="/product/">Product</a></li>
+          
+          
+          <li><a href="https://github.com/zaburo-ch" target="_blank">GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+
+  
+  <main id="single" role="main">
+    <div class="article-header">
+      <h1>Style Transfer いろいろ</h1>
+      <div class="meta">
+        Dec 17, 2016 &nbsp;
+        
+          #<a href="/tags/python">Python</a>&nbsp;
+        
+          #<a href="/tags/tensorflow">TensorFlow</a>&nbsp;
+        
+      </div>
+    </div>
+    <article>
+      <p>研究室のゼミでStyle Transferに関して論文紹介を行った際に使用したスライドを<br />
+少し修正してslide shareにアップロードしました．</p>
+
+<p><iframe src="//www.slideshare.net/slideshow/embed_code/key/crr96NXhlx6ow9" width="595" height="485" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe> <div style="margin-bottom:5px"> <strong> <a href="//www.slideshare.net/zaburo/style-transfer" title="Style transfer" target="_blank">Style transfer</a> </strong> from <strong><a target="_blank" href="//www.slideshare.net/zaburo">zaburo</a></strong> </div></p>
+
+<p>TensorFlowの練習も兼ねて実装してみたので<br />
+この記事では，実装するときに悩んだところなどついていくつか取り上げたいと思います．</p>
+
+<p>下記の実装を参考にさせていただきました．<br />
+<a href="https://github.com/cysmith/neural-style-tf">https://github.com/cysmith/neural-style-tf</a><br />
+<a href="https://github.com/tensorflow/magenta/tree/master/magenta/models/image_stylization">https://github.com/tensorflow/magenta/tree/master/magenta/models/image_stylization</a></p>
+
+<p>まずはスライド中でGatys et al. 2016aとして紹介している<br />
+もっとも基本的なStyle Transferを実装します．コードは<a href="https://github.com/zaburo-ch/style_transfer/blob/master/my_style_transfer.py">こちら</a>．</p>
+
+<p>基本的には論文の式を実装するだけですが<br />
+コンテンツの損失の式がピクセル数で割るような形になっていないのに<br />
+論文に入力画像のサイズが書いていないので(見逃しているだけ？)，<br />
+論文のalphaとbetaの比をそのままつかってもうまくいきませんでした．</p>
+
+<p>そこでJohnson et al. 2016に書かれている式を使うことにしました．<br />
+具体的にはコンテンツの損失で二乗和をとっているところを二乗平均にしました．<br />
+ついでに，スタイルの損失についてもJohnson et al. 2016に従って修正します．<br />
+ここはGram matrixを<code>height * width</code>で割って二乗平均をとる形にしました．<br />
+(Gram matrixを<code>channel * height * width</code>で割るのと等価なはずです)</p>
+
+<p>VGGについてはTensorFlow-Slimを使ってサクッと書きました．<br />
+基本は<a href="https://github.com/tensorflow/tensorflow/blob/master/tensorflow/contrib/slim/python/slim/nets/vgg.py">slimの下にあるvgg_16</a>から全結合層を除いたものになっています．<br />
+endpointはそのままだとkeyが<code>vgg_16/convN/convN_M</code>のような形になるので，<br />
+使いやすいようにkeyを変更して使っています．<br />
+slimを使うと数行でVGG16が実装できるので非常に便利でした．</p>
+
+<p>また，損失の定義する方法としては，コンテンツ・スタイル画像をテンソルとして別々に定義し<br />
+最適化の際にそれらをVGGに入力した値などを計算させるような方法も考えられますが，<br />
+損失を定義する段階でコンテンツ・スタイル画像を入力した場合の計算しておき，<br />
+それを定数として扱った方が高速に動作したのでそのように書きました．</p>
+
+<p>次にGatys et al. 2016bで提案された色を保存したままStyle Transferを行う手法の1つである<br />
+Luminance-only Transferを実装します．コードは<a href="https://github.com/zaburo-ch/style_transfer/blob/master/luminance_only.py">こちら</a><br />
+これは<a href="https://en.wikipedia.org/wiki/YIQ">英語版WikipediaのYIQの記事</a>にYIQとRGBの相互変換が載っているので<br />
+これを実装すればほとんどおしまいです．</p>
+
+<p>あとは，RGB -&gt; YIQ -&gt; YチャンネルはそのままでIQチャンネルを全て0にしたもの -&gt; RGB<br />
+という流れで変換してStyle Transferして結果のIQチャンネルを元のIQチャンネルに戻すだけです．<br />
+また，コンテンツのYチャンネルとスタイルのYチャンネルの平均・分散が
+同じになるように途中でスタイルのYチャンネルを変換するとより結果がよくなるそうです．</p>
+
+<p>Johnson et al. 2016についても<a href="https://github.com/tensorflow/magenta/tree/master/magenta/models/image_stylization">magentaのimage_stylization</a>を参考にして実装してみましたが，<br />
+いまひとつ綺麗な画像が生成できていないので要改善という感じです&hellip;<br />
+コードは<a href="https://github.com/zaburo-ch/style_transfer/tree/master/fast_transfer">こちら</a></p>
+
+<p>もしかしたらTensorFlowのバージョンによって違うのかもしれませんが，<br />
+<code>tf.image.convert_image_dtype(image, dtype=tf.float32)</code><br />
+は使った段階で[0, 1)に値が丸められるので，この後で255で割る必要はないようです．<br />
+参考にしたコードでは255で割っていたのでそれを真似していたらハマってしまいました&hellip;</p>
+
+<p>あとデバッグの際にはsummaryで値を眺めてみるというのもありですが，<br />
+<code>tf.Print</code>で実際の値を見るのも非常に役に立ちました．↓このへんを参考に．
+<a href="http://stackoverflow.com/questions/38810424/how-does-one-debug-nan-values-in-tensorflow/38813502">http://stackoverflow.com/questions/38810424/how-does-one-debug-nan-values-in-tensorflow/38813502</a>
+<a href="https://www.tensorflow.org/api_docs/python/control_flow_ops/debugging_operations#Print">https://www.tensorflow.org/api_docs/python/control_flow_ops/debugging_operations#Print</a></p>
+
+<p>とりあえず思いつくことは以上になります．<br />
+ついこの間1ネットワークで任意のスタイルに適用できるという凄い論文<br />
+(Chen &amp; Schmidt 2016)が出たのでこれについても試してみたいですね．</p>
+
+<p><strong>参考文献</strong><br />
+ - Gatys et al. 2016a <a href="http://www.cv-foundation.org/openaccess/content_cvpr_2016/papers/Gatys_Image_Style_Transfer_CVPR_2016_paper.pdf">Image Style Transfer Using Convolutional Neural Networks</a><br />
+ - Gatys et al. 2016b <a href="https://arxiv.org/abs/1606.05897">Preserving Color in Neural Artistic Style Transfer</a><br />
+ - Johnson et al. 2016 <a href="https://arxiv.org/abs/1603.08155">Perceptual Losses for Real-Time Style Transfer and Super-Resolution</a><br />
+ - Chen &amp; Schmidt 2016 <a href="https://arxiv.org/abs/1612.04337">Fast Patch-based Style Transfer of Arbitrary Style</a></p>
+
+    </article>
+    
+ <aside><div id="disqus_thread"></div></aside> 
+
+<script type="text/javascript">
+     
+    var disqus_shortname = 'zaburoapp';
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+  </main>
+
+
+  
+  <footer role="contentinfo">
+    <div style="text-align:center;">
+      
+      Written by ZABURO
+    </div>
+  </footer>
+
+
+</div>
+
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+</body>
+</html>
+
