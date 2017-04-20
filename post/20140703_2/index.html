@@ -9,6 +9,27 @@
     AOJ 2224 Save your cat | ZABURO app
   </title>
 
+  
+  <meta name="twitter:card" content="summary" />
+  <meta name="og:title" content="AOJ 2224 Save your cat" />
+  <meta name="og:description" content="フェンスを辺と考え、閉路をなくせばよいので、
+閉路をなくす　→　全域木の辺の数を最小にする
+壊す長さを最小に　→　長い辺から使っていく
+と考えると最小全域木と同じような解き方で解けます。
+UnionFind木を使ったクラスカル法で解く場合。
+fenceをcostの大きさで降順にソートして、
+使わなかったfenceのcostの和を出力します。
+
+プリム法で解く場合。
+プリム法は最小全域&rdquo;木&rdquo;をつくるので、森をつくるため、
+使われていない頂点に対して何度かプリム法で木を作ります。
+(森に対してプリム法を使う方法これしかおもいつかない……)
+あと、この実装方法だと同じ辺を何度もみることがあるので
+クラスカル法の時のように素直にsumを出力できません。
+ " />
+  <meta name="twitter:url" content="https://zaburo-ch.github.io/post/20140703_2/" />
+  <meta name="twitter:site" content="@musharna000" />
+
 
   
   <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
@@ -84,22 +105,13 @@ fenceをcostの大きさで降順にソートして、<br />
 <script  src="http://gist-it.appspot.com/github/zaburo-ch/icpc_practice/blob/master/aoj2224prim.cpp"></script>
 
     </article>
+
     
- <aside><div id="disqus_thread"></div></aside> 
-
-<script type="text/javascript">
-     
-    var disqus_shortname = 'zaburoapp';
-
-     
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-
+    <div style="margin: 60px 0 10px;">
+      <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="vertical-normal" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-via="musharna000">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+    
+    </div>
   </main>
 
 

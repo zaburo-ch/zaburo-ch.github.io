@@ -9,6 +9,27 @@
     とんぺーのミスコンにエントリーした気分になれるブックマークレットつくった | ZABURO app
   </title>
 
+  
+  <meta name="twitter:card" content="summary" />
+  <meta name="og:title" content="とんぺーのミスコンにエントリーした気分になれるブックマークレットつくった" />
+  <meta name="og:description" content="使い方
+1.幅140px高さ260pxの画像を用意する。
+2.画像のURLをこのテキストボックスに入れる。
+
+3.このリンクを右クリックしてブックマーク
+学祭ミスコン ブックマークレット
+4.コンテストの公式ページに行く
+第6回Mr.&amp;Ms.東北大コンテスト
+http://www.festa-tohoku.org/program/contest/contest.html
+5.先ほどのブックマークを開く！
+5人目のミス候補が現れます。
+マウスを画像にのせたときの白いオーバーレイは実装しましたが、
+名前やNo.5の記述は省略しました。
+以下に元のコードを載せるので、誰かやって！
+ var imgurl = &lsquo;ms1.jpg&rsquo;; var msul = $(&lsquo;ul&rsquo;).eq(1); msul.children().attr(&lsquo;style&rsquo;,&lsquo;margin-right:25px;&lsquo;); var newms = $(&rsquo;&lt;li&gt;&rsquo;); newms.css({ &lsquo;position&rsquo;:&lsquo;relative&rsquo;, &lsquo;float&rsquo;:&lsquo;left&rsquo;, &lsquo;width&rsquo;:&lsquo;150px&rsquo;, &lsquo;height&rsquo;:&lsquo;270px&rsquo;, &lsquo;background-image&rsquo;:&lsquo;-moz-linear-gradient(top,#931f20,#f29d80 50%,#931f20)&rsquo; }); newms.css(&lsquo;background-image&rsquo;,&lsquo;-webkit-gradient(linear,left top,left bottom,from(#931f20),color-stop(0.5, #f29d80),to(#931f20))&rsquo;); var msimg = $(&rsquo;&lt;img&gt;&rsquo;); msimg.attr(&lsquo;src&rsquo;,imgurl); msimg.css({ &lsquo;position&rsquo;:&lsquo;absolute&rsquo;, &lsquo;top&rsquo;:&lsquo;5px&rsquo;, &lsquo;left&rsquo;:&lsquo;5px&rsquo;, }); newms.append(msimg); var overlay = $(&rsquo;&lt;div&gt;&rsquo;); overlay.css({ &lsquo;position&rsquo;:&lsquo;absolute&rsquo;, &lsquo;top&rsquo;:&lsquo;4px&rsquo;, &lsquo;left&rsquo;:&lsquo;4px&rsquo;, &lsquo;width&rsquo;:&lsquo;142px&rsquo;, &lsquo;z-index&rsquo;:&lsquo;100&rsquo;, &lsquo;height&rsquo;:&lsquo;262px&rsquo;, &lsquo;background&rsquo;:&lsquo;rgba(255,255,255,0.15)&rsquo; }); overlay.hide(); newms.append(overlay); newms.hover( function(){ overlay.show(); }, function(){ overlay." />
+  <meta name="twitter:url" content="https://zaburo-ch.github.io/post/20141007_0/" />
+  <meta name="twitter:site" content="@musharna000" />
+
 
   
   <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
@@ -134,22 +155,13 @@ msul.append(newms);
 <a href="http://userjs.up.seesaa.net/js/bookmarklet.html">http://userjs.up.seesaa.net/js/bookmarklet.html</a></strong></a></p>
 
     </article>
+
     
- <aside><div id="disqus_thread"></div></aside> 
-
-<script type="text/javascript">
-     
-    var disqus_shortname = 'zaburoapp';
-
-     
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-
+    <div style="margin: 60px 0 10px;">
+      <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="vertical-normal" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-via="musharna000">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+    
+    </div>
   </main>
 
 

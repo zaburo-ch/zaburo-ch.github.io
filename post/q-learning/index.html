@@ -9,6 +9,43 @@
     Pythonで Q学習 を実装する | ZABURO app
   </title>
 
+  
+  <meta name="twitter:card" content="summary" />
+  <meta name="og:title" content="Pythonで Q学習 を実装する" />
+  <meta name="og:description" content="Deep Q-Networkについて調べてみたら面白い記事を見つけました。
+DQNの生い立ち　＋　Deep Q-NetworkをChainerで書いた
+http://qiita.com/Ugo-Nama/items/08c6a5f6a571335972d5
+この記事を読んで、Deep Q-Networkが
+Q学習 -&gt; Q-Network -&gt; Deep Q-Network という流れ生まれたものだということがわかりました。
+この流れをPythonで実装しながら辿ってみようと思います。
+今回はQ学習を実装します。
+Q学習について下記のページに詳しく載っているので割愛します。
+強化学習
+http://www.sist.ac.jp/~kanakubo/research/reinforcement_learning.html
+強化学習とは？
+http://sysplan.nams.kyushu-u.ac.jp/gen/edu/RL_intro.html
+まず、Q学習で適応する環境として次のような簡単な環境を考えます。
+環境の状態は、&#39;A&#39;または&#39;B&#39;からなる長さ8の文字列で表され、 その文字列にはある法則により得点がつけられる。 プレイヤーはその法則についての知識を予め持たないが、 文字列中の任意の1文字を選んで&#39;A&#39;または&#39;B&#39;に置き換えることができ、 その結果、その操作による得点の変化量を報酬として受け取る。  たぶんマルコフ決定過程になっていると思います。マルコフ性、エルゴート性も持つはず。
+文字列に得点をつける法則はなんでも良いのですが、
+今回は、特定の文字列(単語)に次のように得点を割り当てて、
+{&ldquo;A&rdquo;: 1, &ldquo;BB&rdquo;: 1, &ldquo;AB&rdquo;: 2, &ldquo;ABB&rdquo;: 3, &ldquo;BBA&rdquo;: 3, &ldquo;BBBB&rdquo;: 4}
+文字列中に含まれる単語の合計得点を文字列の得点とするということにします。
+例えば&rdquo;AAAAAAAA&rdquo;なら8点(1 * 8)、&rdquo;AAAAAAAB&rdquo;なら9点(1 * 7 &#43; 2)です。
+環境のとりうる状態は長さ8のそれぞれに&rsquo;A&rsquo;, &lsquo;B&rsquo;の2通りあるので2^8通りあり、
+アクションは、何もしないのと、位置1~8のそれぞれを&rsquo;A&rsquo;または&rsquo;B&rsquo;なのでを計17通りあります。
+今回のコードでは状態は文字列、アクションは整数(0~16)で管理します。
+ 先述した強化学習の記事では、Q学習の学習中に、
+一定の回数遷移を繰り返した後、状態をs0に戻すものとそうでないものがあり、
+どちらを採用するか悩んだので QLearning(n_rounds, t_max)として
+2重のループにすることで一応どちらの方法でも実行できるようにしました。
+これを実行結果はこんな感じ
+軸のラベルを書き忘れていますが、
+横軸が外側のループが回った数で、縦軸がそれまでに学習したQを使ってt_max回遷移した時のスコアですね。
+&ldquo;ABBBBBBB&rdquo;に遷移して終わるのとき最大値28をとるのですが、
+約900セット(t_max * 900回)の学習でそれを実現する遷移ができるようになっています。" />
+  <meta name="twitter:url" content="https://zaburo-ch.github.io/post/q-learning/" />
+  <meta name="twitter:site" content="@musharna000" />
+
 
   
   <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
@@ -128,22 +165,13 @@ http://sysplan.nams.kyushu-u.ac.jp/gen/edu/RL_intro.html</a></p>
 http://d.hatena.ne.jp/poor_code/20090628/1246176165</a></p>
 
     </article>
+
     
- <aside><div id="disqus_thread"></div></aside> 
-
-<script type="text/javascript">
-     
-    var disqus_shortname = 'zaburoapp';
-
-     
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-
+    <div style="margin: 60px 0 10px;">
+      <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="vertical-normal" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-via="musharna000">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+    
+    </div>
   </main>
 
 

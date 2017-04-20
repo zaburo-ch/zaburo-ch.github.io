@@ -9,6 +9,32 @@
     【Android】NDK から OpenCV を使うプロジェクトを作る手順 | ZABURO app
   </title>
 
+  
+  <meta name="twitter:card" content="summary" />
+  <meta name="og:title" content="【Android】NDK から OpenCV を使うプロジェクトを作る手順" />
+  <meta name="og:description" content="久しぶりにAndroidでOpenCVを使おうとしたら
+書き始めるまでに必要な準備を忘れていたのでメモ。
+コメントを書き入れている部分は
+「ここにかかなければいけない、というわけではないけど
+ここに書いておくのが便利」という部分です
+環境 Eclipse 3.7.2
+・「プロパティ」→「Android」からOpenCVのライブラリを登録
+・OpenCVを使うActivityのメンバに以下を追加し
+private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) { @Override public void onManagerConnected(int status) { switch (status) { case LoaderCallbackInterface.SUCCESS: //ここで後で自分で作成するC/C&#43;&#43;でopencvを動かすライブラリをロードしておく System.loadLibrary(&ldquo;my_opencv_method&rdquo;); //ロードが成功した場合にのみボタンを有効にする mButton.setEnabled(true); break; default: super.onManagerConnected(status); break; } } };onResumeを以下のようにオーバーライド
+@Override public void onResume() { super.onResume(); //ボタンはロード成功するまでは無効化しておく mButton1.setEnabled(false); OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_2_4_3, this, mLoaderCallback); }・プロジェクトを右クリック→「Android ツール」→「Add native support」
+・プロジェクトを右クリック→「プロパティ」→「C/C&#43;&#43;一般」→「パスおよびシンボル」→「インクルード」タブ→「追加」ボタン
+で最低でも以下の３つを登録
+/opt/OpenCV-2.4.6-android-sdk/sdk/native/jni/include
+/opt/android-ndk-r9/sources/cxx-stl/gnu-libstdc&#43;&#43;/4.6/include
+/opt/android-ndk-r9/sources/cxx-stl/gnu-libstdc&#43;&#43;/4.6/libs/armeabi-v7a/include
+(僕は/optに各ライブラリを置いているのでそのへんは適宜修正)
+・jniフォルダを作成して、Android.mkとApplication.mkを用意
+(他のプロジェクトからコピペして編集)
+Android.mk
+LOCAL_PATH := $(call my-dir) include $(CLEAR_VARS) #OPENCV_CAMERA_MODULES:=off #OPENCV_INSTALL_MODULES:=off #OPENCV_LIB_TYPE:=SHARED include /opt/OpenCV-2." />
+  <meta name="twitter:url" content="https://zaburo-ch.github.io/post/20140106_0/" />
+  <meta name="twitter:site" content="@musharna000" />
+
 
   
   <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
@@ -154,22 +180,13 @@ public static native int[] findContours(long matAddr);</code></pre><br />
 <p>・コードを書いて実行</p>
 
     </article>
+
     
- <aside><div id="disqus_thread"></div></aside> 
-
-<script type="text/javascript">
-     
-    var disqus_shortname = 'zaburoapp';
-
-     
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-
+    <div style="margin: 60px 0 10px;">
+      <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="vertical-normal" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-via="musharna000">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+    
+    </div>
   </main>
 
 

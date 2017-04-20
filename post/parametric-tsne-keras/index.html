@@ -9,6 +9,46 @@
     Parametric t-SNE を Keras で書いた | ZABURO app
   </title>
 
+  
+  <meta name="twitter:card" content="summary" />
+  <meta name="og:title" content="Parametric t-SNE を Keras で書いた" />
+  <meta name="og:description" content="最近、t-SNEについていろいろ調べいて、その中でParametric t-SNEの論文を読みました。
+元のt-SNEは可視化や次元削減の手法としてとても有用なのですが、 変換後の座標を乱数で初期化し、
+KLダイバージェンスが小さくなるように勾配降下で座標を調整していく感じなので、
+初めの乱数次第で配置は大きく変わりますし、別なデータを同じような場所に投射するようなことができません。
+そのため、kaggleなどで前処理として使われる際には、
+訓練データとテストデータをくっつけて変換するという方法が取られています。
+しかし、本来見れないはずのテストデータを訓練データを変換する時にも使うというのはグレーな感じがします。
+そこで、座標を直接調整するのではなく、
+元の座標をパラメトリックな関数で低次元の座標に投射するようにして、
+その関数のパラメータを学習してあげようというのがParametric t-SNEです。
+ここで、関数としてニューラルネットが使われます。
+論文では、RBMを重ねてpre trainingしてfine tuningというのをやっているのですが、
+どうせやるならということで今風にReLUで書きました。
+コードはここに置いてあります。
+とりあえず論文にも載っているMNISTで試しました。
+100 epoch回すとAWS EC2のg2.2xlargeインスタンスでだいたい10分程度かかります。
+普通のMNISTなので60000件の訓練データと10000件のテストデータがあります。
+学習していく過程が見れたら面白そうだなと思ったので、
+各epoch終了後テストデータに対して変換を行い、散布図を書くようにしました。
+結果はこんな感じ。
+(なんかgifが吐けなくてmp4をgifに変換したので画質が悪い&hellip;)
+訓練に使っていないデータに対してすごくいい感じに別けられていると思います。
+10~20 epochくらいでいい感じに別けられているので、
+10 epoch毎とかにミニバッチをシャッフルしてあげるともっと良くなるかもしれません。
+一応shuffle_intervalという変数が用意してあって、
+shuffle_interval回のepochが回るとミニバッチがシャッフルされてPが再計算されます。
+Pを計算する部分についてもPython上でですが並列化してあるので少しは早いと思います。
+Convolutional Parametric t-SNEだー！！って言って畳み込み層を使ったものも書いたのですが、
+普通のMLP版とあまり変わらなかったのでお蔵入りしました。
+いつもMNISTしてばかりなのでCIFAR-10でも試してみたのですがあまりうまくいきませんでした。
+そもそもt-SNEでCIFAR-10がうまくいくのが試していないので良くわかりませんが、
+これConvolutionalしてなんとか解決できないかなーと考えています。
+追記：
+逆変換も試しました。" />
+  <meta name="twitter:url" content="https://zaburo-ch.github.io/post/parametric-tsne-keras/" />
+  <meta name="twitter:site" content="@musharna000" />
+
 
   
   <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
@@ -120,22 +160,13 @@ shuffle_interval回のepochが回るとミニバッチがシャッフルされ�
 <a href="/post/tsne-decode/">逆変換も試しました。</a></p>
 
     </article>
+
     
- <aside><div id="disqus_thread"></div></aside> 
-
-<script type="text/javascript">
-     
-    var disqus_shortname = 'zaburoapp';
-
-     
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-
+    <div style="margin: 60px 0 10px;">
+      <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="vertical-normal" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-via="musharna000">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+    
+    </div>
   </main>
 
 

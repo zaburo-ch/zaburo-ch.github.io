@@ -9,6 +9,44 @@
     Wikipediaのアクセス上位10000ページの距離を計算した話 | ZABURO app
   </title>
 
+  
+  <meta name="twitter:card" content="summary" />
+  <meta name="og:title" content="Wikipediaのアクセス上位10000ページの距離を計算した話" />
+  <meta name="og:description" content="先日の記事の続きです。
+Wikipediaでリンクを辿って遊ぶ
+今回探したのはWikipediaに存在する記事のうち
+最も距離のはなれている記事の組み合わせです。
+ここで言う距離とは、ある記事から記事内のリンクのみを辿って行く時
+何回リンクを踏めばその記事に辿り着くかを表した数字です。
+複数あるルートのうち最も短いものをその組の距離としました。
+さて、Wikipediaについてですが、
+Wikipedia:全言語版の統計
+http://ja.wikipedia.org/wiki/Wikipedia:%E5%85%A8%E8%A8%80%E8%AA%9E%E7%89%88%E3%81%AE%E7%B5%B1%E8%A8%88
+によれば、2014年10月17日現在
+純記事数は全言語総計でなんと33,448,472もあるそうです。
+日本語のものだけで930,619もあるので
+これをすべて解析するとなると人生が終わるまでに
+計算し終わるかという問題が出てきます。
+というわけで今回は、日本語版Wikipediaの記事のうち
+ある日の閲覧数が上位の記事を一定数とって来て
+その記事のみを対象にページ間距離を計算しました。
+技術的なことは後日記事にするとして
+早速結果を書いていきたいと思います。
+まず2014年9月1日の閲覧数上位1000位に限定した場合の結果。
+上位20位のみを抜粋しました。
+&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&ndash;
+List of longest distance between Wikipedia pages
+20140901 : Page view Top 1000
+1: 8 続柄 -&gt; 近江友里恵
+2: 8 続柄 -&gt; たちかぜ自衛官いじめ自殺事件
+3: 8 国鉄105系電車 -&gt; たちかぜ自衛官いじめ自殺事件
+4: 8 七草 -&gt; 近江友里恵
+5: 8 七草 -&gt; たちかぜ自衛官いじめ自殺事件
+6: 8 カルトの集団自殺 -&gt; 近江友里恵
+7: 8 カルトの集団自殺 -&gt; たちかぜ自衛官いじめ自殺事件" />
+  <meta name="twitter:url" content="https://zaburo-ch.github.io/post/20141017_0/" />
+  <meta name="twitter:site" content="@musharna000" />
+
 
   
   <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
@@ -166,22 +204,13 @@
 <p>詳しい方法等はソースコードとともに後日記事にしたいと思います。</p>
 
     </article>
+
     
- <aside><div id="disqus_thread"></div></aside> 
-
-<script type="text/javascript">
-     
-    var disqus_shortname = 'zaburoapp';
-
-     
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-
+    <div style="margin: 60px 0 10px;">
+      <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="vertical-normal" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-via="musharna000">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+    
+    </div>
   </main>
 
 

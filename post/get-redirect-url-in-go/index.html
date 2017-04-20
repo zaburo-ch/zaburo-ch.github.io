@@ -9,6 +9,33 @@
     Go言語でリダイレクト先のURLを取得する | ZABURO app
   </title>
 
+  
+  <meta name="twitter:card" content="summary" />
+  <meta name="og:title" content="Go言語でリダイレクト先のURLを取得する" />
+  <meta name="og:description" content="タイトルのとおりGoでリダイレクト先のURLを取得します。
+Goでは普通にClientを使ってGETやらHEADリクエストを行うと、
+リダイレクトがあったとき自動的にリダイレクト先の内容をとってくるようになっているので、
+今回のようにリダイレクト先に行く必要の無い特殊なケースでは、
+リダイレクト時の動作を変更するか、より低レベルのメソッドを利用することで対応します。
+参考にしたページ
+rest - How Can I Make the Go HTTP Client NOT Follow Redirects Automatically? - Stack Overflow
+リダイレクト時の動作を変更する Client.CheckRedirect func(req *Request, via []*Request) error
+がリダイレクト時の動作を定めているためこれを変更します。
+CheckRedirectがerrorを返すと、Clientはリダイレクト先を取得する代わりに
+前のレスポンスの内容とそのerror(wrapped in a url.Error)を返します。
+ 30行目では型アサーションを用いてRedirectAttemptedErrorが起こったかを確認しています。
+HEADリクエストの場合もBodyをcloseしなきゃいけないのかはちょっとわかりませんが、
+これを見る限りは必要そうなのでcloseしています。
+より低レベルのメソッドを利用する http.TransportのRoundTripメソッドを使ってリクエストを行います。
+ Transportの設定難しそうだったのでひとまずhttp.DefaultTransport使ってます。
+ClientはStatusCodeが301,302,303,307の時にリダイレクトの処理を行うので、
+たぶんこの20行目の書き方でも上手く行くはずです。
+複数の値のどれかと一致すればtrueみたいな書き方がわからなかったので
+愚直に4つ書いて並べてあります。なんかいい方法あるんでしょうか。
+Pythonみたいにin演算子とかあればいいんですけどね。" />
+  <meta name="twitter:url" content="https://zaburo-ch.github.io/post/get-redirect-url-in-go/" />
+  <meta name="twitter:site" content="@musharna000" />
+
 
   
   <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
@@ -106,22 +133,13 @@ ClientはStatusCodeが301,302,303,307の時にリダイレクトの処理を行�
 Pythonみたいにin演算子とかあればいいんですけどね。</p>
 
     </article>
+
     
- <aside><div id="disqus_thread"></div></aside> 
-
-<script type="text/javascript">
-     
-    var disqus_shortname = 'zaburoapp';
-
-     
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-
+    <div style="margin: 60px 0 10px;">
+      <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="vertical-normal" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-via="musharna000">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+    
+    </div>
   </main>
 
 

@@ -9,6 +9,55 @@
     【Python】PageRankアルゴリズム | ZABURO app
   </title>
 
+  
+  <meta name="twitter:card" content="summary" />
+  <meta name="og:title" content="【Python】PageRankアルゴリズム" />
+  <meta name="og:description" content="PageRankというアルゴリズム、
+以前からなんとなくは知ってはいたのですが、
+ランダムサーファーモデルで計算する方法を聞いて、
+めちゃくちゃ賢いなこれーって思ったので実際にやってみました。
+ひとまずPageRankについて調べたことを纏めます。
+PageRankは基本的に次の２つの考え方でページの重要度を推定します。
+・多くのページからリンクされているページの質は高い
+・質の高いページからリンクされているページの質は高い
+これを数学的に考えるのにランダムサーファーモデルを利用します。
+ランダムサーファーモデルでは
+ページのリンク関係を有向グラフとして考え、
+人(サーファー)にこの有向グラフをランダムに辿らせたとき、
+人が居る確率が高いページを重要とします。
+まず、ページの総数をNとし、N次正方行列Mを
+M[i][j] = ページjにいるサーファーがページiに移動する確率
+と定義します。
+例えばページ0にページ1とページ5へのリンクしかないとすると、
+サーファーはランダムに移動するので
+M[i][0]は i=1or5 のとき1/2 となりそれ以外のiでは0となります。
+また、ベクトルP(t)を時刻tに各ページに人がいる確率とすると
+P(0)は全ての要素が 1/N のベクトルとなり
+P(t&#43;1)はMとP(t)の積を取ることで計算できます。
+有向グラフが強連結のとき、この遷移を無限に繰り返すことで
+Pはtに依らない一定の値に収束します。よってこのPは
+M P = P
+の解を要素の和が1になるよう正規化してあげることにより求められます。
+このPの大きさが各ページの重要度となります。
+行列計算において Ax = λx を解く、というのは固有値問題と言って
+色々な方法が考えられているらしいのですが、ここについては
+行列計算における高速アルゴリズム
+http://www.cms-initiative.jp/ja/events/0627yamamoto.pdf
+こちらのページが詳しいです。
+Pythonではscipy.sparse.linalg.eigsを使うと
+Implicitly Restarted Arnoldi で計算してくれます。
+ただ、M P = P を解くだけのためにこれらを使うのが速いのかは
+勉強不足で僕もよくわかっていません。
+実際のウェブページでは、ページ間の関係を有効グラフにしても
+必ずしも上で述べたような強連結になるわけではありません。
+そのため「一定の確率でサーファーはリンクを辿らずにランダムに移動する」
+という考えを新たに導入します。その時はMにあたるものを
+全ての要素が 1/N である N次正方行列Uと普通にリンクを辿る確率αを用いて
+(αM &#43; (1-α)U) として計算することによってPが求められます。
+次の図のようなリンク関係にあるページのPageRankを" />
+  <meta name="twitter:url" content="https://zaburo-ch.github.io/post/20150514_0/" />
+  <meta name="twitter:site" content="@musharna000" />
+
 
   
   <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
@@ -140,22 +189,13 @@ get_pagerank_simpleではもっと単純に<br />
 get_pagerank_simpleの方法でも十分実用に足りそうです。</p>
 
     </article>
+
     
- <aside><div id="disqus_thread"></div></aside> 
-
-<script type="text/javascript">
-     
-    var disqus_shortname = 'zaburoapp';
-
-     
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-
+    <div style="margin: 60px 0 10px;">
+      <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="vertical-normal" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-via="musharna000">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+    
+    </div>
   </main>
 
 

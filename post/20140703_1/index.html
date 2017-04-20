@@ -9,6 +9,24 @@
     AOJ 2200 Mr. Rito Post Office | ZABURO app
   </title>
 
+  
+  <meta name="twitter:card" content="summary" />
+  <meta name="og:title" content="AOJ 2200 Mr. Rito Post Office" />
+  <meta name="og:description" content="わからなくてぐぐりました。
+http://d.hatena.ne.jp/sune2/20120719/1342723320
+z[i]からz[i&#43;1]に移動するとき、
+陸路のみ 陸路　→　海路　→　陸路  のうち、どちらかのタイプの経路を辿る。
+この考え方で実装するとうまくいきます。
+dp[i][j]に対して、i-1のとき船があった場所をkとし
+z[i-1] →(陸路)→ k →(海路)→ j →(陸路)→ z[i]
+と進む事で船を場所jに移し自分はz[i]に移動することができます。
+k==jのとき、すなわち船を移動させる必要がないときは、
+必ずしもkを経由する必要がないのでz[i-1]からz[i]の陸最短路で良い。
+これがわからなくて何回かWAくらった。
+ " />
+  <meta name="twitter:url" content="https://zaburo-ch.github.io/post/20140703_1/" />
+  <meta name="twitter:site" content="@musharna000" />
+
 
   
   <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
@@ -83,22 +101,13 @@ k==jのとき、すなわち船を移動させる必要がないときは、<br 
 <script  src="http://gist-it.appspot.com/github/zaburo-ch/icpc_practice/blob/master/aoj2200ans.cpp"></script>
 
     </article>
+
     
- <aside><div id="disqus_thread"></div></aside> 
-
-<script type="text/javascript">
-     
-    var disqus_shortname = 'zaburoapp';
-
-     
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-
+    <div style="margin: 60px 0 10px;">
+      <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="vertical-normal" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-via="musharna000">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+    
+    </div>
   </main>
 
 

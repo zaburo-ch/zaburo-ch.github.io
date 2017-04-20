@@ -9,6 +9,28 @@
     t-SNE の逆変換を試してみた | ZABURO app
   </title>
 
+  
+  <meta name="twitter:card" content="summary" />
+  <meta name="og:title" content="t-SNE の逆変換を試してみた" />
+  <meta name="og:description" content="Parametric t-SNEでt-SNEの変換をニューラルネットで近似することができたので、
+その逆についてもやってみました。
+逆変換と言っても特に難しいことはやっておらず、
+まず普通にBarnes-Hut t-SNEで訓練データを2次元に変換して、
+変換後の座標を入力、変換前の座標を教師データとして教師あり学習を行います。
+今回は、変換後の座標のうち訓練データにないような座標について、
+どのように逆変換されるのかが気になるので汎化性能を高めるためにDropoutを入れました。
+コードは次の通りです。
+
+t-SNEの結果がこんな感じで、
+適当に座標を指定して逆変換した結果がこれ
+かなり綺麗に逆変換できました。
+deconvolutionを使えばもっとうまく逆変換できるかもしれませんが、
+MNISTの結果としてはこれで十分だと思います。
+なんとかしてこの方針で画像生成とかできないのかなーと思っているのですが、
+まずはグレースケールでない画像をうまく変換できるようにt-SNE側を工夫しなければいけない気がします。" />
+  <meta name="twitter:url" content="https://zaburo-ch.github.io/post/tsne-decode/" />
+  <meta name="twitter:site" content="@musharna000" />
+
 
   
   <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
@@ -96,22 +118,13 @@ MNISTの結果としてはこれで十分だと思います。<br />
 まずはグレースケールでない画像をうまく変換できるようにt-SNE側を工夫しなければいけない気がします。</p>
 
     </article>
+
     
- <aside><div id="disqus_thread"></div></aside> 
-
-<script type="text/javascript">
-     
-    var disqus_shortname = 'zaburoapp';
-
-     
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-
+    <div style="margin: 60px 0 10px;">
+      <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="vertical-normal" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-via="musharna000">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+    
+    </div>
   </main>
 
 

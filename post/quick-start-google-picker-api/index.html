@@ -9,6 +9,53 @@
     Google Picker API を使ってみる | ZABURO app
   </title>
 
+  
+  <meta name="twitter:card" content="summary" />
+  <meta name="og:title" content="Google Picker API を使ってみる" />
+  <meta name="og:description" content="Google Driveのファイルを利用できるPicker APIを GAE上で使ってみたのでメモっておきます。
+クライアントIDが何かとか詳しい話は抜きにしてとにかく動かすまで。
+こちらのガイドに従ってやります。
+https://developers.google.com/picker/docs/
+まずPciker APIを有効にします。
+Google Developers ConsoleにログインしてAPIを使うプロジェクトのページに入ります。
+左側のサイドバーの「APIと認証」-&gt;「API」を選択。
+Pickerとかで検索して「Google Picker API」を選択しAPIを有効にします。
+次にクライアントIDとAPIキーを作成します。
+「APIと認証」-&gt;「認証情報」から2つとも作成できます。
+クライアントIDの方はウェブアプリケーションを選択し、
+「JavaScript 生成元」にはAPIを使用するページのオリジンを指定。
+今回はlocalhost:8080でも動いて欲しいので次の二つを指定しました。
+http://プロジェクトID.appspot.com/
+http://localhost:8080/
+リダイレクトURLはよくわからなかった。とりあえず、
+http://localhost:8080/oauth2callback
+みたいな感じで指定してるけどたぶん意味ないです。
+APIキーの方はブラウザキーを選択。
+リファラーはクライアントIDの時と同じ感じで
+http://プロジェクトID.appspot.com/*
+http://localhost:8080/*
+としました。
+これでクライアントIDとAPIキーが取得できたので
+先のガイドの「The &ldquo;Hello World&rdquo; Application」のとおりにページを用意して
+developerKeyとclientIdを書き換えればとりあえず動きます。
+このスクリプトの流れは、
+&lt;script type=&ldquo;text/javascript&rdquo; src=&ldquo;https://apis.google.com/js/api.js?onload=onApiLoad&quot;&gt;&lt;/script&gt;  でGoogle API Loader scriptを読み込む。
+読み込みが終わると onload=onApiLoad で指定しているonApiLoadが呼ばれて
+authとpickerのスクリプトが読み込まれる。
+両方読み込まれるとcreatePicker()の内容が実行されて
+pickerのインスタンスが作成、可視化される。
+という感じになっています。
+pickerの生成時にコールバック用の関数とかいろいろ指定できるのですが、
+addView()の部分がキモで、ここで表示されるファイルの種類を指定しています。
+指定方法についてはガイドの「Showing Different Views」に表が載っていて
+サンプルの通りだとPicasaのWeb Albumsにある写真が表示されるようになっています。
+こことscopeを表に従って変えればGoogle Driveのアイテムとかも表示できるのですが
+全部取得してしまうとごちゃごちゃになるのでsetMimeTypesでMIME Typeを指定します。
+MIME TypeはMIME Type 一覧表を見て適当に。
+例えばpdfだけを表示するようにしたい場合は次のようにします。" />
+  <meta name="twitter:url" content="https://zaburo-ch.github.io/post/quick-start-google-picker-api/" />
+  <meta name="twitter:site" content="@musharna000" />
+
 
   
   <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
@@ -151,22 +198,13 @@ setLocale(&lsquo;ja&rsquo;)で日本語で表示するよう指定すること�
 Gistにもっと工夫したものがあったのでこれも参考にするといいと思います。</p>
 
     </article>
+
     
- <aside><div id="disqus_thread"></div></aside> 
-
-<script type="text/javascript">
-     
-    var disqus_shortname = 'zaburoapp';
-
-     
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-
+    <div style="margin: 60px 0 10px;">
+      <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="vertical-normal" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-via="musharna000">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+    
+    </div>
   </main>
 
 

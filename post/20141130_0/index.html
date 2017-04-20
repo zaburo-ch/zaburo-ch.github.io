@@ -9,6 +9,32 @@
     Wikipediaのページ解析に使ったpythonコード | ZABURO app
   </title>
 
+  
+  <meta name="twitter:card" content="summary" />
+  <meta name="og:title" content="Wikipediaのページ解析に使ったpythonコード" />
+  <meta name="og:description" content="すっかりわすれていましたがソースコードです。
+とりあえずpython触ってみようくらいの気持ちで書いたコードなので
+pythonに慣習みたいなものがあるならたぶんそれには従えていません。
+multiprocessing、numpy、pandasあたりをちゃんと使えば
+格段に早くすることもできるかもしれません。やんないけど。
+python wikipedia.py 20141101
+のようにして日付指定して使います。
+以下のようなことをやってます。
+・http://dumps.wikimedia.orgから1時間ごとの閲覧数のデータを1日分取ってくる
+・国コード(?)がjaの物だけ抽出する
+・標準ライブラリのCounterで各ページの1日分の閲覧数をカウントする
+・閲覧数上位10000ページを取り出す
+・1ページずつ開き記事内の/wiki/で始まるリンクを抽出する
+・リンクがあれば距離1なければINFとして(ディクショナリで)隣接行列をつくる
+・ワーシャルフロイド法で全点間最短距離を求める
+・ソートして表示
+
+Gistを使ってみました。綺麗に表示してくれますね。
+過去の物をGistに置き換えたりはしませんが
+今後はできるだけこれをつかっていこうと思います。" />
+  <meta name="twitter:url" content="https://zaburo-ch.github.io/post/20141130_0/" />
+  <meta name="twitter:site" content="@musharna000" />
+
 
   
   <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
@@ -89,22 +115,13 @@ Gistを使ってみました。綺麗に表示してくれますね。<br />
 今後はできるだけこれをつかっていこうと思います。</p>
 
     </article>
+
     
- <aside><div id="disqus_thread"></div></aside> 
-
-<script type="text/javascript">
-     
-    var disqus_shortname = 'zaburoapp';
-
-     
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-
+    <div style="margin: 60px 0 10px;">
+      <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="vertical-normal" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-via="musharna000">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+    
+    </div>
   </main>
 
 

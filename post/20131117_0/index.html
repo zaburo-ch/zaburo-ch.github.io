@@ -9,6 +9,41 @@
     【AndEngine】onPauseでNullPointerException | ZABURO app
   </title>
 
+  
+  <meta name="twitter:card" content="summary" />
+  <meta name="og:title" content="【AndEngine】onPauseでNullPointerException" />
+  <meta name="og:description" content="一部機種において(Androidのバージョンの問題？)
+起動直後に強制終了してしまうバグに悩まされたのでメモ。
+logcatでシステムのログを確認すると
+SimpleLayoutGameActivityを継承しているMainActivityが
+謎の挙動をしている模様。
+onCreate,onResumeの後になぜかonPauseが呼び出され
+NullPointerExceptionで強制終了していました。
+MainActivityのメンバとして以下を定義し
+private boolean isGoing = false;onPauseの処理をisGoingがtrueのときにしかしないように
+ifで指定してやることで解決。
+onCreateSceneでisGoingをtrueにしてます。
+onResumeの後にonPauseが呼ばれるなんて
+ライフサイクル無視しすぎやん！ってすごく困ったんですが、
+どうやらonResumeあたりでエラーが発生して
+AndEngineがアプリを再起動しようとした結果
+onPauseが呼ばれていたみたいです。
+で、onCreateSceneあたりで生成する予定のオブジェクトは
+ここでonPauseが呼ばれたときにはまだ生成されていないので
+それらのオブジェクトを操作する処理がonPauseにかかれていると
+NullPointerExceptionで落ちるというわけでした。
+ちなみにそのエラーには以下のようなコメントがついていて
+UpdateThread interrupted. Don&rsquo;t worry - this EngineDestroyedException is most likely expected!
+UpdateThreadが中断されちゃったよ！
+まあこのEngineが落ちちゃう例外はよくあることだから安心して！
+ってなわけなのでどうやらAndEngine側に問題がある模様。
+Forumなどを探して見たところ
+ソースはありませんでしたが「99.999%そのエラーは起きるよ」
+というコメントがあるほどで私の技術力では何ともしがたい問題のようです。
+なんだかなー" />
+  <meta name="twitter:url" content="https://zaburo-ch.github.io/post/20131117_0/" />
+  <meta name="twitter:site" content="@musharna000" />
+
 
   
   <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
@@ -100,22 +135,13 @@ NullPointerExceptionで落ちるというわけでした。</p>
 なんだかなー</p>
 
     </article>
+
     
- <aside><div id="disqus_thread"></div></aside> 
-
-<script type="text/javascript">
-     
-    var disqus_shortname = 'zaburoapp';
-
-     
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-
+    <div style="margin: 60px 0 10px;">
+      <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="vertical-normal" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-via="musharna000">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+    
+    </div>
   </main>
 
 

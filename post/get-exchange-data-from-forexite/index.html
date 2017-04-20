@@ -9,6 +9,22 @@
     Forexiteから為替データを取得するスクリプトを書いた【Python】 | ZABURO app
   </title>
 
+  
+  <meta name="twitter:card" content="summary" />
+  <meta name="og:title" content="Forexiteから為替データを取得するスクリプトを書いた【Python】" />
+  <meta name="og:description" content="書きました。
+Forexiteから分足データをダウンロードしてきて
+解凍したものを適当な形にpandasで加工してcsvで出力する、というのを n 日分行います。
+ひとまず n は200にしているので、そのままコピペして実行すれば200日分のデータが集まるはずです。
+Forexiteのデータは１日毎に分けられているのですが、
+これから使う用途ではその方が都合が良いのでそのままにしてます。
+コードは以下の通り。
+
+ブログ用に処理を綺麗に関数にまとめたかったのですが、
+逆に強引な書き方が増えてしまいました&hellip;&hellip;" />
+  <meta name="twitter:url" content="https://zaburo-ch.github.io/post/get-exchange-data-from-forexite/" />
+  <meta name="twitter:site" content="@musharna000" />
+
 
   
   <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
@@ -86,22 +102,13 @@
 逆に強引な書き方が増えてしまいました&hellip;&hellip;</p>
 
     </article>
+
     
- <aside><div id="disqus_thread"></div></aside> 
-
-<script type="text/javascript">
-     
-    var disqus_shortname = 'zaburoapp';
-
-     
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-
+    <div style="margin: 60px 0 10px;">
+      <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="vertical-normal" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-via="musharna000">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+    
+    </div>
   </main>
 
 
