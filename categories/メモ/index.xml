@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>ZABURO app</title>
-    <link>https://zaburo-ch.github.io/categories/%E3%83%A1%E3%83%A2/index.xml</link>
-    <description>Recent content on ZABURO app</description>
+    <title>メモ on ZABURO app</title>
+    <link>https://zaburo-ch.github.io/categories/%E3%83%A1%E3%83%A2/</link>
+    <description>Recent content in メモ on ZABURO app</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
     <copyright>Written by ZABURO</copyright>
-    <atom:link href="https://zaburo-ch.github.io/categories/%E3%83%A1%E3%83%A2/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 17 Jun 2015 02:48:23 +0900</lastBuildDate>
+    
+	<atom:link href="https://zaburo-ch.github.io/categories/%E3%83%A1%E3%83%A2/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>【C&#43;&#43;】mainなどの関数の中では大きな配列を確保できない</title>
@@ -15,28 +18,24 @@
       <pubDate>Wed, 17 Jun 2015 02:48:23 +0900</pubDate>
       
       <guid>https://zaburo-ch.github.io/post/20150617_0/</guid>
-      <description>&lt;p&gt;これがSegmentation faultになるのに対して&lt;br /&gt;
-&lt;script src=&#34;https://gist.github.com/zaburo-ch/f7a91485933876727a59.js&#34;&gt;&lt;/script&gt;&lt;br /&gt;
-これは正しく実行される。&lt;br /&gt;
-&lt;script src=&#34;https://gist.github.com/zaburo-ch/8c0bac865b2f9ddeb8f4.js&#34;&gt;&lt;/script&gt;&lt;br /&gt;
-グローバル変数はヒープに取られるのに対して、&lt;br /&gt;
-ローカル変数はスタックに積まれていく。&lt;br /&gt;
-スタックのサイズは制限されていることが多く、&lt;br /&gt;
-(bashならulimit -aで確認できる。8192KBだった)&lt;br /&gt;
-bool型は1byteなので配列のサイズは10000001/1024≒9765KBとなり&lt;br /&gt;
-スタックのサイズ制限を超えてしまうので、&lt;br /&gt;
-メモリリミットより小さいがローカル変数として確保できない。&lt;/p&gt;
+      <description>これがSegmentation faultになるのに対して
 
-&lt;p&gt;[参考]&lt;br /&gt;
-&lt;a href=&#34;http://homepage2.nifty.com/well/Variable.html&#34; target=&#34;_blank&#34; title=&#34;http://homepage2.nifty.com/well/Variable.html&#34;&gt;&lt;a href=&#34;http://homepage2.nifty.com/well/Variable.html&#34;&gt;http://homepage2.nifty.com/well/Variable.html&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
+これは正しく実行される。
 
-&lt;p&gt;[2015/6/30 追記]&lt;br /&gt;
-newでもいけるということをコメントで教えて頂きました。&lt;br /&gt;
-なるほど確かにnewでもヒープに確保されますね。&lt;br /&gt;
-newでいけるということは中でnew使ってくれてるvectorでもいけます。&lt;br /&gt;
-&lt;script src=&#34;https://gist.github.com/zaburo-ch/a976a83edecd0eb952e9.js&#34;&gt;&lt;/script&gt;
-ご指摘ありがとうございました！&lt;/p&gt;
-</description>
+グローバル変数はヒープに取られるのに対して、
+ローカル変数はスタックに積まれていく。
+スタックのサイズは制限されていることが多く、
+(bashならulimit -aで確認できる。8192KBだった)
+bool型は1byteなので配列のサイズは10000001/1024≒9765KBとなり
+スタックのサイズ制限を超えてしまうので、
+メモリリミットより小さいがローカル変数として確保できない。
+[参考]
+http://homepage2.nifty.com/well/Variable.html
+[2015/6/30 追記]
+newでもいけるということをコメントで教えて頂きました。
+なるほど確かにnewでもヒープに確保されますね。
+newでいけるということは中でnew使ってくれてるvectorでもいけます。
+ ご指摘ありがとうございました！</description>
     </item>
     
     <item>
@@ -45,34 +44,28 @@ newでいけるということは中でnew使ってくれてるvectorでもい�
       <pubDate>Mon, 06 Apr 2015 18:36:47 +0900</pubDate>
       
       <guid>https://zaburo-ch.github.io/post/20150406_0/</guid>
-      <description>&lt;p&gt;ここ数ヶ月くらい、ある時系列データを集めていたのですが、&lt;br /&gt;
-そのデータを扱うにあたってまずデータを分類したいと思い&lt;br /&gt;
-クラスタリングについて調べたところ&lt;br /&gt;
-どうやらクラスタリングにはまず距離を定義しなければいけないらしい。&lt;/p&gt;
+      <description>ここ数ヶ月くらい、ある時系列データを集めていたのですが、
+そのデータを扱うにあたってまずデータを分類したいと思い
+クラスタリングについて調べたところ
+どうやらクラスタリングにはまず距離を定義しなければいけないらしい。
+時系列データの距離？は？と思っていたら
+このようなページがありました。
+動的時間伸縮法 / DTW (Dynamic Time Warping) を可視化する
+http://sinhrks.hatenablog.com/entry/2014/11/14/232603
+Rの{TSculst}というパッケージを使えば簡単に計算できるそうですが、
+有り難い事にDTW距離算出の実装を載せてくれているので
+Python用に書き直してみました。
 
-&lt;p&gt;時系列データの距離？は？と思っていたら&lt;br /&gt;
-このようなページがありました。&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://sinhrks.hatenablog.com/entry/2014/11/14/232603&#34; target=&#34;_blank&#34; title=&#34;動的時間伸縮法 / DTW (Dynamic Time Warping) を可視化する&#34;&gt;動的時間伸縮法 / DTW (Dynamic Time Warping) を可視化する&lt;br /&gt;
-&lt;a href=&#34;http://sinhrks.hatenablog.com/entry/2014/11/14/232603&#34;&gt;http://sinhrks.hatenablog.com/entry/2014/11/14/232603&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;Rの{TSculst}というパッケージを使えば簡単に計算できるそうですが、&lt;br /&gt;
-有り難い事にDTW距離算出の実装を載せてくれているので&lt;br /&gt;
-Python用に書き直してみました。&lt;/p&gt;
-
-&lt;p&gt;&lt;script src=&#34;https://gist.github.com/zaburo-ch/6c16ecb3a4e25ee0d076.js&#34;&gt;&lt;/script&gt;&lt;br /&gt;
-英語力低すぎて&lt;a href=&#34;http://en.wikipedia.org/wiki/Dynamic_time_warping&#34; target=&#34;_blank&#34; title=&#34;英語版Wikipedia&#34;&gt;英語版Wikipedia&lt;/a&gt;があまり理解できなかったのですが、&lt;br /&gt;
-dは点同士の距離を定義する関数(初期値は差の絶対値)となる引数で、&lt;br /&gt;
-windowは、ある点から距離を計算する対象となる点を&lt;br /&gt;
-windowで指定した範囲に制限する場合の引数であってると思います。&lt;/p&gt;
-
-&lt;p&gt;参考にさせて頂いたページにならって&lt;br /&gt;
-RのデータセットAirPassengersでテストするようにしていますが、&lt;br /&gt;
-PythonでRのデータセット利用する方法については&lt;br /&gt;
-以下のページを参照してください。めっちゃ便利です。&lt;br /&gt;
-&lt;a href=&#34;http://kumamotosan.hatenablog.com/entry/2014/03/02/231742&#34; target=&#34;_blank&#34; title=&#34;PythonでRの標準データセットを使う。http://kumamotosan.hatenablog.com/entry/2014/03/02/231742&#34;&gt;PythonでRの標準データセットを使う。&lt;br /&gt;
-&lt;a href=&#34;http://kumamotosan.hatenablog.com/entry/2014/03/02/231742&#34;&gt;http://kumamotosan.hatenablog.com/entry/2014/03/02/231742&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
-</description>
+英語力低すぎて英語版Wikipediaがあまり理解できなかったのですが、
+dは点同士の距離を定義する関数(初期値は差の絶対値)となる引数で、
+windowは、ある点から距離を計算する対象となる点を
+windowで指定した範囲に制限する場合の引数であってると思います。
+参考にさせて頂いたページにならって
+RのデータセットAirPassengersでテストするようにしていますが、
+PythonでRのデータセット利用する方法については
+以下のページを参照してください。めっちゃ便利です。
+PythonでRの標準データセットを使う。
+http://kumamotosan.hatenablog.com/entry/2014/03/02/231742</description>
     </item>
     
     <item>
@@ -81,23 +74,18 @@ PythonでRのデータセット利用する方法については&lt;br /&gt;
       <pubDate>Sat, 07 Mar 2015 21:50:12 +0900</pubDate>
       
       <guid>https://zaburo-ch.github.io/post/20150307_0/</guid>
-      <description>&lt;p&gt;実行中のウィンドウのリストを取得する方法が知りたくて&lt;br /&gt;
-SonofGrab というサンプルに行き着いたのですが&lt;br /&gt;
-エラーでちゃいました。&lt;/p&gt;
-
-&lt;p&gt;環境は OSX10.9.4 Xcode6.1.1 です。&lt;/p&gt;
-
-&lt;p&gt;まず、古いSDKが指定されたままでビルドができないので&lt;br /&gt;
-Build SettingsからBase SDKを自分のOSにあったものにします。&lt;br /&gt;
-するとビルドが行われますがそこでもエラーがおきます。&lt;br /&gt;
-適当にぐぐると以下のページが見つかります。&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://stackoverflow.com/questions/12844729/linking-error-for-inline-functions&#34; target=&#34;_blank&#34; title=&#34;objective c - Linking error for inline functions - Stack Overflow&#34;&gt;objective c - Linking error for inline functions - Stack Overflow&lt;br /&gt;
-&lt;a href=&#34;http://stackoverflow.com/questions/12844729/linking-error-for-inline-functions&#34;&gt;http://stackoverflow.com/questions/12844729/linking-error-for-inline-functions&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;具体的には&lt;br /&gt;
-Controller.mの71行目のinlineの前にstaticをつけるだけです。&lt;/p&gt;
-</description>
+      <description>実行中のウィンドウのリストを取得する方法が知りたくて
+SonofGrab というサンプルに行き着いたのですが
+エラーでちゃいました。
+環境は OSX10.9.4 Xcode6.1.1 です。
+まず、古いSDKが指定されたままでビルドができないので
+Build SettingsからBase SDKを自分のOSにあったものにします。
+するとビルドが行われますがそこでもエラーがおきます。
+適当にぐぐると以下のページが見つかります。
+objective c - Linking error for inline functions - Stack Overflow
+http://stackoverflow.com/questions/12844729/linking-error-for-inline-functions
+具体的には
+Controller.mの71行目のinlineの前にstaticをつけるだけです。</description>
     </item>
     
     <item>
@@ -106,12 +94,10 @@ Controller.mの71行目のinlineの前にstaticをつけるだけです。&lt;/p
       <pubDate>Sat, 28 Feb 2015 16:18:09 +0900</pubDate>
       
       <guid>https://zaburo-ch.github.io/post/20150228_0/</guid>
-      <description>&lt;p&gt;str型の文字列sならlen(s)とするだけでバイト数が取得できます。&lt;br /&gt;
-てっきり文字数が返ってくるものだと思っていたのでメモ。&lt;/p&gt;
-
-&lt;p&gt;ちなみに文字数の取得は len(s.decode(&amp;lsquo;utf-8&amp;rsquo;))&lt;br /&gt;
-マルチバイト文字が入ってない場合はバイト数＝文字数なのでそのままlen(s)でも可能。&lt;/p&gt;
-</description>
+      <description>str型の文字列sならlen(s)とするだけでバイト数が取得できます。
+てっきり文字数が返ってくるものだと思っていたのでメモ。
+ちなみに文字数の取得は len(s.decode(&amp;lsquo;utf-8&amp;rsquo;))
+マルチバイト文字が入ってない場合はバイト数＝文字数なのでそのままlen(s)でも可能。</description>
     </item>
     
     <item>
@@ -120,22 +106,16 @@ Controller.mの71行目のinlineの前にstaticをつけるだけです。&lt;/p
       <pubDate>Thu, 18 Dec 2014 21:51:43 +0900</pubDate>
       
       <guid>https://zaburo-ch.github.io/post/20141218_0/</guid>
-      <description>&lt;p&gt;cordova4.1.2で動作確認しております。&lt;/p&gt;
-
-&lt;p&gt;基本的には普通にJQuery mobile使って書くだけなんですが、&lt;br /&gt;
-そのままだと、iOS7.0以降の上部のステータスバー的なものと&lt;br /&gt;
-JQuery mobileのヘッダが重なってしまいます。&lt;/p&gt;
-
-&lt;p&gt;そのため、iOS7.0以降でのみヘッダの上にマージンをが設定されるようにします。&lt;br /&gt;
-.css()とかでやってもpage遷移後に機能しなかったので、&lt;br /&gt;
-style要素を動的に追加する方法にしたらうまくいきました。&lt;/p&gt;
-
-&lt;p&gt;まずwindow.deviceを使うためにpluginを追加します。&lt;br /&gt;
-$ cordova plugin add org.apache.cordova.device&lt;/p&gt;
-
-&lt;p&gt;ソースは以下の通り。&lt;br /&gt;
-&lt;script src=&#34;https://gist.github.com/zaburo-ch/0beb1ac8d6d02de69726.js&#34;&gt;&lt;/script&gt;&lt;/p&gt;
-</description>
+      <description>cordova4.1.2で動作確認しております。
+基本的には普通にJQuery mobile使って書くだけなんですが、
+そのままだと、iOS7.0以降の上部のステータスバー的なものと
+JQuery mobileのヘッダが重なってしまいます。
+そのため、iOS7.0以降でのみヘッダの上にマージンをが設定されるようにします。
+.css()とかでやってもpage遷移後に機能しなかったので、
+style要素を動的に追加する方法にしたらうまくいきました。
+まずwindow.deviceを使うためにpluginを追加します。
+$ cordova plugin add org.apache.cordova.device
+ソースは以下の通り。</description>
     </item>
     
     <item>
@@ -144,30 +124,24 @@ $ cordova plugin add org.apache.cordova.device&lt;/p&gt;
       <pubDate>Wed, 17 Dec 2014 17:35:15 +0900</pubDate>
       
       <guid>https://zaburo-ch.github.io/post/20141217_0/</guid>
-      <description>&lt;p&gt;subplots_adjustが何者か調べたのでメモ。&lt;br /&gt;
-matplotlib(1.4.2)で動作確認しました。&lt;/p&gt;
-
-&lt;p&gt;subplots_adjustは図の位置を設定するメソッドです。&lt;br /&gt;
-これを使う事で余白を変更指定する事が出来ます。たぶん。&lt;br /&gt;
-&lt;a href=&#34;http://matplotlib.org/api/figure_api.html#matplotlib.figure.Figure.subplots_adjust&#34; target=&#34;_blank&#34;&gt;&lt;a href=&#34;http://matplotlib.org/api/figure_api.html#matplotlib.figure.Figure.subplots_adjust&#34;&gt;http://matplotlib.org/api/figure_api.html#matplotlib.figure.Figure.subplots_adjust&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;図の大きさを1として、&lt;br /&gt;
-topとbottomは下から、leftとrightは左からの長さを指定します。&lt;br /&gt;
-wspaceとhspaceは複数のグラフがまとまっているときの余白とかそんな感じ。&lt;/p&gt;
-
-&lt;p&gt;デフォルトの値は下記の通り&lt;br /&gt;
-left : 0.125&lt;br /&gt;
-right : 0.9&lt;br /&gt;
-bottom : 0.1&lt;br /&gt;
-top : 0.9&lt;br /&gt;
-wspace : 0.2&lt;br /&gt;
-hspace : 0.2&lt;/p&gt;
-
-&lt;p&gt;以下のサンプルでは、デフォルトのままのグラフと&lt;br /&gt;
-各値を0.05(5%分)減らしたグラフを表示するようにしました。&lt;/p&gt;
-
-&lt;script src=&#34;https://gist.github.com/zaburo-ch/733528b92d5e95be4b86.js&#34;&gt;&lt;/script&gt;
-</description>
+      <description>subplots_adjustが何者か調べたのでメモ。
+matplotlib(1.4.2)で動作確認しました。
+subplots_adjustは図の位置を設定するメソッドです。
+これを使う事で余白を変更指定する事が出来ます。たぶん。
+http://matplotlib.org/api/figure_api.html#matplotlib.figure.Figure.subplots_adjust
+図の大きさを1として、
+topとbottomは下から、leftとrightは左からの長さを指定します。
+wspaceとhspaceは複数のグラフがまとまっているときの余白とかそんな感じ。
+デフォルトの値は下記の通り
+left : 0.125
+right : 0.9
+bottom : 0.1
+top : 0.9
+wspace : 0.2
+hspace : 0.2
+以下のサンプルでは、デフォルトのままのグラフと
+各値を0.05(5%分)減らしたグラフを表示するようにしました。
+ </description>
     </item>
     
     <item>
@@ -176,28 +150,23 @@ hspace : 0.2&lt;/p&gt;
       <pubDate>Fri, 03 Oct 2014 18:01:51 +0900</pubDate>
       
       <guid>https://zaburo-ch.github.io/post/20141003_0/</guid>
-      <description>&lt;p&gt;Wikipediaでリンクを辿って遊ぶのがなかなか楽しいです。&lt;/p&gt;
-
-&lt;p&gt;Wikipediaのあるページから全く関係のないページに、&lt;br /&gt;
-記事内のリンクだけを使ってどれだけ早くつけるか競うゲームです。&lt;br /&gt;
-例えば「リオネル・メッシ」から「貞子3D2」とか。&lt;/p&gt;
-
-&lt;p&gt;リンクを辿るごとに目的の記事に近づいたり離れたりが&lt;br /&gt;
-なんとなくですがわかるので結構楽しいです。&lt;br /&gt;
-メッシなら「アルゼンチン入った！」とか「サッカーまで来た」とか。&lt;br /&gt;
-色々なルートがあるのも楽しいです。&lt;/p&gt;
-
-&lt;p&gt;ゴールしたらそこからスタートすると辿ってる感がでるし、&lt;br /&gt;
-負けた方が次のゴール決めたり、&lt;br /&gt;
-「戻る」禁止にしたりルール次第でかなり面白くなると思います。&lt;/p&gt;
-
-&lt;p&gt;こんな感じで遊んでいるうちに&lt;br /&gt;
-Wikipediaのページ間の距離(?)に興味がわいてきたので、&lt;br /&gt;
-&lt;a href=&#34;http://dumps.wikimedia.org/other/pagecounts-raw/&#34; target=&#34;_blank&#34; title=&#34;Page view statistics for Wikimedia projects&#34;&gt;&lt;strong&gt;Page view statistics for Wikimedia projects&lt;/strong&gt;&lt;br /&gt;
-&lt;a href=&#34;http://dumps.wikimedia.org/other/pagecounts-raw/&#34;&gt;http://dumps.wikimedia.org/other/pagecounts-raw/&lt;/a&gt;&lt;/a&gt;&lt;br /&gt;
-からデータを頂いてきてpythonでいろいろやってみたので&lt;br /&gt;
-近いうちに記事にしようと思います。&lt;/p&gt;
-</description>
+      <description>Wikipediaでリンクを辿って遊ぶのがなかなか楽しいです。
+Wikipediaのあるページから全く関係のないページに、
+記事内のリンクだけを使ってどれだけ早くつけるか競うゲームです。
+例えば「リオネル・メッシ」から「貞子3D2」とか。
+リンクを辿るごとに目的の記事に近づいたり離れたりが
+なんとなくですがわかるので結構楽しいです。
+メッシなら「アルゼンチン入った！」とか「サッカーまで来た」とか。
+色々なルートがあるのも楽しいです。
+ゴールしたらそこからスタートすると辿ってる感がでるし、
+負けた方が次のゴール決めたり、
+「戻る」禁止にしたりルール次第でかなり面白くなると思います。
+こんな感じで遊んでいるうちに
+Wikipediaのページ間の距離(?)に興味がわいてきたので、
+Page view statistics for Wikimedia projects
+http://dumps.wikimedia.org/other/pagecounts-raw/
+からデータを頂いてきてpythonでいろいろやってみたので
+近いうちに記事にしようと思います。</description>
     </item>
     
     <item>
@@ -206,36 +175,18 @@ Wikipediaのページ間の距離(?)に興味がわいてきたので、&lt;br /
       <pubDate>Fri, 26 Sep 2014 13:42:20 +0900</pubDate>
       
       <guid>https://zaburo-ch.github.io/post/20140926_0/</guid>
-      <description>&lt;p&gt;JQuery mobileのポップアップのボタンなどを押して&lt;br /&gt;
-更にポップアップを開こうとするとうまく開いてくれません。&lt;/p&gt;
-
-&lt;p&gt;おそらく2重にポップアップが開かれないようになっているのだと思います。&lt;br /&gt;
-仕方が無いので今開いているポップアップを閉じてから&lt;br /&gt;
-新しくポップアップを開くようにしてみたのですが、&lt;br /&gt;
-古いポップアップが閉じるのみで新しいポップアップが開きません。&lt;br /&gt;
-ポップアップが閉じてから新しいポップアップが開けるまで&lt;br /&gt;
-タイムラグのようなものがあるのかもしれません。&lt;/p&gt;
-
-&lt;p&gt;以下のようにして動かしました。&lt;br /&gt;
-&lt;pre&gt;&lt;code&gt;function openPopup(){
-  closePopup();
-  var timerId;
-  $(&amp;ldquo;#popup&amp;rdquo;).bind({
-    popupafteropen:function(event, ui){
-      clearInterval(timerId);
-    }
-  });
-  timerId = setInterval(function(){
-    $(&amp;ldquo;#popup&amp;rdquo;).popup(&amp;lsquo;open&amp;rsquo;);
-  },100);
-};
-function closePopup(){
-  //開いているポップアップを閉じる処理
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;br /&gt;
-ちゃんと開いてくれるまでopenを繰り返して&lt;br /&gt;
-openされたら繰り返しを止める感じですね！安直！&lt;/p&gt;
-</description>
+      <description>JQuery mobileのポップアップのボタンなどを押して
+更にポップアップを開こうとするとうまく開いてくれません。
+おそらく2重にポップアップが開かれないようになっているのだと思います。
+仕方が無いので今開いているポップアップを閉じてから
+新しくポップアップを開くようにしてみたのですが、
+古いポップアップが閉じるのみで新しいポップアップが開きません。
+ポップアップが閉じてから新しいポップアップが開けるまで
+タイムラグのようなものがあるのかもしれません。
+以下のようにして動かしました。
+function openPopup(){ closePopup(); var timerId; $(&amp;ldquo;#popup&amp;rdquo;).bind({ popupafteropen:function(event, ui){ clearInterval(timerId); } }); timerId = setInterval(function(){ $(&amp;ldquo;#popup&amp;rdquo;).popup(&amp;lsquo;open&amp;rsquo;); },100); }; function closePopup(){ //開いているポップアップを閉じる処理 } 
+ちゃんと開いてくれるまでopenを繰り返して
+openされたら繰り返しを止める感じですね！安直！</description>
     </item>
     
     <item>
@@ -244,79 +195,10 @@ openされたら繰り返しを止める感じですね！安直！&lt;/p&gt;
       <pubDate>Sun, 02 Feb 2014 22:50:06 +0900</pubDate>
       
       <guid>https://zaburo-ch.github.io/post/20140202_1/</guid>
-      <description>&lt;p&gt;書きました。&lt;/p&gt;
-
-&lt;p&gt;・ネイティブメソッドの記述&lt;br /&gt;
-&lt;pre&gt;&lt;code&gt;//色抽出
-public static native void colorExtract(long matAddr,int code,
-                                        int lowH,int highH,
-                                        int lowS,int highS,
-                                        int lowV,int highV);&lt;/code&gt;&lt;/pre&gt;
-・ネイティブコード&lt;br /&gt;
-&lt;pre&gt;&lt;code&gt;JNIEXPORT void JNICALL Java_com_fc2_blog_zaburoapp_markerdetection_MainActivity_colorExtract
-  (JNIEnv * jenv, jclass, jlong matAddr, jint code, jint lowH, jint highH, jint lowS, jint highS, jint lowV, jint highV){
-    Mat &lt;em&gt;inputImg;
-    inputImg = (Mat&lt;/em&gt;) matAddr;
-    int height = inputImg-&amp;gt;rows;
-    int width = inputImg-&amp;gt;cols;
-    Mat hsvImg = Mat(height,width,CV_8UC3);
-    cvtColor(*inputImg,hsvImg,code);
-    vector&lt;Mat&gt; singleCh;
-    split(hsvImg,singleCh);
-    Mat h1,h2,h,s1,s2,s,v1,v2,v,hs,mask;
-    if(lowH&amp;lt;=highH){
-        threshold((Mat)singleCh[0],h1,lowH,255,CV_THRESH_BINARY);
-        threshold((Mat)singleCh[0],h2,highH,255,CV_THRESH_BINARY_INV);
-        bitwise_and(h1,h2,h);
-    }else{
-        threshold((Mat)singleCh[0],h1,lowH,255,CV_THRESH_BINARY);
-        threshold((Mat)singleCh[0],h2,highH,255,CV_THRESH_BINARY_INV);
-        bitwise_or(h1,h2,h);
-    }
-    if(lowS&amp;lt;=highS){
-        threshold((Mat)singleCh[1],s1,lowS,255,CV_THRESH_BINARY);
-        threshold((Mat)singleCh[1],s2,highS,255,CV_THRESH_BINARY_INV);
-        bitwise_and(s1,s2,s);
-    }else{
-        threshold((Mat)singleCh[1],s1,lowS,255,CV_THRESH_BINARY);
-        threshold((Mat)singleCh[1],s2,highS,255,CV_THRESH_BINARY_INV);
-        bitwise_or(s1,s2,s);
-    }
-    if(lowH&amp;lt;=highH){
-        threshold((Mat)singleCh[2],v1,lowV,255,CV_THRESH_BINARY);
-        threshold((Mat)singleCh[2],v2,highV,255,CV_THRESH_BINARY_INV);
-        bitwise_and(v1,v2,v);
-    }else{
-        threshold((Mat)singleCh[2],v1,lowV,255,CV_THRESH_BINARY);
-        threshold((Mat)singleCh[2],v2,highV,255,CV_THRESH_BINARY_INV);
-        bitwise_or(v1,v2,v);
-    }
-    bitwise_and(h,s,hs);
-    bitwise_and(hs,v,mask);
-    Mat dstImg = Mat(height,width,inputImg-&amp;gt;type(),Scalar(0,0,0));
-    inputImg-&amp;gt;copyTo(dstImg,mask);
-    dstImg.copyTo(*inputImg);
-}&lt;/code&gt;&lt;/pre&gt;&lt;br /&gt;
-・使い方・例&lt;br /&gt;
-&lt;pre&gt;&lt;code&gt;Mat matImg = new Mat();
-Utils.bitmapToMat(bmp,matImg);
-colorExtract(matImg.getNativeObjAddr(),Imgproc.COLOR_RGB2HSV,
-            170,10,
-            80,255,
-            0,255);
-Utils.matToBitmap(matImg, bmp);
-mImageView.setImageBitmap(bmp);&lt;/code&gt;&lt;/pre&gt;って感じで使えば&lt;br /&gt;
-色相(H)：0〜10,170〜255&lt;br /&gt;
-彩度(S)：80〜255&lt;br /&gt;
-明度(V)：0〜255&lt;br /&gt;
-の範囲の色を入力画像と同じサイズの黒背景の画像に抽出します。&lt;br /&gt;
-第２引数のcodeはBitmapは大抵RGBのイメージだから&lt;br /&gt;
-こんな感じにしとけば概ね間違いないと思います。&lt;br /&gt;
-内部で、CV_8UC3(符号無し8bit整数3チャンネル)で画素を扱う都合上&lt;br /&gt;
-色のパラメータは0〜255の範囲で表現します。&lt;br /&gt;
-たぶん範囲外の値を渡すと落ちます。&lt;br /&gt;
-例外投げる部分かけばよかったんですけど、めんどうでした。&lt;/p&gt;
-</description>
+      <description>書きました。
+・ネイティブメソッドの記述
+//色抽出 public static native void colorExtract(long matAddr,int code, int lowH,int highH, int lowS,int highS, int lowV,int highV); ・ネイティブコード
+JNIEXPORT void JNICALL Java_com_fc2_blog_zaburoapp_markerdetection_MainActivity_colorExtract (JNIEnv * jenv, jclass, jlong matAddr, jint code, jint lowH, jint highH, jint lowS, jint highS, jint lowV, jint highV){ Mat inputImg; inputImg = (Mat) matAddr; int height = inputImg-&amp;gt;rows; int width = inputImg-&amp;gt;cols; Mat hsvImg = Mat(height,width,CV_8UC3); cvtColor(*inputImg,hsvImg,code); vector singleCh; split(hsvImg,singleCh); Mat h1,h2,h,s1,s2,s,v1,v2,v,hs,mask; if(lowH&amp;lt;=highH){ threshold((Mat)singleCh[0],h1,lowH,255,CV_THRESH_BINARY); threshold((Mat)singleCh[0],h2,highH,255,CV_THRESH_BINARY_INV); bitwise_and(h1,h2,h); }else{ threshold((Mat)singleCh[0],h1,lowH,255,CV_THRESH_BINARY); threshold((Mat)singleCh[0],h2,highH,255,CV_THRESH_BINARY_INV); bitwise_or(h1,h2,h); } if(lowS&amp;lt;=highS){ threshold((Mat)singleCh[1],s1,lowS,255,CV_THRESH_BINARY); threshold((Mat)singleCh[1],s2,highS,255,CV_THRESH_BINARY_INV); bitwise_and(s1,s2,s); }else{ threshold((Mat)singleCh[1],s1,lowS,255,CV_THRESH_BINARY); threshold((Mat)singleCh[1],s2,highS,255,CV_THRESH_BINARY_INV); bitwise_or(s1,s2,s); } if(lowH&amp;lt;=highH){ threshold((Mat)singleCh[2],v1,lowV,255,CV_THRESH_BINARY); threshold((Mat)singleCh[2],v2,highV,255,CV_THRESH_BINARY_INV); bitwise_and(v1,v2,v); }else{ threshold((Mat)singleCh[2],v1,lowV,255,CV_THRESH_BINARY); threshold((Mat)singleCh[2],v2,highV,255,CV_THRESH_BINARY_INV); bitwise_or(v1,v2,v); } bitwise_and(h,s,hs); bitwise_and(hs,v,mask); Mat dstImg = Mat(height,width,inputImg-&amp;gt;type(),Scalar(0,0,0)); inputImg-&amp;gt;copyTo(dstImg,mask); dstImg.</description>
     </item>
     
     <item>
@@ -325,12 +207,10 @@ mImageView.setImageBitmap(bmp);&lt;/code&gt;&lt;/pre&gt;って感じで使えば
       <pubDate>Sun, 02 Feb 2014 14:09:21 +0900</pubDate>
       
       <guid>https://zaburo-ch.github.io/post/20140202_0/</guid>
-      <description>&lt;p&gt;分かりやすく解説しているページがあったのでメモ&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;しずくくんのAndroidでゲームプログラミングしてみたいなblog&lt;/strong&gt;&lt;br /&gt;
-Bitmap.getPixels()のstride引数の意味がわかった&lt;br /&gt;
-&lt;a href=&#34;http://blog.livedoor.jp/shizuku_kun/archives/51385763.html&#34; target=&#34;_blank&#34; title=&#34;Bitmap.getPixels()のstride引数の意味がわかった&#34;&gt;&lt;a href=&#34;http://blog.livedoor.jp/shizuku_kun/archives/51385763.html&#34;&gt;http://blog.livedoor.jp/shizuku_kun/archives/51385763.html&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
-</description>
+      <description>分かりやすく解説しているページがあったのでメモ
+しずくくんのAndroidでゲームプログラミングしてみたいなblog
+Bitmap.getPixels()のstride引数の意味がわかった
+http://blog.livedoor.jp/shizuku_kun/archives/51385763.html</description>
     </item>
     
     <item>
@@ -339,95 +219,26 @@ Bitmap.getPixels()のstride引数の意味がわかった&lt;br /&gt;
       <pubDate>Mon, 06 Jan 2014 23:37:13 +0900</pubDate>
       
       <guid>https://zaburo-ch.github.io/post/20140106_0/</guid>
-      <description>&lt;p&gt;久しぶりにAndroidでOpenCVを使おうとしたら&lt;br /&gt;
-書き始めるまでに必要な準備を忘れていたのでメモ。&lt;br /&gt;
-コメントを書き入れている部分は&lt;br /&gt;
-「ここにかかなければいけない、というわけではないけど&lt;br /&gt;
-ここに書いておくのが便利」という部分です&lt;/p&gt;
-
-&lt;p&gt;環境 Eclipse 3.7.2&lt;/p&gt;
-
-&lt;p&gt;・「プロパティ」→「Android」からOpenCVのライブラリを登録&lt;/p&gt;
-
-&lt;p&gt;・OpenCVを使うActivityのメンバに以下を追加し&lt;br /&gt;
-&lt;pre&gt;&lt;code&gt;private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
-    @Override
-    public void onManagerConnected(int status) {
-        switch (status) {
-        case LoaderCallbackInterface.SUCCESS:
-            //ここで後で自分で作成するC/C++でopencvを動かすライブラリをロードしておく
-            System.loadLibrary(&amp;ldquo;my_opencv_method&amp;rdquo;);
-            //ロードが成功した場合にのみボタンを有効にする
-            mButton.setEnabled(true);
-            break;
-        default:
-            super.onManagerConnected(status);
-            break;
-        }
-    }
-};&lt;/code&gt;&lt;/pre&gt;onResumeを以下のようにオーバーライド&lt;br /&gt;
-&lt;pre&gt;&lt;code&gt;@Override
-public void onResume()
-{
-    super.onResume();
-    //ボタンはロード成功するまでは無効化しておく
-    mButton1.setEnabled(false);
-    OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_2_4_3, this, mLoaderCallback);
-}&lt;/code&gt;&lt;/pre&gt;・プロジェクトを右クリック→「Android ツール」→「Add native support」&lt;/p&gt;
-
-&lt;p&gt;・プロジェクトを右クリック→「プロパティ」→「C/C++一般」→「パスおよびシンボル」→「インクルード」タブ→「追加」ボタン&lt;br /&gt;
-で最低でも以下の３つを登録&lt;br /&gt;
-/opt/OpenCV-2.4.6-android-sdk/sdk/native/jni/include&lt;br /&gt;
-/opt/android-ndk-r9/sources/cxx-stl/gnu-libstdc++/4.6/include&lt;br /&gt;
-/opt/android-ndk-r9/sources/cxx-stl/gnu-libstdc++/4.6/libs/armeabi-v7a/include&lt;br /&gt;
-(僕は/optに各ライブラリを置いているのでそのへんは適宜修正)&lt;/p&gt;
-
-&lt;p&gt;・jniフォルダを作成して、Android.mkとApplication.mkを用意&lt;br /&gt;
-(他のプロジェクトからコピペして編集)&lt;br /&gt;
-Android.mk&lt;br /&gt;
-&lt;pre&gt;&lt;code&gt;LOCAL_PATH := $(call my-dir)
-include $(CLEAR_VARS)
-#OPENCV_CAMERA_MODULES:=off
-#OPENCV_INSTALL_MODULES:=off
-#OPENCV_LIB_TYPE:=SHARED
-include /opt/OpenCV-2.4.6-android-sdk/sdk/native/jni/OpenCV.mk
-LOCAL_SRC_FILES  := my_opencv_method.cpp
-LOCAL_C_INCLUDES += $(LOCAL_PATH)
-LOCAL_LDLIBS     += -llog -ldl
-LOCAL_MODULE     := my_opencv_method
-include $(BUILD_SHARED_LIBRARY)
-&lt;/pre&gt;&lt;/code&gt;
-Application.mk&lt;br /&gt;
-&lt;pre&gt;&lt;code&gt;APP_STL := gnustl_static
-APP_CPPFLAGS := -frtti -fexceptions
-APP_ABI := armeabi-v7a
-APP_PLATFORM := android-8&lt;/code&gt;&lt;/pre&gt;&lt;br /&gt;
-・Activityにnativeメソッドを記載&lt;br /&gt;
-例&lt;br /&gt;
-&lt;pre&gt;&lt;code&gt;public static native void threshold(long matAddr);
-public static native int[] findContours(long matAddr);&lt;/code&gt;&lt;/pre&gt;&lt;br /&gt;
-・プロジェクトのAndroidManifest.xmlなどが保存してあるディレクトリに移動し以下のコマンドを実行&lt;br /&gt;
-&lt;pre&gt;&lt;code&gt;javah -classpath src -o jni/my_opencv_method.h {package name}.MainActivity&lt;/code&gt;&lt;/pre&gt;jniにmy_opencv_method.hが生成される&lt;/p&gt;
-
-&lt;p&gt;・my_opencv_method.hからメソッドをコピー&lt;br /&gt;
-&lt;pre&gt;&lt;code&gt;JNIEXPORT void JNICALL Java_com_fc2_blog_zaburoapp_markerdetection_MainActivity_threshold (JNIEnv *, jclass, jlong);&lt;/code&gt;&lt;/pre&gt;&lt;/p&gt;
-
-&lt;p&gt;・my_opencv_method.cppを作成してペーストし、以下のincludeを加える&lt;br /&gt;
-&lt;pre&gt;&lt;code&gt;#include &amp;lt;jni.h&amp;gt;
-#include &amp;lt;vector&amp;gt;
-#include &amp;lt;opencv2/core/core.hpp&amp;gt;
-#include &amp;lt;opencv2/imgproc/imgproc.hpp&amp;gt;
-#include &amp;lt;opencv2/objdetect/objdetect.hpp&amp;gt;
-#include &amp;lt;opencv2/highgui/highgui.hpp&amp;gt;
-#include &amp;lt;opencv2/calib3d/calib3d.hpp&amp;gt;
-#include &amp;lt;android/log.h&amp;gt;
-#include &amp;lt;my_opencv_method.h&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;このへんがあれば十分&lt;br /&gt;
-(JNIEnv *, jclass, jlong)→(JNIEnv * jenv, jclass, jlong matAddr)みたいな感じで&lt;br /&gt;
-変数名を指定するのを忘れずに。&lt;/p&gt;
-
-&lt;p&gt;・コードを書いて実行&lt;/p&gt;
-</description>
+      <description>久しぶりにAndroidでOpenCVを使おうとしたら
+書き始めるまでに必要な準備を忘れていたのでメモ。
+コメントを書き入れている部分は
+「ここにかかなければいけない、というわけではないけど
+ここに書いておくのが便利」という部分です
+環境 Eclipse 3.7.2
+・「プロパティ」→「Android」からOpenCVのライブラリを登録
+・OpenCVを使うActivityのメンバに以下を追加し
+private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) { @Override public void onManagerConnected(int status) { switch (status) { case LoaderCallbackInterface.SUCCESS: //ここで後で自分で作成するC/C++でopencvを動かすライブラリをロードしておく System.loadLibrary(&amp;ldquo;my_opencv_method&amp;rdquo;); //ロードが成功した場合にのみボタンを有効にする mButton.setEnabled(true); break; default: super.onManagerConnected(status); break; } } };onResumeを以下のようにオーバーライド
+@Override public void onResume() { super.onResume(); //ボタンはロード成功するまでは無効化しておく mButton1.setEnabled(false); OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_2_4_3, this, mLoaderCallback); }・プロジェクトを右クリック→「Android ツール」→「Add native support」
+・プロジェクトを右クリック→「プロパティ」→「C/C++一般」→「パスおよびシンボル」→「インクルード」タブ→「追加」ボタン
+で最低でも以下の３つを登録
+/opt/OpenCV-2.4.6-android-sdk/sdk/native/jni/include
+/opt/android-ndk-r9/sources/cxx-stl/gnu-libstdc++/4.6/include
+/opt/android-ndk-r9/sources/cxx-stl/gnu-libstdc++/4.6/libs/armeabi-v7a/include
+(僕は/optに各ライブラリを置いているのでそのへんは適宜修正)
+・jniフォルダを作成して、Android.mkとApplication.mkを用意
+(他のプロジェクトからコピペして編集)
+Android.mk
+LOCAL_PATH := $(call my-dir) include $(CLEAR_VARS) #OPENCV_CAMERA_MODULES:=off #OPENCV_INSTALL_MODULES:=off #OPENCV_LIB_TYPE:=SHARED include /opt/OpenCV-2.</description>
     </item>
     
     <item>
@@ -436,42 +247,38 @@ public static native int[] findContours(long matAddr);&lt;/code&gt;&lt;/pre&gt;&
       <pubDate>Thu, 12 Dec 2013 16:32:38 +0900</pubDate>
       
       <guid>https://zaburo-ch.github.io/post/20131212_0/</guid>
-      <description>&lt;p&gt;AndroidでSQLiteを使うようなアプリを作成していて、&lt;br /&gt;
-「Android SQLite」でぐぐっても&lt;br /&gt;
-基本的な「検索」「挿入」「更新」「削除」あたりの&lt;br /&gt;
-ざっくりした方法しか見つけられないので、&lt;br /&gt;
-補足的な感じで、部分一致している文字列の検索とか&lt;br /&gt;
-検索条件の詳しい書き方の調べ方をメモっておきます。&lt;/p&gt;
+      <description>AndroidでSQLiteを使うようなアプリを作成していて、
+「Android SQLite」でぐぐっても
+基本的な「検索」「挿入」「更新」「削除」あたりの
+ざっくりした方法しか見つけられないので、
+補足的な感じで、部分一致している文字列の検索とか
+検索条件の詳しい書き方の調べ方をメモっておきます。
+どうにも改行が下手です。
 
-&lt;p&gt;どうにも改行が下手です。&lt;br /&gt;
-&lt;strong&gt;&lt;br /&gt;
-【部分一致している文字列の検索】&lt;/strong&gt;&lt;br /&gt;
-SQLで言う(SQL分からないけど)「LIKE句」と&lt;br /&gt;
-ワイルドカードである「%」を使うらしいです。&lt;br /&gt;
-たとえば、&lt;br /&gt;
-&lt;pre&gt;&lt;code&gt;cursor = mydb.query(&amp;ldquo;my_table&amp;rdquo;, null, &amp;ldquo;name like ?&amp;rdquo;, new String[]{&amp;ldquo;%&amp;rdquo;+ &amp;ldquo;検索対象文字列&amp;rdquo; +&amp;ldquo;%&amp;rdquo;}, null, null, null);&lt;/code&gt;&lt;/pre&gt;ってしてやると、&lt;br /&gt;
-nameっていうフィールドにある各文字列から&lt;br /&gt;
-「検索対象文字列」を含む文字列を検索してくれる。&lt;br /&gt;
-&lt;span style=&#34;font-size:x-small;&#34;&gt;mydbっていうのはSQLiteDatabaseのインスタンスで&lt;br /&gt;
-my_tableはテーブル名。&lt;/span&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;【検索条件の詳しい書き方の調べ方】&lt;/strong&gt;&lt;br /&gt;
-SQLiteってAndroidに独特なものではないから、&lt;br /&gt;
-素直に「SQLite」でぐぐる。もしくは「SQL」。&lt;br /&gt;
-すると&lt;br /&gt;
-&lt;pre&gt;&lt;code&gt;select * from customer where address = &amp;lsquo;東京&amp;rsquo;;&lt;/code&gt;&lt;/pre&gt;って感じの全然文法の違う文がでてくるけど、この検索条件はAndroid版の&lt;br /&gt;
-&lt;pre&gt;&lt;code&gt;cursor = mydb.query(&amp;ldquo;customer&amp;rdquo;, null, &amp;ldquo;address = ?&amp;rdquo;, new String[]{&amp;ldquo;東京&amp;rdquo;}, null, null, null);&lt;/code&gt;&lt;/pre&gt;と大体同じ意味。&lt;br /&gt;
-というのも、内部での動作なんて調べてないから分からないけど、&lt;br /&gt;
-たぶん、mydb.queryってしたときAndroid側で&lt;br /&gt;
-&lt;pre&gt;&lt;code&gt;select 第2引数 from 第1引数 where 第3引数と第4引数&lt;/code&gt;&lt;/pre&gt;という文を作ってSQLite側に投げてくれてるってイメージでいいと思います。&lt;br /&gt;
-（第3引数の?に第4変数で指定した文字列の配列から順に文字列が入ります）&lt;br /&gt;
-&lt;span style=&#34;font-size:x-small;&#34;&gt;（Cのprintfに近いものを感じた……）&lt;/span&gt;&lt;br /&gt;
-第5引数とかも指定すればgroup by句とかとして文に入ってくるはず。&lt;br /&gt;
-それがわかってれば、&lt;br /&gt;
-&lt;a href=&#34;http://www.dbonline.jp/sqlite/select/&#34; target=&#34;_blank&#34; title=&#34;sqlite&#34;&gt;&lt;a href=&#34;http://www.dbonline.jp/sqlite/select/&#34;&gt;http://www.dbonline.jp/sqlite/select/&lt;/a&gt;&lt;/a&gt;&lt;br /&gt;
-こういうSQLiteの解説サイトを読み替えできるので&lt;br /&gt;
-欲しい情報は得やすくなると思います。&lt;/p&gt;
-</description>
+【部分一致している文字列の検索】
+SQLで言う(SQL分からないけど)「LIKE句」と
+ワイルドカードである「%」を使うらしいです。
+たとえば、
+cursor = mydb.query(&amp;ldquo;my_table&amp;rdquo;, null, &amp;ldquo;name like ?&amp;rdquo;, new String[]{&amp;ldquo;%&amp;rdquo;+ &amp;ldquo;検索対象文字列&amp;rdquo; +&amp;ldquo;%&amp;rdquo;}, null, null, null);ってしてやると、
+nameっていうフィールドにある各文字列から
+「検索対象文字列」を含む文字列を検索してくれる。
+mydbっていうのはSQLiteDatabaseのインスタンスで
+my_tableはテーブル名。
+【検索条件の詳しい書き方の調べ方】
+SQLiteってAndroidに独特なものではないから、
+素直に「SQLite」でぐぐる。もしくは「SQL」。
+すると
+select * from customer where address = &amp;lsquo;東京&amp;rsquo;;って感じの全然文法の違う文がでてくるけど、この検索条件はAndroid版の
+cursor = mydb.query(&amp;ldquo;customer&amp;rdquo;, null, &amp;ldquo;address = ?&amp;rdquo;, new String[]{&amp;ldquo;東京&amp;rdquo;}, null, null, null);と大体同じ意味。
+というのも、内部での動作なんて調べてないから分からないけど、
+たぶん、mydb.queryってしたときAndroid側で
+select 第2引数 from 第1引数 where 第3引数と第4引数という文を作ってSQLite側に投げてくれてるってイメージでいいと思います。
+（第3引数の?に第4変数で指定した文字列の配列から順に文字列が入ります）
+（Cのprintfに近いものを感じた……）
+第5引数とかも指定すればgroup by句とかとして文に入ってくるはず。
+それがわかってれば、
+http://www.dbonline.jp/sqlite/select/
+こういうSQLiteの解説サイトを読み替えできるので</description>
     </item>
     
   </channel>

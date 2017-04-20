@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on ZABURO app</title>
+    <link>https://zaburo-ch.github.io/tags/</link>
+    <description>Recent content in Tags on ZABURO app</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja</language>
+    <copyright>Written by ZABURO</copyright>
+    <lastBuildDate>Wed, 09 Dec 2015 17:22:31 +0900</lastBuildDate>
+    
+	<atom:link href="https://zaburo-ch.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Android</title>
+      <link>https://zaburo-ch.github.io/tags/android/</link>
+      <pubDate>Wed, 09 Dec 2015 17:22:31 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/tags/android/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>C&#43;&#43;</title>
+      <link>https://zaburo-ch.github.io/tags/c&#43;&#43;/</link>
+      <pubDate>Sat, 14 May 2016 14:45:45 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/tags/c&#43;&#43;/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Fx</title>
+      <link>https://zaburo-ch.github.io/tags/fx/</link>
+      <pubDate>Thu, 08 Oct 2015 22:26:21 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/tags/fx/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Go</title>
+      <link>https://zaburo-ch.github.io/tags/go/</link>
+      <pubDate>Sat, 12 Sep 2015 00:08:08 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/tags/go/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Google App Engine</title>
+      <link>https://zaburo-ch.github.io/tags/google-app-engine/</link>
+      <pubDate>Thu, 06 Aug 2015 01:41:08 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/tags/google-app-engine/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Google Drive</title>
+      <link>https://zaburo-ch.github.io/tags/google-drive/</link>
+      <pubDate>Thu, 06 Aug 2015 01:41:08 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/tags/google-drive/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Http</title>
+      <link>https://zaburo-ch.github.io/tags/http/</link>
+      <pubDate>Sat, 12 Sep 2015 00:08:08 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/tags/http/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Javascript</title>
+      <link>https://zaburo-ch.github.io/tags/javascript/</link>
+      <pubDate>Thu, 06 Aug 2015 01:41:08 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/tags/javascript/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Matplotlib</title>
+      <link>https://zaburo-ch.github.io/tags/matplotlib/</link>
+      <pubDate>Thu, 08 Oct 2015 00:59:54 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/tags/matplotlib/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Numpy</title>
+      <link>https://zaburo-ch.github.io/tags/numpy/</link>
+      <pubDate>Thu, 17 Mar 2016 13:37:58 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/tags/numpy/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Pandas</title>
+      <link>https://zaburo-ch.github.io/tags/pandas/</link>
+      <pubDate>Thu, 08 Oct 2015 22:26:21 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/tags/pandas/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Picker Api</title>
+      <link>https://zaburo-ch.github.io/tags/picker-api/</link>
+      <pubDate>Thu, 06 Aug 2015 01:41:08 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/tags/picker-api/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Python</title>
+      <link>https://zaburo-ch.github.io/tags/python/</link>
+      <pubDate>Sat, 17 Dec 2016 17:04:54 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/tags/python/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Tensorflow</title>
+      <link>https://zaburo-ch.github.io/tags/tensorflow/</link>
+      <pubDate>Sat, 17 Dec 2016 17:04:54 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/tags/tensorflow/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Webrtc</title>
+      <link>https://zaburo-ch.github.io/tags/webrtc/</link>
+      <pubDate>Mon, 29 Jun 2015 00:28:20 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/tags/webrtc/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Webアプリ</title>
+      <link>https://zaburo-ch.github.io/tags/web%E3%82%A2%E3%83%97%E3%83%AA/</link>
+      <pubDate>Mon, 29 Jun 2015 00:28:20 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/tags/web%E3%82%A2%E3%83%97%E3%83%AA/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>スマホさがし</title>
+      <link>https://zaburo-ch.github.io/tags/%E3%82%B9%E3%83%9E%E3%83%9B%E3%81%95%E3%81%8C%E3%81%97/</link>
+      <pubDate>Wed, 09 Dec 2015 17:22:31 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/tags/%E3%82%B9%E3%83%9E%E3%83%9B%E3%81%95%E3%81%8C%E3%81%97/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>可視化</title>
+      <link>https://zaburo-ch.github.io/tags/%E5%8F%AF%E8%A6%96%E5%8C%96/</link>
+      <pubDate>Wed, 29 Jun 2016 13:06:24 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/tags/%E5%8F%AF%E8%A6%96%E5%8C%96/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>機械学習</title>
+      <link>https://zaburo-ch.github.io/tags/%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92/</link>
+      <pubDate>Wed, 29 Jun 2016 13:06:24 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/tags/%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

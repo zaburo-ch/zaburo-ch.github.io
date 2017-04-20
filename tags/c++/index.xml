@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>ZABURO app</title>
-    <link>https://zaburo-ch.github.io/tags/c&#43;&#43;/index.xml</link>
-    <description>Recent content on ZABURO app</description>
+    <title>C&#43;&#43; on ZABURO app</title>
+    <link>https://zaburo-ch.github.io/tags/c&#43;&#43;/</link>
+    <description>Recent content in C&#43;&#43; on ZABURO app</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
     <copyright>Written by ZABURO</copyright>
-    <atom:link href="https://zaburo-ch.github.io/tags/c&#43;&#43;/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 14 May 2016 14:45:45 +0900</lastBuildDate>
+    
+	<atom:link href="https://zaburo-ch.github.io/tags/c++/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>【C&#43;&#43;】コピーコンストラクタについてのメモ</title>
@@ -15,15 +18,11 @@
       <pubDate>Sat, 14 May 2016 14:45:45 +0900</pubDate>
       
       <guid>https://zaburo-ch.github.io/post/cpp-copy-constructor/</guid>
-      <description>&lt;p&gt;関数内で作成したオブジェクトをreturnして代入した場合に&lt;br /&gt;
-コピーが起こってしまうのではといつも不安になっているので試した。&lt;/p&gt;
-
-&lt;script src=&#34;https://gist.github.com/zaburo-ch/d1f55b864bd005a5c9764f97c593306d.js&#34;&gt;&lt;/script&gt;
-
-&lt;p&gt;おこらなかった！嬉しい！&lt;br /&gt;
-たぶんいい感じにポインタ的なものを差し替えてくれているのだろう。&lt;br /&gt;
-コンパイラは g++ (Homebrew gcc 4.9.2_1) 4.9.2&lt;/p&gt;
-</description>
+      <description>関数内で作成したオブジェクトをreturnして代入した場合に
+コピーが起こってしまうのではといつも不安になっているので試した。
+ おこらなかった！嬉しい！
+たぶんいい感じにポインタ的なものを差し替えてくれているのだろう。
+コンパイラは g++ (Homebrew gcc 4.9.2_1) 4.9.2</description>
     </item>
     
   </channel>

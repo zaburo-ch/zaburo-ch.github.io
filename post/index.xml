@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Post-rsses on ZABURO app</title>
-    <link>https://zaburo-ch.github.io/post/index.xml</link>
-    <description>Recent content in Post-rsses on ZABURO app</description>
+    <title>Posts on ZABURO app</title>
+    <link>https://zaburo-ch.github.io/post/</link>
+    <description>Recent content in Posts on ZABURO app</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
     <copyright>Written by ZABURO</copyright>
     <lastBuildDate>Sat, 17 Dec 2016 17:04:54 +0900</lastBuildDate>
-    <atom:link href="https://zaburo-ch.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    
+	<atom:link href="https://zaburo-ch.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>Style Transfer いろいろ</title>
@@ -16,77 +18,39 @@
       <pubDate>Sat, 17 Dec 2016 17:04:54 +0900</pubDate>
       
       <guid>https://zaburo-ch.github.io/post/style-transfer/</guid>
-      <description>&lt;p&gt;研究室のゼミでStyle Transferに関して論文紹介を行った際に使用したスライドを&lt;br /&gt;
-少し修正してslide shareにアップロードしました．&lt;/p&gt;
-
-&lt;p&gt;&lt;iframe src=&#34;//www.slideshare.net/slideshow/embed_code/key/crr96NXhlx6ow9&#34; width=&#34;595&#34; height=&#34;485&#34; frameborder=&#34;0&#34; marginwidth=&#34;0&#34; marginheight=&#34;0&#34; scrolling=&#34;no&#34; style=&#34;border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;&#34; allowfullscreen&gt; &lt;/iframe&gt; &lt;div style=&#34;margin-bottom:5px&#34;&gt; &lt;strong&gt; &lt;a href=&#34;//www.slideshare.net/zaburo/style-transfer&#34; title=&#34;Style transfer&#34; target=&#34;_blank&#34;&gt;Style transfer&lt;/a&gt; &lt;/strong&gt; from &lt;strong&gt;&lt;a target=&#34;_blank&#34; href=&#34;//www.slideshare.net/zaburo&#34;&gt;zaburo&lt;/a&gt;&lt;/strong&gt; &lt;/div&gt;&lt;/p&gt;
-
-&lt;p&gt;TensorFlowの練習も兼ねて実装してみたので&lt;br /&gt;
-この記事では，実装するときに悩んだところなどついていくつか取り上げたいと思います．&lt;/p&gt;
-
-&lt;p&gt;下記の実装を参考にさせていただきました．&lt;br /&gt;
-&lt;a href=&#34;https://github.com/cysmith/neural-style-tf&#34;&gt;https://github.com/cysmith/neural-style-tf&lt;/a&gt;&lt;br /&gt;
-&lt;a href=&#34;https://github.com/tensorflow/magenta/tree/master/magenta/models/image_stylization&#34;&gt;https://github.com/tensorflow/magenta/tree/master/magenta/models/image_stylization&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;まずはスライド中でGatys et al. 2016aとして紹介している&lt;br /&gt;
-もっとも基本的なStyle Transferを実装します．コードは&lt;a href=&#34;https://github.com/zaburo-ch/style_transfer/blob/master/my_style_transfer.py&#34;&gt;こちら&lt;/a&gt;．&lt;/p&gt;
-
-&lt;p&gt;基本的には論文の式を実装するだけですが&lt;br /&gt;
-コンテンツの損失の式がピクセル数で割るような形になっていないのに&lt;br /&gt;
-論文に入力画像のサイズが書いていないので(見逃しているだけ？)，&lt;br /&gt;
-論文のalphaとbetaの比をそのままつかってもうまくいきませんでした．&lt;/p&gt;
-
-&lt;p&gt;そこでJohnson et al. 2016に書かれている式を使うことにしました．&lt;br /&gt;
-具体的にはコンテンツの損失で二乗和をとっているところを二乗平均にしました．&lt;br /&gt;
-ついでに，スタイルの損失についてもJohnson et al. 2016に従って修正します．&lt;br /&gt;
-ここはGram matrixを&lt;code&gt;height * width&lt;/code&gt;で割って二乗平均をとる形にしました．&lt;br /&gt;
-(Gram matrixを&lt;code&gt;channel * height * width&lt;/code&gt;で割るのと等価なはずです)&lt;/p&gt;
-
-&lt;p&gt;VGGについてはTensorFlow-Slimを使ってサクッと書きました．&lt;br /&gt;
-基本は&lt;a href=&#34;https://github.com/tensorflow/tensorflow/blob/master/tensorflow/contrib/slim/python/slim/nets/vgg.py&#34;&gt;slimの下にあるvgg_16&lt;/a&gt;から全結合層を除いたものになっています．&lt;br /&gt;
-endpointはそのままだとkeyが&lt;code&gt;vgg_16/convN/convN_M&lt;/code&gt;のような形になるので，&lt;br /&gt;
-使いやすいようにkeyを変更して使っています．&lt;br /&gt;
-slimを使うと数行でVGG16が実装できるので非常に便利でした．&lt;/p&gt;
-
-&lt;p&gt;また，損失の定義する方法としては，コンテンツ・スタイル画像をテンソルとして別々に定義し&lt;br /&gt;
-最適化の際にそれらをVGGに入力した値などを計算させるような方法も考えられますが，&lt;br /&gt;
-損失を定義する段階でコンテンツ・スタイル画像を入力した場合の計算しておき，&lt;br /&gt;
-それを定数として扱った方が高速に動作したのでそのように書きました．&lt;/p&gt;
-
-&lt;p&gt;次にGatys et al. 2016bで提案された色を保存したままStyle Transferを行う手法の1つである&lt;br /&gt;
-Luminance-only Transferを実装します．コードは&lt;a href=&#34;https://github.com/zaburo-ch/style_transfer/blob/master/luminance_only.py&#34;&gt;こちら&lt;/a&gt;&lt;br /&gt;
-これは&lt;a href=&#34;https://en.wikipedia.org/wiki/YIQ&#34;&gt;英語版WikipediaのYIQの記事&lt;/a&gt;にYIQとRGBの相互変換が載っているので&lt;br /&gt;
-これを実装すればほとんどおしまいです．&lt;/p&gt;
-
-&lt;p&gt;あとは，RGB -&amp;gt; YIQ -&amp;gt; YチャンネルはそのままでIQチャンネルを全て0にしたもの -&amp;gt; RGB&lt;br /&gt;
-という流れで変換してStyle Transferして結果のIQチャンネルを元のIQチャンネルに戻すだけです．&lt;br /&gt;
-また，コンテンツのYチャンネルとスタイルのYチャンネルの平均・分散が
-同じになるように途中でスタイルのYチャンネルを変換するとより結果がよくなるそうです．&lt;/p&gt;
-
-&lt;p&gt;Johnson et al. 2016についても&lt;a href=&#34;https://github.com/tensorflow/magenta/tree/master/magenta/models/image_stylization&#34;&gt;magentaのimage_stylization&lt;/a&gt;を参考にして実装してみましたが，&lt;br /&gt;
-いまひとつ綺麗な画像が生成できていないので要改善という感じです&amp;hellip;&lt;br /&gt;
-コードは&lt;a href=&#34;https://github.com/zaburo-ch/style_transfer/tree/master/fast_transfer&#34;&gt;こちら&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;もしかしたらTensorFlowのバージョンによって違うのかもしれませんが，&lt;br /&gt;
-&lt;code&gt;tf.image.convert_image_dtype(image, dtype=tf.float32)&lt;/code&gt;&lt;br /&gt;
-は使った段階で[0, 1)に値が丸められるので，この後で255で割る必要はないようです．&lt;br /&gt;
-参考にしたコードでは255で割っていたのでそれを真似していたらハマってしまいました&amp;hellip;&lt;/p&gt;
-
-&lt;p&gt;あとデバッグの際にはsummaryで値を眺めてみるというのもありですが，&lt;br /&gt;
-&lt;code&gt;tf.Print&lt;/code&gt;で実際の値を見るのも非常に役に立ちました．↓このへんを参考に．
-&lt;a href=&#34;http://stackoverflow.com/questions/38810424/how-does-one-debug-nan-values-in-tensorflow/38813502&#34;&gt;http://stackoverflow.com/questions/38810424/how-does-one-debug-nan-values-in-tensorflow/38813502&lt;/a&gt;
-&lt;a href=&#34;https://www.tensorflow.org/api_docs/python/control_flow_ops/debugging_operations#Print&#34;&gt;https://www.tensorflow.org/api_docs/python/control_flow_ops/debugging_operations#Print&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;とりあえず思いつくことは以上になります．&lt;br /&gt;
-ついこの間1ネットワークで任意のスタイルに適用できるという凄い論文&lt;br /&gt;
-(Chen &amp;amp; Schmidt 2016)が出たのでこれについても試してみたいですね．&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;参考文献&lt;/strong&gt;&lt;br /&gt;
- - Gatys et al. 2016a &lt;a href=&#34;http://www.cv-foundation.org/openaccess/content_cvpr_2016/papers/Gatys_Image_Style_Transfer_CVPR_2016_paper.pdf&#34;&gt;Image Style Transfer Using Convolutional Neural Networks&lt;/a&gt;&lt;br /&gt;
- - Gatys et al. 2016b &lt;a href=&#34;https://arxiv.org/abs/1606.05897&#34;&gt;Preserving Color in Neural Artistic Style Transfer&lt;/a&gt;&lt;br /&gt;
- - Johnson et al. 2016 &lt;a href=&#34;https://arxiv.org/abs/1603.08155&#34;&gt;Perceptual Losses for Real-Time Style Transfer and Super-Resolution&lt;/a&gt;&lt;br /&gt;
- - Chen &amp;amp; Schmidt 2016 &lt;a href=&#34;https://arxiv.org/abs/1612.04337&#34;&gt;Fast Patch-based Style Transfer of Arbitrary Style&lt;/a&gt;&lt;/p&gt;
-</description>
+      <description>研究室のゼミでStyle Transferに関して論文紹介を行った際に使用したスライドを
+少し修正してslide shareにアップロードしました．
+  Style transfer  from zaburo 
+TensorFlowの練習も兼ねて実装してみたので
+この記事では，実装するときに悩んだところなどついていくつか取り上げたいと思います．
+下記の実装を参考にさせていただきました．
+https://github.com/cysmith/neural-style-tf
+https://github.com/tensorflow/magenta/tree/master/magenta/models/image_stylization
+まずはスライド中でGatys et al. 2016aとして紹介している
+もっとも基本的なStyle Transferを実装します．コードはこちら．
+基本的には論文の式を実装するだけですが
+コンテンツの損失の式がピクセル数で割るような形になっていないのに
+論文に入力画像のサイズが書いていないので(見逃しているだけ？)，
+論文のalphaとbetaの比をそのままつかってもうまくいきませんでした．
+そこでJohnson et al. 2016に書かれている式を使うことにしました．
+具体的にはコンテンツの損失で二乗和をとっているところを二乗平均にしました．
+ついでに，スタイルの損失についてもJohnson et al. 2016に従って修正します．
+ここはGram matrixをheight * widthで割って二乗平均をとる形にしました．
+(Gram matrixをchannel * height * widthで割るのと等価なはずです)
+VGGについてはTensorFlow-Slimを使ってサクッと書きました．
+基本はslimの下にあるvgg_16から全結合層を除いたものになっています．
+endpointはそのままだとkeyがvgg_16/convN/convN_Mのような形になるので，
+使いやすいようにkeyを変更して使っています．
+slimを使うと数行でVGG16が実装できるので非常に便利でした．
+また，損失の定義する方法としては，コンテンツ・スタイル画像をテンソルとして別々に定義し
+最適化の際にそれらをVGGに入力した値などを計算させるような方法も考えられますが，
+損失を定義する段階でコンテンツ・スタイル画像を入力した場合の計算しておき，
+それを定数として扱った方が高速に動作したのでそのように書きました．
+次にGatys et al. 2016bで提案された色を保存したままStyle Transferを行う手法の1つである
+Luminance-only Transferを実装します．コードはこちら
+これは英語版WikipediaのYIQの記事にYIQとRGBの相互変換が載っているので
+これを実装すればほとんどおしまいです．
+あとは，RGB -&amp;gt; YIQ -&amp;gt; YチャンネルはそのままでIQチャンネルを全て0にしたもの -&amp;gt; RGB</description>
     </item>
     
     <item>
@@ -95,31 +59,22 @@ Luminance-only Transferを実装します．コードは&lt;a href=&#34;https://
       <pubDate>Wed, 29 Jun 2016 13:06:24 +0900</pubDate>
       
       <guid>https://zaburo-ch.github.io/post/tsne-decode/</guid>
-      <description>&lt;p&gt;Parametric t-SNEでt-SNEの変換をニューラルネットで近似することができたので、&lt;br /&gt;
-その逆についてもやってみました。&lt;/p&gt;
+      <description>Parametric t-SNEでt-SNEの変換をニューラルネットで近似することができたので、
+その逆についてもやってみました。
+逆変換と言っても特に難しいことはやっておらず、
+まず普通にBarnes-Hut t-SNEで訓練データを2次元に変換して、
+変換後の座標を入力、変換前の座標を教師データとして教師あり学習を行います。
+今回は、変換後の座標のうち訓練データにないような座標について、
+どのように逆変換されるのかが気になるので汎化性能を高めるためにDropoutを入れました。
+コードは次の通りです。
 
-&lt;p&gt;逆変換と言っても特に難しいことはやっておらず、&lt;br /&gt;
-まず普通にBarnes-Hut t-SNEで訓練データを2次元に変換して、&lt;br /&gt;
-変換後の座標を入力、変換前の座標を教師データとして教師あり学習を行います。&lt;/p&gt;
-
-&lt;p&gt;今回は、変換後の座標のうち訓練データにないような座標について、&lt;br /&gt;
-どのように逆変換されるのかが気になるので汎化性能を高めるためにDropoutを入れました。&lt;/p&gt;
-
-&lt;p&gt;コードは次の通りです。&lt;br /&gt;
-&lt;script src=&#34;https://gist.github.com/zaburo-ch/591fd26eda1236a1721f5be5eb06ce6a.js&#34;&gt;&lt;/script&gt;&lt;/p&gt;
-
-&lt;p&gt;t-SNEの結果がこんな感じで、&lt;br /&gt;
-&lt;img src=&#34;https://zaburo-ch.github.io/images/tsne-decode-img01.png&#34; alt=&#34;tsne_result.png&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;適当に座標を指定して逆変換した結果がこれ&lt;br /&gt;
-&lt;img src=&#34;https://zaburo-ch.github.io/images/tsne-decode-img02.png&#34; alt=&#34;test_result.png&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;かなり綺麗に逆変換できました。&lt;br /&gt;
-deconvolutionを使えばもっとうまく逆変換できるかもしれませんが、&lt;br /&gt;
-MNISTの結果としてはこれで十分だと思います。&lt;br /&gt;
-なんとかしてこの方針で画像生成とかできないのかなーと思っているのですが、&lt;br /&gt;
-まずはグレースケールでない画像をうまく変換できるようにt-SNE側を工夫しなければいけない気がします。&lt;/p&gt;
-</description>
+t-SNEの結果がこんな感じで、
+適当に座標を指定して逆変換した結果がこれ
+かなり綺麗に逆変換できました。
+deconvolutionを使えばもっとうまく逆変換できるかもしれませんが、
+MNISTの結果としてはこれで十分だと思います。
+なんとかしてこの方針で画像生成とかできないのかなーと思っているのですが、
+まずはグレースケールでない画像をうまく変換できるようにt-SNE側を工夫しなければいけない気がします。</description>
     </item>
     
     <item>
@@ -128,55 +83,40 @@ MNISTの結果としてはこれで十分だと思います。&lt;br /&gt;
       <pubDate>Tue, 28 Jun 2016 22:01:32 +0900</pubDate>
       
       <guid>https://zaburo-ch.github.io/post/parametric-tsne-keras/</guid>
-      <description>&lt;p&gt;最近、t-SNEについていろいろ調べいて、その中で&lt;a href=&#34;https://lvdmaaten.github.io/publications/papers/AISTATS_2009.pdf&#34;&gt;Parametric t-SNEの論文&lt;/a&gt;を読みました。&lt;br /&gt;
-&lt;a href=&#34;https://lvdmaaten.github.io/publications/papers/JMLR_2008.pdf&#34;&gt;元のt-SNE&lt;/a&gt;は可視化や次元削減の手法としてとても有用なのですが、
-変換後の座標を乱数で初期化し、&lt;br /&gt;
-KLダイバージェンスが小さくなるように勾配降下で座標を調整していく感じなので、&lt;br /&gt;
-初めの乱数次第で配置は大きく変わりますし、別なデータを同じような場所に投射するようなことができません。&lt;/p&gt;
-
-&lt;p&gt;そのため、kaggleなどで前処理として使われる際には、&lt;br /&gt;
-訓練データとテストデータをくっつけて変換するという方法が取られています。&lt;br /&gt;
-しかし、本来見れないはずのテストデータを訓練データを変換する時にも使うというのはグレーな感じがします。&lt;/p&gt;
-
-&lt;p&gt;そこで、座標を直接調整するのではなく、&lt;br /&gt;
-元の座標をパラメトリックな関数で低次元の座標に投射するようにして、&lt;br /&gt;
-その関数のパラメータを学習してあげようというのがParametric t-SNEです。&lt;br /&gt;
-ここで、関数としてニューラルネットが使われます。&lt;/p&gt;
-
-&lt;p&gt;論文では、RBMを重ねてpre trainingしてfine tuningというのをやっているのですが、&lt;br /&gt;
-どうせやるならということで今風にReLUで書きました。&lt;/p&gt;
-
-&lt;p&gt;コードは&lt;a href=&#34;https://github.com/zaburo-ch/Parametric-t-SNE-in-Keras&#34;&gt;ここ&lt;/a&gt;に置いてあります。&lt;br /&gt;
-とりあえず論文にも載っているMNISTで試しました。&lt;br /&gt;
-100 epoch回すとAWS EC2のg2.2xlargeインスタンスでだいたい10分程度かかります。&lt;/p&gt;
-
-&lt;p&gt;普通のMNISTなので60000件の訓練データと10000件のテストデータがあります。&lt;br /&gt;
-学習していく過程が見れたら面白そうだなと思ったので、&lt;br /&gt;
-各epoch終了後テストデータに対して変換を行い、散布図を書くようにしました。&lt;/p&gt;
-
-&lt;p&gt;結果はこんな感じ。&lt;br /&gt;
-&lt;img src=&#34;https://zaburo-ch.github.io/images/mnist_process.gif&#34; alt=&#34;画像&#34; /&gt;&lt;br /&gt;
-(なんかgifが吐けなくてmp4をgifに変換したので画質が悪い&amp;hellip;)&lt;/p&gt;
-
-&lt;p&gt;訓練に使っていないデータに対してすごくいい感じに別けられていると思います。&lt;/p&gt;
-
-&lt;p&gt;10~20 epochくらいでいい感じに別けられているので、&lt;br /&gt;
-10 epoch毎とかにミニバッチをシャッフルしてあげるともっと良くなるかもしれません。&lt;br /&gt;
-一応shuffle_intervalという変数が用意してあって、&lt;br /&gt;
-shuffle_interval回のepochが回るとミニバッチがシャッフルされてPが再計算されます。&lt;/p&gt;
-
-&lt;p&gt;Pを計算する部分についてもPython上でですが並列化してあるので少しは早いと思います。&lt;/p&gt;
-
-&lt;p&gt;Convolutional Parametric t-SNEだー！！って言って畳み込み層を使ったものも書いたのですが、&lt;br /&gt;
-普通のMLP版とあまり変わらなかったのでお蔵入りしました。&lt;/p&gt;
-
-&lt;p&gt;いつもMNISTしてばかりなのでCIFAR-10でも試してみたのですがあまりうまくいきませんでした。&lt;br /&gt;
-そもそもt-SNEでCIFAR-10がうまくいくのが試していないので良くわかりませんが、&lt;br /&gt;
-これConvolutionalしてなんとか解決できないかなーと考えています。&lt;/p&gt;
-
-&lt;p&gt;追記：&lt;br /&gt;
-&lt;a href=&#34;https://zaburo-ch.github.io/post/tsne-decode/&#34;&gt;逆変換も試しました。&lt;/a&gt;&lt;/p&gt;
-</description>
+      <description>最近、t-SNEについていろいろ調べいて、その中でParametric t-SNEの論文を読みました。
+元のt-SNEは可視化や次元削減の手法としてとても有用なのですが、 変換後の座標を乱数で初期化し、
+KLダイバージェンスが小さくなるように勾配降下で座標を調整していく感じなので、
+初めの乱数次第で配置は大きく変わりますし、別なデータを同じような場所に投射するようなことができません。
+そのため、kaggleなどで前処理として使われる際には、
+訓練データとテストデータをくっつけて変換するという方法が取られています。
+しかし、本来見れないはずのテストデータを訓練データを変換する時にも使うというのはグレーな感じがします。
+そこで、座標を直接調整するのではなく、
+元の座標をパラメトリックな関数で低次元の座標に投射するようにして、
+その関数のパラメータを学習してあげようというのがParametric t-SNEです。
+ここで、関数としてニューラルネットが使われます。
+論文では、RBMを重ねてpre trainingしてfine tuningというのをやっているのですが、
+どうせやるならということで今風にReLUで書きました。
+コードはここに置いてあります。
+とりあえず論文にも載っているMNISTで試しました。
+100 epoch回すとAWS EC2のg2.2xlargeインスタンスでだいたい10分程度かかります。
+普通のMNISTなので60000件の訓練データと10000件のテストデータがあります。
+学習していく過程が見れたら面白そうだなと思ったので、
+各epoch終了後テストデータに対して変換を行い、散布図を書くようにしました。
+結果はこんな感じ。
+(なんかgifが吐けなくてmp4をgifに変換したので画質が悪い&amp;hellip;)
+訓練に使っていないデータに対してすごくいい感じに別けられていると思います。
+10~20 epochくらいでいい感じに別けられているので、
+10 epoch毎とかにミニバッチをシャッフルしてあげるともっと良くなるかもしれません。
+一応shuffle_intervalという変数が用意してあって、
+shuffle_interval回のepochが回るとミニバッチがシャッフルされてPが再計算されます。
+Pを計算する部分についてもPython上でですが並列化してあるので少しは早いと思います。
+Convolutional Parametric t-SNEだー！！って言って畳み込み層を使ったものも書いたのですが、
+普通のMLP版とあまり変わらなかったのでお蔵入りしました。
+いつもMNISTしてばかりなのでCIFAR-10でも試してみたのですがあまりうまくいきませんでした。
+そもそもt-SNEでCIFAR-10がうまくいくのが試していないので良くわかりませんが、
+これConvolutionalしてなんとか解決できないかなーと考えています。
+追記：
+逆変換も試しました。</description>
     </item>
     
     <item>
@@ -185,15 +125,11 @@ shuffle_interval回のepochが回るとミニバッチがシャッフルされ�
       <pubDate>Sat, 14 May 2016 14:45:45 +0900</pubDate>
       
       <guid>https://zaburo-ch.github.io/post/cpp-copy-constructor/</guid>
-      <description>&lt;p&gt;関数内で作成したオブジェクトをreturnして代入した場合に&lt;br /&gt;
-コピーが起こってしまうのではといつも不安になっているので試した。&lt;/p&gt;
-
-&lt;script src=&#34;https://gist.github.com/zaburo-ch/d1f55b864bd005a5c9764f97c593306d.js&#34;&gt;&lt;/script&gt;
-
-&lt;p&gt;おこらなかった！嬉しい！&lt;br /&gt;
-たぶんいい感じにポインタ的なものを差し替えてくれているのだろう。&lt;br /&gt;
-コンパイラは g++ (Homebrew gcc 4.9.2_1) 4.9.2&lt;/p&gt;
-</description>
+      <description>関数内で作成したオブジェクトをreturnして代入した場合に
+コピーが起こってしまうのではといつも不安になっているので試した。
+ おこらなかった！嬉しい！
+たぶんいい感じにポインタ的なものを差し替えてくれているのだろう。
+コンパイラは g++ (Homebrew gcc 4.9.2_1) 4.9.2</description>
     </item>
     
     <item>
@@ -202,60 +138,26 @@ shuffle_interval回のepochが回るとミニバッチがシャッフルされ�
       <pubDate>Wed, 13 Apr 2016 11:32:33 +0900</pubDate>
       
       <guid>https://zaburo-ch.github.io/post/faxocr/</guid>
-      <description>&lt;p&gt;せっかくKerasを使ってみたのでCNNもやってみたいということで、&lt;br /&gt;
-&lt;a href=&#34;https://sites.google.com/site/faxocr2010/systemrequirements/kocr/mnist&#34;&gt;FaxOCR&lt;/a&gt;というMNISTと同形式のデータセットで手書き文字認識をやってみました。&lt;br /&gt;
-ソースコードは&lt;a href=&#34;https://github.com/zaburo-ch/FaxOCR/blob/master/code/faxmnist_keras.py&#34;&gt;ここ&lt;/a&gt;にあります。&lt;/p&gt;
-
-&lt;p&gt;このデータセットではtrain setがかなり小さいので、&lt;br /&gt;
-まず最初に適当に拡大縮小や回転をして画像データの枚数を11倍に(1枚から10枚生成)しました。&lt;/p&gt;
-
-&lt;p&gt;CNNのアーキテクチャは&lt;a href=&#34;https://github.com/toshi-k/kaggle-digit-recognizer/blob/master/2_model.lua&#34;&gt;toshi-kさんのコード&lt;/a&gt;を参考にして適当に設定しました。&lt;br /&gt;
-ただ、データセットが小さくて過学習してしまいそうだなーと思ったので、&lt;br /&gt;
-上記のものに比べて小さいネットワークになっています。&lt;/p&gt;
-
-&lt;p&gt;入力したテンソルがどの時点でどのサイズになっているか確認する方法がわからなかったので、&lt;br /&gt;
-ZeroPaddingなどがこれでうまくいっているのかわかりませんが、&lt;br /&gt;
-入力(1, 28, 28) -&amp;gt; (64, 12, 12) -&amp;gt; (64, 12, 12) -&amp;gt; (256, 10, 10) -&amp;gt; (128) -&amp;gt; (10)出力&lt;br /&gt;
-という形になっていると嬉しいなくらいの感じで書いています。&lt;br /&gt;
-&lt;a href=&#34;http://ultraist.hatenablog.com/entry/2014/08/23/144007&#34;&gt;こういう風に&lt;/a&gt;デバッグする方法が知りたい&amp;hellip;&amp;hellip;&lt;/p&gt;
-
-&lt;p&gt;結果は次の通りです。&lt;/p&gt;
-
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;dataset&lt;/th&gt;
-&lt;th&gt;正答率&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;train&lt;/td&gt;
-&lt;td&gt;99.5%&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;valid&lt;/td&gt;
-&lt;td&gt;99.1%&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;test&lt;/td&gt;
-&lt;td&gt;93.1%&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;増やしたデータセットのうち90%をtrain、10%をvalidとし、&lt;br /&gt;
-trainで訓練してvalidが最も高くなるところで止まるようになっています。&lt;br /&gt;
-もとのデータセット全部をtrainにしてtestが高くなるところで止めるともう少し精度が上がります。(&lt;a href=&#34;https://github.com/zaburo-ch/FaxOCR/blob/master/code/faxmnist_keras_testval.py&#34;&gt;これ&lt;/a&gt;)&lt;/p&gt;
-
-&lt;p&gt;GPUマシンを持っていないので学習に時間がかかりすぎりてあんまり色々試せない&amp;hellip;&amp;hellip;&lt;/p&gt;
-
-&lt;p&gt;[追記]&lt;br /&gt;
-データセットのバージョンは&lt;a href=&#34;https://sites.google.com/site/faxocr2010/systemrequirements/kocr/mnist/faxocr-numbers-20160411c.zip&#34;&gt;faxocr-numbers-20160411c.zip&lt;/a&gt;のものです。&lt;/p&gt;
-</description>
+      <description>せっかくKerasを使ってみたのでCNNもやってみたいということで、
+FaxOCRというMNISTと同形式のデータセットで手書き文字認識をやってみました。
+ソースコードはここにあります。
+このデータセットではtrain setがかなり小さいので、
+まず最初に適当に拡大縮小や回転をして画像データの枚数を11倍に(1枚から10枚生成)しました。
+CNNのアーキテクチャはtoshi-kさんのコードを参考にして適当に設定しました。
+ただ、データセットが小さくて過学習してしまいそうだなーと思ったので、
+上記のものに比べて小さいネットワークになっています。
+入力したテンソルがどの時点でどのサイズになっているか確認する方法がわからなかったので、
+ZeroPaddingなどがこれでうまくいっているのかわかりませんが、
+入力(1, 28, 28) -&amp;gt; (64, 12, 12) -&amp;gt; (64, 12, 12) -&amp;gt; (256, 10, 10) -&amp;gt; (128) -&amp;gt; (10)出力
+という形になっていると嬉しいなくらいの感じで書いています。
+こういう風にデバッグする方法が知りたい&amp;hellip;&amp;hellip;
+結果は次の通りです。
+   dataset 正答率     train 99.5%   valid 99.1%   test 93.1%    増やしたデータセットのうち90%をtrain、10%をvalidとし、
+trainで訓練してvalidが最も高くなるところで止まるようになっています。
+もとのデータセット全部をtrainにしてtestが高くなるところで止めるともう少し精度が上がります。(これ)
+GPUマシンを持っていないので学習に時間がかかりすぎりてあんまり色々試せない&amp;hellip;&amp;hellip;
+[追記]
+データセットのバージョンはfaxocr-numbers-20160411c.zipのものです。</description>
     </item>
     
     <item>
@@ -264,108 +166,28 @@ trainで訓練してvalidが最も高くなるところで止まるようにな�
       <pubDate>Thu, 17 Mar 2016 13:37:58 +0900</pubDate>
       
       <guid>https://zaburo-ch.github.io/post/neural-fitted-q-iteration/</guid>
-      <description>&lt;p&gt;&lt;a href=&#34;https://zaburo-ch.github.io/post/mlp/&#34;&gt;前々回に実装した多層パーセプトロン&lt;/a&gt;と&lt;a href=&#34;https://zaburo-ch.github.io/post/inverted-pendulum/&#34;&gt;前回実装した倒立振子のシミュレータ&lt;/a&gt;を用いて、&lt;br /&gt;
-&lt;a href=&#34;http://ml.informatik.uni-freiburg.de/_media/publications/rieecml05.pdf&#34;&gt;Neural Fitted Q Iteration&lt;/a&gt;(NFQ)の実験を行います。&lt;/p&gt;
+      <description>前々回に実装した多層パーセプトロンと前回実装した倒立振子のシミュレータを用いて、
+Neural Fitted Q Iteration(NFQ)の実験を行います。
+NFQはQ学習の最適行動価値関数を多層パーセプトロンを用いて近似する手法の一つで、
+学習中にはデータを追加せず、事前に集められたデータのみから学習を行います。
+コードはこんな感じ。MLPはkerasで構築しました。
 
-&lt;p&gt;NFQはQ学習の最適行動価値関数を多層パーセプトロンを用いて近似する手法の一つで、&lt;br /&gt;
-学習中にはデータを追加せず、事前に集められたデータのみから学習を行います。&lt;/p&gt;
-
-&lt;p&gt;コードはこんな感じ。MLPはkerasで構築しました。&lt;br /&gt;
-&lt;script src=&#34;https://gist.github.com/zaburo-ch/f2f61a94ee722447d2d7.js&#34;&gt;&lt;/script&gt;&lt;/p&gt;
-
-&lt;p&gt;mはepisodeの個数にあたる変数になっていて、&lt;br /&gt;
-[50, 100, 150, 200, 300, 400]の各m対して、50回実験を行うようになっています。&lt;br /&gt;
-実験の大まかな流れは、&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;make_episodes(m)でm個のepisodeを作る&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;多層パーセプトロンを構築&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;Neural Fitted Q Iterationを実行&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;倒立振子を立たせるタスクを実行&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;停止するまでの時間を記録(t&amp;lt;299なら失敗、t==299なら成功)&lt;br /&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;という感じです。肝心の3.では、&lt;br /&gt;
-episodesの中からpattern_set_size個ずつepisodesを取り出し、&lt;br /&gt;
-その中の各cycleから入力xと教師信号tを作成して、&lt;br /&gt;
-多層パーセプトロンをこれにfitさせるのを繰り返すことで学習を行っています。&lt;br /&gt;
-episodes1周だけではうまくタスクを成功させることができなかったので、&lt;br /&gt;
-毎回取り出す順番をランダムに変えてepisodesを5周させるようにしています。&lt;/p&gt;
-
-&lt;p&gt;実験結果は次のようになりました。&lt;/p&gt;
-
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;m&lt;/th&gt;
-&lt;th&gt;成功した回数&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;50&lt;/td&gt;
-&lt;td&gt;25 / 50 (50%)&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;100&lt;/td&gt;
-&lt;td&gt;41 / 50 (82%)&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;150&lt;/td&gt;
-&lt;td&gt;43 / 50 (86%)&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;200&lt;/td&gt;
-&lt;td&gt;43 / 50 (86%)&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;300&lt;/td&gt;
-&lt;td&gt;48 / 50 (96%)&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;400&lt;/td&gt;
-&lt;td&gt;46 / 50 (92%)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;m = 50 の場合については論文とほぼ同程度成功できています。&lt;br /&gt;
-しかし、それ以外の場合では論文の結果よりもやや悪い数字が出てしまっています。&lt;br /&gt;
-特に m &amp;gt;= 200 では100%となるらしいのですが、100%は出ませんでした。&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Rpropを使うところをSGDでやったこと(sigmoid関数がフラットになる範囲で学習が停滞する)&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;episodesの周回数(5)やpattern_set_size(=m/10)をテキトーに決めたこと&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;fitの時のepoch数が1000で固定されていること&lt;br /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;あたりかなが原因なのかなと思っています。&lt;br /&gt;
-この辺りをちゃんと設定すれば100%も出せると思うのですが、&lt;br /&gt;
-まあそれほど悪くない結果が出ているのでひとまずこれで良いことにします。&lt;/p&gt;
-
-&lt;p&gt;倒立振子のアニメーションは以下のような感じ。&lt;br /&gt;
-コスト関数が単純(倒れたら1、倒れないなら0)なため、&lt;br /&gt;
-直立した状態でキープしようとするのではなく、&lt;br /&gt;
-倒れそうになってから直そうとするので台車ごとすっ飛んで行きます。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://zaburo-ch.github.io/images/pendulum_m50_fail.gif&#34; alt=&#34;m=50,失敗&#34; /&gt;
-m = 50, 失敗&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://zaburo-ch.github.io/images/pendulum_m50_success.gif&#34; alt=&#34;m=50,成功&#34; /&gt;
-m = 50, 成功(gifは10秒で打ち切り)&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://zaburo-ch.github.io/images/pendulum_m400_fail.gif&#34; alt=&#34;m=400,失敗&#34; /&gt;
-m = 400, 失敗&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://zaburo-ch.github.io/images/pendulum_m400_success.gif&#34; alt=&#34;m=400,成功&#34; /&gt;
-m = 400, 成功(gifは10秒で打ち切り)&lt;/p&gt;
-</description>
+mはepisodeの個数にあたる変数になっていて、
+[50, 100, 150, 200, 300, 400]の各m対して、50回実験を行うようになっています。
+実験の大まかな流れは、
+ make_episodes(m)でm個のepisodeを作る
+ 多層パーセプトロンを構築
+ Neural Fitted Q Iterationを実行
+ 倒立振子を立たせるタスクを実行
+ 停止するまでの時間を記録(t&amp;lt;299なら失敗、t==299なら成功)
+  という感じです。肝心の3.では、
+episodesの中からpattern_set_size個ずつepisodesを取り出し、
+その中の各cycleから入力xと教師信号tを作成して、
+多層パーセプトロンをこれにfitさせるのを繰り返すことで学習を行っています。
+episodes1周だけではうまくタスクを成功させることができなかったので、
+毎回取り出す順番をランダムに変えてepisodesを5周させるようにしています。
+実験結果は次のようになりました。
+   m 成功した回数     50 25 / 50 (50%)   100 41 / 50 (82%)   150 43 / 50 (86%)   200 43 / 50 (86%)   300 48 / 50 (96%)   400 46 / 50 (92%)    m = 50 の場合については論文とほぼ同程度成功できています。</description>
     </item>
     
     <item>
@@ -374,36 +196,24 @@ m = 400, 成功(gifは10秒で打ち切り)&lt;/p&gt;
       <pubDate>Tue, 15 Mar 2016 21:00:44 +0900</pubDate>
       
       <guid>https://zaburo-ch.github.io/post/inverted-pendulum/</guid>
-      <description>&lt;p&gt;&lt;a href=&#34;http://ml.informatik.uni-freiburg.de/_media/publications/rieecml05.pdf&#34;&gt;Neural Fitted Q Iteration&lt;/a&gt;の実験で使う倒立振子のシミュレータを書きました。&lt;br /&gt;
-論文ではCLSquareというシステムを使って実験が行われているのですが、&lt;br /&gt;
-頑張ってインストールしたものの上手く動かせなかったので自分で書きました。&lt;/p&gt;
-
-&lt;p&gt;倒立振子の運動方程式については&lt;a href=&#34;http://www.robot.mach.mie-u.ac.jp/~nkato/class/sc/Invpend_eq3.pdf&#34;&gt;こちら&lt;/a&gt;のスライドが詳しいです。&lt;br /&gt;
-今回は摩擦を無視するのでスライドでいう B と C が 0 になります。&lt;/p&gt;
-
-&lt;p&gt;台車の重さやポールの長さなどの各種定数は、NFQの論文に倣い、&lt;br /&gt;
-&lt;a href=&#34;https://scholar.google.com/citations?view_op=view_citation&amp;amp;hl=ja&amp;amp;user=VqHiIg8AAAAJ&amp;amp;citation_for_view=VqHiIg8AAAAJ:u5HHmVD_uO8C&#34;&gt;これ&lt;/a&gt;のInverted Pendulumの実験と同じにしました。&lt;/p&gt;
-
-&lt;p&gt;コードはこんな感じ。
-&lt;script src=&#34;https://gist.github.com/zaburo-ch/ebeb65b7b1e97f2ece80.js&#34;&gt;&lt;/script&gt;&lt;/p&gt;
-
-&lt;p&gt;アクションは[-50N, 50N, 0N]の3種類で、[0, 1, 2]で表現しました。&lt;br /&gt;
-do_action(a)でアクションが実行され t だけ時間が進みます。&lt;/p&gt;
-
-&lt;p&gt;matplotlibでビジュアライズできるようにしたので、&lt;br /&gt;
-実行すると次のようなアニメーションが表示されます。&lt;br /&gt;
-&lt;img src=&#34;https://zaburo-ch.github.io/images/pendulum01.gif&#34; alt=&#34;inverted pendulum&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;加速度がこの式で与えられるのは微分してみたらわかるけど、&lt;br /&gt;
-速度や位置(角速度や角度)をどうやって更新していいのかわからなかったので、&lt;br /&gt;
-tが小さければ高校物理のvt+&lt;sup&gt;1&lt;/sup&gt;&amp;frasl;&lt;sub&gt;2&lt;/sub&gt;*at^2で大丈夫でしょって感じで&lt;br /&gt;
-t_sum回ループ回して細かく更新することでそれっぽい結果を得ました。&lt;/p&gt;
-
-&lt;p&gt;ちゃんと検索してみると&lt;a href=&#34;https://searchcode.com/codesearch/view/34802371/&#34;&gt;C言語での実装&lt;/a&gt;が見つかったので、&lt;br /&gt;
-これを真似してupdate_stateを書き換えてみるとこんな感じ。
-&lt;script src=&#34;https://gist.github.com/zaburo-ch/70f16749efeef5beb95e.js&#34;&gt;&lt;/script&gt;
-物理が分からない自分が書いたコードより安心なので、実験ではこっちを使おうと思います。&lt;/p&gt;
-</description>
+      <description>Neural Fitted Q Iterationの実験で使う倒立振子のシミュレータを書きました。
+論文ではCLSquareというシステムを使って実験が行われているのですが、
+頑張ってインストールしたものの上手く動かせなかったので自分で書きました。
+倒立振子の運動方程式についてはこちらのスライドが詳しいです。
+今回は摩擦を無視するのでスライドでいう B と C が 0 になります。
+台車の重さやポールの長さなどの各種定数は、NFQの論文に倣い、
+これのInverted Pendulumの実験と同じにしました。
+コードはこんな感じ。 
+アクションは[-50N, 50N, 0N]の3種類で、[0, 1, 2]で表現しました。
+do_action(a)でアクションが実行され t だけ時間が進みます。
+matplotlibでビジュアライズできるようにしたので、
+実行すると次のようなアニメーションが表示されます。
+加速度がこの式で与えられるのは微分してみたらわかるけど、
+速度や位置(角速度や角度)をどうやって更新していいのかわからなかったので、
+tが小さければ高校物理のvt+1&amp;frasl;2*at^2で大丈夫でしょって感じで
+t_sum回ループ回して細かく更新することでそれっぽい結果を得ました。
+ちゃんと検索してみるとC言語での実装が見つかったので、
+これを真似してupdate_stateを書き換えてみるとこんな感じ。  物理が分からない自分が書いたコードより安心なので、実験ではこっちを使おうと思います。</description>
     </item>
     
     <item>
@@ -412,78 +222,54 @@ t_sum回ループ回して細かく更新することでそれっぽい結果を
       <pubDate>Sat, 20 Feb 2016 01:29:30 +0900</pubDate>
       
       <guid>https://zaburo-ch.github.io/post/mlp/</guid>
-      <description>&lt;p&gt;前回は古典的Q学習を実装しましたが、次はニューラルネットを用いたQ学習として、&lt;br /&gt;
-&lt;a href=&#34;http://ml.informatik.uni-freiburg.de/_media/publications/rieecml05.pdf&#34;&gt;Neural Fitted Q Iteration&lt;/a&gt;を使ったQ学習を実装しようと考えています。&lt;/p&gt;
+      <description>前回は古典的Q学習を実装しましたが、次はニューラルネットを用いたQ学習として、
+Neural Fitted Q Iterationを使ったQ学習を実装しようと考えています。
+今回はその前の勉強として、
+誤差逆伝播法を用いた多層パーセプトロンをNumPyだけで実装してみます。
+誤差逆伝播法についてはこちらのスライドが詳しいです。
 
-&lt;p&gt;今回はその前の勉強として、&lt;br /&gt;
-誤差逆伝播法を用いた多層パーセプトロンをNumPyだけで実装してみます。&lt;br /&gt;
-誤差逆伝播法についてはこちらのスライドが詳しいです。&lt;/p&gt;
-
-&lt;p&gt;&lt;iframe src=&#34;//www.slideshare.net/slideshow/embed_code/key/1T0PJeFTRBMnCG?startSlide=32&#34; width=&#34;425&#34; height=&#34;355&#34; frameborder=&#34;0&#34; marginwidth=&#34;0&#34; marginheight=&#34;0&#34; scrolling=&#34;no&#34; style=&#34;border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;&#34; allowfullscreen&gt; &lt;/iframe&gt;&lt;br /&gt;
-&lt;a href=&#34;//www.slideshare.net/weda654/3-45366686&#34; title=&#34;わかりやすいパターン認識_3章&#34; target=&#34;_blank&#34;&gt;わかりやすいパターン認識_3章&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;コードはこんな感じ。
-&lt;script src=&#34;https://gist.github.com/zaburo-ch/7ab05a6dda71b5ccfe4f.js&#34;&gt;&lt;/script&gt;&lt;/p&gt;
-
-&lt;p&gt;活性化関数は全てシグモイド関数で、コスト関数は残差の平方和を用いました。&lt;br /&gt;
-各層はforwardで出力を計算して、&lt;br /&gt;
-backwardで前の層の誤差を計算しつつ W や b の更新を行います。&lt;br /&gt;
-tanhなどの層も同じような関数を実装してMLPのinitを適宜変えれば使える(はず)。&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://deeplearning.net/tutorial/mlp.html&#34;&gt;DeepLearningTutorialsのMLPのコード&lt;/a&gt;っぽくしたくて、&lt;br /&gt;
-&lt;a href=&#34;http://blog.yusugomori.com/post/40250499669/python%E3%81%AB%E3%82%88%E3%82%8Bdeep-learning%E3%81%AE%E5%AE%9F%E8%A3%85deep-belief-nets-%E7%B7%A8&#34;&gt;DeepLearningTutorialsのDBNをNumPyで実装した方のコード&lt;/a&gt;とか、&lt;br /&gt;
-&lt;a href=&#34;http://aidiary.hatenablog.com/entry/20140201/1391218771&#34;&gt;NumPyでMLPを実装を実装した方のコード&lt;/a&gt;などを参考に書きました。&lt;/p&gt;
-
-&lt;p&gt;各所に載っている式を見る限りは出力層も活性化関数を使うっぽいんですが、&lt;br /&gt;
-Chainerの多層パーセプトロンのサンプルをはじめとして、&lt;br /&gt;
-出力層で線形変換するだけ(活性化関数を使わない)のものが結構あって混乱しました。&lt;br /&gt;
-たぶんシグモイド関数やtanhだと出力できる範囲が狭くて不便なので&lt;br /&gt;
-出力層だけ恒等関数使ってるんだろうという感じでとりあえず考えています。&lt;br /&gt;
-先のNFQの論文で、全ての層でシグモイドを使ったみたいなことが書いてあったので、&lt;br /&gt;
-今回は出力層にもシグモイド関数を使うことにしています。&lt;br /&gt;
-あと出力層での誤差も、出力層の活性化関数の微分をかけるのかどうかがわからなくて&lt;br /&gt;
-結構悩みましたが、スライドの式に従ってかけることにしました。&lt;/p&gt;
-
-&lt;p&gt;また、確率的勾配降下法(SGD)でミニバッチを使った学習ができるように書きましたが、&lt;br /&gt;
-ミニバッチを使う時に W や b の更新をどうやるのかがよくわからなくて、&lt;br /&gt;
-結局ループ回して学習パターン1つずつ使って更新を行うようにしました。&lt;br /&gt;
-出力層の時点で誤差の和をとってそれを伝播するんだと思ったのですが、&lt;br /&gt;
-そしたらそれと掛け合わせる前の層の出力はどうするんだ！？ってなって&lt;br /&gt;
-結局わからず、まあ結局やってること大体一緒でしょってことでこの形にしました。&lt;/p&gt;
-
-&lt;p&gt;結果はこんな感じになります。赤が教師信号、青がMLPの出力で、&lt;br /&gt;
-左が1000回反復した場合、右が10000回反復した場合です。&lt;br /&gt;
-&lt;img src=&#34;https://zaburo-ch.github.io/images/mlp_approximate_abs_1000.png&#34; width=&#34;300px&#34; /&gt;
-&lt;img src=&#34;https://zaburo-ch.github.io/images/mlp_approximate_abs_10000.png&#34; width=&#34;300px&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;たぶん学習できていると思うのですが、&lt;br /&gt;
-いまいちうまくいっているのか確証が持てなかったので、&lt;br /&gt;
-同じネットワークをChainerでも実装してみました。&lt;/p&gt;
-
-&lt;p&gt;コードは&lt;a href=&#34;https://gist.github.com/zaburo-ch/8f4fe27e898b42a38635&#34;&gt;ここ&lt;/a&gt;。Tutorialのものをちょっといじっただけです。&lt;/p&gt;
-
-&lt;p&gt;結果は次の通り。&lt;br /&gt;
-&lt;img src=&#34;https://zaburo-ch.github.io/images/mlp_approximate_abs_chainer_1000.png&#34; width=&#34;300px&#34; /&gt;
-&lt;img src=&#34;https://zaburo-ch.github.io/images/mlp_approximate_abs_chainer_10000.png&#34; width=&#34;300px&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Chainerの方が若干うまく近似できていますが、&lt;br /&gt;
-概ね同じような感じの結果が得られたので、自分で書いた方も大丈夫なはず。&lt;/p&gt;
-
-&lt;p&gt;実行時間はNumPyだけの方がかなり早いです。&lt;br /&gt;
-ただ自分で微分する必要もなく適当に層つなぐだけで出来ちゃったのでChainerすごい&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;2016/03/15 追記&lt;/strong&gt;&lt;br /&gt;
-Kerasでも試してみました。コードは&lt;a href=&#34;https://gist.github.com/zaburo-ch/13b9bfc221246b319a19&#34;&gt;ここ&lt;/a&gt;。&lt;/p&gt;
-
-&lt;p&gt;結果はだいたい同じような感じ&lt;br /&gt;
-&lt;img src=&#34;https://zaburo-ch.github.io/images/mlp_approximate_abs_keras_1000.png&#34; width=&#34;300px&#34; /&gt;
-&lt;img src=&#34;https://zaburo-ch.github.io/images/mlp_approximate_abs_keras_10000.png&#34; width=&#34;300px&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;後ろでTheanoが使われていることもありかなり速いです。&lt;br /&gt;
-まだMLP書いただけなので、もっと大規模なモデルを実装するときにどうなるかはわかりませんが、&lt;br /&gt;
-モデルの記述の仕方や、sklearnっぽいfit・predictの書き方など、&lt;br /&gt;
-結構書きやすいように感じました。もっと使ってみたい。&lt;/p&gt;
-</description>
+わかりやすいパターン認識_3章
+コードはこんな感じ。 
+活性化関数は全てシグモイド関数で、コスト関数は残差の平方和を用いました。
+各層はforwardで出力を計算して、
+backwardで前の層の誤差を計算しつつ W や b の更新を行います。
+tanhなどの層も同じような関数を実装してMLPのinitを適宜変えれば使える(はず)。
+DeepLearningTutorialsのMLPのコードっぽくしたくて、
+DeepLearningTutorialsのDBNをNumPyで実装した方のコードとか、
+NumPyでMLPを実装を実装した方のコードなどを参考に書きました。
+各所に載っている式を見る限りは出力層も活性化関数を使うっぽいんですが、
+Chainerの多層パーセプトロンのサンプルをはじめとして、
+出力層で線形変換するだけ(活性化関数を使わない)のものが結構あって混乱しました。
+たぶんシグモイド関数やtanhだと出力できる範囲が狭くて不便なので
+出力層だけ恒等関数使ってるんだろうという感じでとりあえず考えています。
+先のNFQの論文で、全ての層でシグモイドを使ったみたいなことが書いてあったので、
+今回は出力層にもシグモイド関数を使うことにしています。
+あと出力層での誤差も、出力層の活性化関数の微分をかけるのかどうかがわからなくて
+結構悩みましたが、スライドの式に従ってかけることにしました。
+また、確率的勾配降下法(SGD)でミニバッチを使った学習ができるように書きましたが、
+ミニバッチを使う時に W や b の更新をどうやるのかがよくわからなくて、
+結局ループ回して学習パターン1つずつ使って更新を行うようにしました。
+出力層の時点で誤差の和をとってそれを伝播するんだと思ったのですが、
+そしたらそれと掛け合わせる前の層の出力はどうするんだ！？ってなって
+結局わからず、まあ結局やってること大体一緒でしょってことでこの形にしました。
+結果はこんな感じになります。赤が教師信号、青がMLPの出力で、
+左が1000回反復した場合、右が10000回反復した場合です。
+たぶん学習できていると思うのですが、
+いまいちうまくいっているのか確証が持てなかったので、
+同じネットワークをChainerでも実装してみました。
+コードはここ。Tutorialのものをちょっといじっただけです。
+結果は次の通り。
+Chainerの方が若干うまく近似できていますが、
+概ね同じような感じの結果が得られたので、自分で書いた方も大丈夫なはず。
+実行時間はNumPyだけの方がかなり早いです。
+ただ自分で微分する必要もなく適当に層つなぐだけで出来ちゃったのでChainerすごい
+2016/03/15 追記
+Kerasでも試してみました。コードはここ。
+結果はだいたい同じような感じ
+後ろでTheanoが使われていることもありかなり速いです。
+まだMLP書いただけなので、もっと大規模なモデルを実装するときにどうなるかはわかりませんが、
+モデルの記述の仕方や、sklearnっぽいfit・predictの書き方など、
+結構書きやすいように感じました。もっと使ってみたい。</description>
     </item>
     
     <item>
@@ -492,63 +278,37 @@ Kerasでも試してみました。コードは&lt;a href=&#34;https://gist.gith
       <pubDate>Sun, 14 Feb 2016 14:28:18 +0900</pubDate>
       
       <guid>https://zaburo-ch.github.io/post/q-learning/</guid>
-      <description>&lt;p&gt;Deep Q-Networkについて調べてみたら面白い記事を見つけました。&lt;br /&gt;
-&lt;a href=&#34;http://qiita.com/Ugo-Nama/items/08c6a5f6a571335972d5&#34;&gt;DQNの生い立ち　＋　Deep Q-NetworkをChainerで書いた&lt;br /&gt;
-http://qiita.com/Ugo-Nama/items/08c6a5f6a571335972d5&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;この記事を読んで、Deep Q-Networkが&lt;br /&gt;
-Q学習 -&amp;gt; Q-Network -&amp;gt; Deep Q-Network という流れ生まれたものだということがわかりました。&lt;br /&gt;
-この流れをPythonで実装しながら辿ってみようと思います。&lt;/p&gt;
-
-&lt;p&gt;今回はQ学習を実装します。&lt;br /&gt;
-Q学習について下記のページに詳しく載っているので割愛します。&lt;br /&gt;
-&lt;a href=&#34;http://www.sist.ac.jp/~kanakubo/research/reinforcement_learning.html&#34;&gt;強化学習&lt;br /&gt;
-http://www.sist.ac.jp/~kanakubo/research/reinforcement_learning.html&lt;/a&gt;&lt;br /&gt;
-&lt;a href=&#34;http://sysplan.nams.kyushu-u.ac.jp/gen/edu/RL_intro.html&#34;&gt;強化学習とは？&lt;br /&gt;
-http://sysplan.nams.kyushu-u.ac.jp/gen/edu/RL_intro.html&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;まず、Q学習で適応する環境として次のような簡単な環境を考えます。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;環境の状態は、&#39;A&#39;または&#39;B&#39;からなる長さ8の文字列で表され、  
-その文字列にはある法則により得点がつけられる。  
-プレイヤーはその法則についての知識を予め持たないが、  
-文字列中の任意の1文字を選んで&#39;A&#39;または&#39;B&#39;に置き換えることができ、  
-その結果、その操作による得点の変化量を報酬として受け取る。  
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;たぶんマルコフ決定過程になっていると思います。マルコフ性、&lt;a href=&#34;http://ibisforest.org/index.php?%E3%82%A8%E3%83%AB%E3%82%B4%E3%83%BC%E3%83%89%E6%80%A7&#34;&gt;エルゴート性&lt;/a&gt;も持つはず。&lt;/p&gt;
-
-&lt;p&gt;文字列に得点をつける法則はなんでも良いのですが、&lt;br /&gt;
-今回は、特定の文字列(単語)に次のように得点を割り当てて、&lt;br /&gt;
-{&amp;ldquo;A&amp;rdquo;: 1, &amp;ldquo;BB&amp;rdquo;: 1, &amp;ldquo;AB&amp;rdquo;: 2, &amp;ldquo;ABB&amp;rdquo;: 3, &amp;ldquo;BBA&amp;rdquo;: 3, &amp;ldquo;BBBB&amp;rdquo;: 4}&lt;br /&gt;
-文字列中に含まれる単語の合計得点を文字列の得点とするということにします。&lt;br /&gt;
-例えば&amp;rdquo;AAAAAAAA&amp;rdquo;なら8点(1 * 8)、&amp;rdquo;AAAAAAAB&amp;rdquo;なら9点(1 * 7 + 2)です。&lt;/p&gt;
-
-&lt;p&gt;環境のとりうる状態は長さ8のそれぞれに&amp;rsquo;A&amp;rsquo;, &amp;lsquo;B&amp;rsquo;の2通りあるので2^8通りあり、&lt;br /&gt;
-アクションは、何もしないのと、位置1~8のそれぞれを&amp;rsquo;A&amp;rsquo;または&amp;rsquo;B&amp;rsquo;なのでを計17通りあります。&lt;br /&gt;
-今回のコードでは状態は文字列、アクションは整数(0~16)で管理します。&lt;/p&gt;
-
-&lt;script src=&#34;https://gist.github.com/zaburo-ch/9ee5fd731d40d47c82ad.js&#34;&gt;&lt;/script&gt;
-
-&lt;p&gt;先述した強化学習の記事では、Q学習の学習中に、&lt;br /&gt;
-一定の回数遷移を繰り返した後、状態をs0に戻すものとそうでないものがあり、&lt;br /&gt;
-どちらを採用するか悩んだので QLearning(n_rounds, t_max)として&lt;br /&gt;
-2重のループにすることで一応どちらの方法でも実行できるようにしました。&lt;/p&gt;
-
-&lt;p&gt;これを実行結果はこんな感じ&lt;br /&gt;
-&lt;img src=&#34;https://zaburo-ch.github.io/images/q_learning_figure_1.png&#34; alt=&#34;/images/q_learning_figure_1.png&#34; /&gt;
-軸のラベルを書き忘れていますが、&lt;br /&gt;
-横軸が外側のループが回った数で、縦軸がそれまでに学習したQを使ってt_max回遷移した時のスコアですね。&lt;br /&gt;
-&amp;ldquo;ABBBBBBB&amp;rdquo;に遷移して終わるのとき最大値28をとるのですが、&lt;br /&gt;
-約900セット(t_max * 900回)の学習でそれを実現する遷移ができるようになっています。&lt;/p&gt;
-
-&lt;p&gt;この問題だとイマイチQ学習のイメージがつかみにくいので、&lt;br /&gt;
-素直に最短路問題とかにしとけば良かったなーと思っています。&lt;/p&gt;
-
-&lt;p&gt;最短路問題を使ったわかりやすい例はこちら&lt;br /&gt;
-&lt;a href=&#34;http://d.hatena.ne.jp/poor_code/20090628/1246176165&#34;&gt;Q学習による最短経路学習 - poor_codeの日記&lt;br /&gt;
-http://d.hatena.ne.jp/poor_code/20090628/1246176165&lt;/a&gt;&lt;/p&gt;
-</description>
+      <description>Deep Q-Networkについて調べてみたら面白い記事を見つけました。
+DQNの生い立ち　＋　Deep Q-NetworkをChainerで書いた
+http://qiita.com/Ugo-Nama/items/08c6a5f6a571335972d5
+この記事を読んで、Deep Q-Networkが
+Q学習 -&amp;gt; Q-Network -&amp;gt; Deep Q-Network という流れ生まれたものだということがわかりました。
+この流れをPythonで実装しながら辿ってみようと思います。
+今回はQ学習を実装します。
+Q学習について下記のページに詳しく載っているので割愛します。
+強化学習
+http://www.sist.ac.jp/~kanakubo/research/reinforcement_learning.html
+強化学習とは？
+http://sysplan.nams.kyushu-u.ac.jp/gen/edu/RL_intro.html
+まず、Q学習で適応する環境として次のような簡単な環境を考えます。
+環境の状態は、&#39;A&#39;または&#39;B&#39;からなる長さ8の文字列で表され、 その文字列にはある法則により得点がつけられる。 プレイヤーはその法則についての知識を予め持たないが、 文字列中の任意の1文字を選んで&#39;A&#39;または&#39;B&#39;に置き換えることができ、 その結果、その操作による得点の変化量を報酬として受け取る。  たぶんマルコフ決定過程になっていると思います。マルコフ性、エルゴート性も持つはず。
+文字列に得点をつける法則はなんでも良いのですが、
+今回は、特定の文字列(単語)に次のように得点を割り当てて、
+{&amp;ldquo;A&amp;rdquo;: 1, &amp;ldquo;BB&amp;rdquo;: 1, &amp;ldquo;AB&amp;rdquo;: 2, &amp;ldquo;ABB&amp;rdquo;: 3, &amp;ldquo;BBA&amp;rdquo;: 3, &amp;ldquo;BBBB&amp;rdquo;: 4}
+文字列中に含まれる単語の合計得点を文字列の得点とするということにします。
+例えば&amp;rdquo;AAAAAAAA&amp;rdquo;なら8点(1 * 8)、&amp;rdquo;AAAAAAAB&amp;rdquo;なら9点(1 * 7 + 2)です。
+環境のとりうる状態は長さ8のそれぞれに&amp;rsquo;A&amp;rsquo;, &amp;lsquo;B&amp;rsquo;の2通りあるので2^8通りあり、
+アクションは、何もしないのと、位置1~8のそれぞれを&amp;rsquo;A&amp;rsquo;または&amp;rsquo;B&amp;rsquo;なのでを計17通りあります。
+今回のコードでは状態は文字列、アクションは整数(0~16)で管理します。
+ 先述した強化学習の記事では、Q学習の学習中に、
+一定の回数遷移を繰り返した後、状態をs0に戻すものとそうでないものがあり、
+どちらを採用するか悩んだので QLearning(n_rounds, t_max)として
+2重のループにすることで一応どちらの方法でも実行できるようにしました。
+これを実行結果はこんな感じ
+軸のラベルを書き忘れていますが、
+横軸が外側のループが回った数で、縦軸がそれまでに学習したQを使ってt_max回遷移した時のスコアですね。
+&amp;ldquo;ABBBBBBB&amp;rdquo;に遷移して終わるのとき最大値28をとるのですが、
+約900セット(t_max * 900回)の学習でそれを実現する遷移ができるようになっています。</description>
     </item>
     
     <item>
@@ -557,24 +317,16 @@ http://d.hatena.ne.jp/poor_code/20090628/1246176165&lt;/a&gt;&lt;/p&gt;
       <pubDate>Wed, 09 Dec 2015 17:22:31 +0900</pubDate>
       
       <guid>https://zaburo-ch.github.io/post/release-smapho-sagashi/</guid>
-      <description>&lt;p&gt;&lt;img src=&#34;https://zaburo-ch.github.io/images/smapho_sagashi_promo1.jpg&#34; alt=&#34;プロモ画像&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;結構前の話ですが、「スマホさがし」というAndroidアプリを公開しました。&lt;br /&gt;
-Webページから紛失したスマホのアラームを鳴らせるという機能だけの簡単なアプリです。&lt;/p&gt;
-
-&lt;p&gt;最近家でスマホをなくすことが多く、同様のアプリを入れようと思ったのですが、&lt;br /&gt;
-スマホ無くて探してるのに「SMSで操作できます」みたいなアプリとか、&lt;br /&gt;
-Webページからの操作に何でも彼んでも権限与えまくってる恐怖のアプリとかしか見つからなかったので、&lt;br /&gt;
-自分用に最小限のものをサクッと作ってみました。&lt;/p&gt;
-
-&lt;p&gt;Androidアプリにハマっていたのが2年前くらいなのですが、&lt;br /&gt;
-今はEclipseじゃなくてAndroidStudioになってて便利だし、&lt;br /&gt;
-適当に作ってもそれなりのデザインになるように設計されてるしで感動ものでした。&lt;/p&gt;
-
-&lt;p&gt;ということで「スマホさがし」よろしくお願いします。&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://play.google.com/store/apps/details?id=io.github.zaburo_ch.smaphosagashi&#34;&gt;&lt;img alt=&#34;Get it on Google Play&#34; src=&#34;https://developer.android.com/images/brand/en_generic_rgb_wo_45.png&#34;&gt;&lt;/a&gt;&lt;/p&gt;
-</description>
+      <description>結構前の話ですが、「スマホさがし」というAndroidアプリを公開しました。
+Webページから紛失したスマホのアラームを鳴らせるという機能だけの簡単なアプリです。
+最近家でスマホをなくすことが多く、同様のアプリを入れようと思ったのですが、
+スマホ無くて探してるのに「SMSで操作できます」みたいなアプリとか、
+Webページからの操作に何でも彼んでも権限与えまくってる恐怖のアプリとかしか見つからなかったので、
+自分用に最小限のものをサクッと作ってみました。
+Androidアプリにハマっていたのが2年前くらいなのですが、
+今はEclipseじゃなくてAndroidStudioになってて便利だし、
+適当に作ってもそれなりのデザインになるように設計されてるしで感動ものでした。
+ということで「スマホさがし」よろしくお願いします。</description>
     </item>
     
     <item>
@@ -583,21 +335,16 @@ Webページからの操作に何でも彼んでも権限与えまくってる�
       <pubDate>Thu, 08 Oct 2015 22:26:21 +0900</pubDate>
       
       <guid>https://zaburo-ch.github.io/post/get-exchange-data-from-forexite/</guid>
-      <description>&lt;p&gt;書きました。&lt;/p&gt;
+      <description>書きました。
+Forexiteから分足データをダウンロードしてきて
+解凍したものを適当な形にpandasで加工してcsvで出力する、というのを n 日分行います。
+ひとまず n は200にしているので、そのままコピペして実行すれば200日分のデータが集まるはずです。
+Forexiteのデータは１日毎に分けられているのですが、
+これから使う用途ではその方が都合が良いのでそのままにしてます。
+コードは以下の通り。
 
-&lt;p&gt;&lt;a href=&#34;https://www.forexite.com/&#34;&gt;Forexite&lt;/a&gt;から分足データをダウンロードしてきて&lt;br /&gt;
-解凍したものを適当な形にpandasで加工してcsvで出力する、というのを n 日分行います。&lt;br /&gt;
-ひとまず n は200にしているので、そのままコピペして実行すれば200日分のデータが集まるはずです。&lt;/p&gt;
-
-&lt;p&gt;Forexiteのデータは１日毎に分けられているのですが、&lt;br /&gt;
-これから使う用途ではその方が都合が良いのでそのままにしてます。&lt;/p&gt;
-
-&lt;p&gt;コードは以下の通り。&lt;br /&gt;
-&lt;script src=&#34;https://gist.github.com/zaburo-ch/2ad144ae43a10844a646.js&#34;&gt;&lt;/script&gt;&lt;/p&gt;
-
-&lt;p&gt;ブログ用に処理を綺麗に関数にまとめたかったのですが、&lt;br /&gt;
-逆に強引な書き方が増えてしまいました&amp;hellip;&amp;hellip;&lt;/p&gt;
-</description>
+ブログ用に処理を綺麗に関数にまとめたかったのですが、
+逆に強引な書き方が増えてしまいました&amp;hellip;&amp;hellip;</description>
     </item>
     
     <item>
@@ -606,25 +353,18 @@ Webページからの操作に何でも彼んでも権限与えまくってる�
       <pubDate>Thu, 08 Oct 2015 00:59:54 +0900</pubDate>
       
       <guid>https://zaburo-ch.github.io/post/handle-exchange-data-by-pandas/</guid>
-      <description>&lt;p&gt;データ分析を本格的にやっていきたいと考えていて、&lt;br /&gt;
-その足がかりとしてpandasの使い方を勉強をしています。&lt;/p&gt;
-
-&lt;p&gt;今回は為替データを扱ってみたいと思います。&lt;br /&gt;
-&lt;a href=&#34;https://www.forexite.com/&#34;&gt;Forexite&lt;/a&gt;というサイトで分足データが無料でダウンロードできるので、これを使います。&lt;br /&gt;
-さっそく&lt;a href=&#34;https://www.forexite.com/free_forex_quotes/2015/10/061015.zip&#34;&gt;こちら(2015年10月6日分)&lt;/a&gt;からzipをダウンロードしてきて解凍すると&lt;br /&gt;
-色々な通貨のデータが一つのtxtファイルにまとまっています。&lt;/p&gt;
-
-&lt;p&gt;USDJPYのデータを抽出し5分足の終値と&lt;br /&gt;
-ボリンジャーバンド、指数加重移動平均をプロットするところまでやります。&lt;/p&gt;
-
-&lt;p&gt;IPythonで試行錯誤しながらやったものをまとめたコードが以下の通りです。
-&lt;script src=&#34;https://gist.github.com/zaburo-ch/12e9ada46ee2b7a16e5f.js&#34;&gt;&lt;/script&gt;&lt;/p&gt;
-
-&lt;p&gt;こんな感じのグラフが表示されます。&lt;br /&gt;
-&lt;img src=&#34;https://zaburo-ch.github.io/images/pandas_study_01.png&#34; alt=&#34;図1&#34; /&gt;&lt;br /&gt;
-&amp;lt;DTYYYYMMDD&amp;gt;と&amp;lt;TIME&amp;gt;をマージする部分の強引さが酷いですね。&lt;br /&gt;
-きっともっとスマートにできるんだろうなぁ&lt;/p&gt;
-</description>
+      <description>データ分析を本格的にやっていきたいと考えていて、
+その足がかりとしてpandasの使い方を勉強をしています。
+今回は為替データを扱ってみたいと思います。
+Forexiteというサイトで分足データが無料でダウンロードできるので、これを使います。
+さっそくこちら(2015年10月6日分)からzipをダウンロードしてきて解凍すると
+色々な通貨のデータが一つのtxtファイルにまとまっています。
+USDJPYのデータを抽出し5分足の終値と
+ボリンジャーバンド、指数加重移動平均をプロットするところまでやります。
+IPythonで試行錯誤しながらやったものをまとめたコードが以下の通りです。 
+こんな感じのグラフが表示されます。
+&amp;lt;DTYYYYMMDD&amp;gt;と&amp;lt;TIME&amp;gt;をマージする部分の強引さが酷いですね。
+きっともっとスマートにできるんだろうなぁ</description>
     </item>
     
     <item>
@@ -633,43 +373,27 @@ Webページからの操作に何でも彼んでも権限与えまくってる�
       <pubDate>Sat, 12 Sep 2015 00:08:08 +0900</pubDate>
       
       <guid>https://zaburo-ch.github.io/post/get-redirect-url-in-go/</guid>
-      <description>
-
-&lt;p&gt;タイトルのとおりGoでリダイレクト先のURLを取得します。&lt;br /&gt;
-Goでは普通にClientを使ってGETやらHEADリクエストを行うと、&lt;br /&gt;
-リダイレクトがあったとき自動的にリダイレクト先の内容をとってくるようになっているので、&lt;br /&gt;
-今回のようにリダイレクト先に行く必要の無い特殊なケースでは、&lt;br /&gt;
-リダイレクト時の動作を変更するか、より低レベルのメソッドを利用することで対応します。&lt;/p&gt;
-
-&lt;p&gt;参考にしたページ&lt;br /&gt;
-&lt;a href=&#34;http://stackoverflow.com/questions/23297520/how-can-i-make-the-go-http-client-not-follow-redirects-automatically&#34;&gt;rest - How Can I Make the Go HTTP Client NOT Follow Redirects Automatically? - Stack Overflow&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;リダイレクト時の動作を変更する&#34;&gt;リダイレクト時の動作を変更する&lt;/h2&gt;
-
-&lt;p&gt;&lt;code&gt;Client.CheckRedirect func(req *Request, via []*Request) error&lt;/code&gt;&lt;br /&gt;
-がリダイレクト時の動作を定めているためこれを変更します。&lt;br /&gt;
-CheckRedirectがerrorを返すと、Clientはリダイレクト先を取得する代わりに&lt;br /&gt;
-前のレスポンスの内容とそのerror(wrapped in a url.Error)を返します。&lt;/p&gt;
-
-&lt;script src=&#34;https://gist.github.com/zaburo-ch/98a1a0bfef742111020b.js&#34;&gt;&lt;/script&gt;
-
-&lt;p&gt;30行目では型アサーションを用いてRedirectAttemptedErrorが起こったかを確認しています。&lt;br /&gt;
-HEADリクエストの場合もBodyをcloseしなきゃいけないのかはちょっとわかりませんが、&lt;br /&gt;
-&lt;a href=&#34;http://golang.org/pkg/net/http/#Response&#34;&gt;これ&lt;/a&gt;を見る限りは必要そうなのでcloseしています。&lt;/p&gt;
-
-&lt;h2 id=&#34;より低レベルのメソッドを利用する&#34;&gt;より低レベルのメソッドを利用する&lt;/h2&gt;
-
-&lt;p&gt;http.TransportのRoundTripメソッドを使ってリクエストを行います。&lt;/p&gt;
-
-&lt;script src=&#34;https://gist.github.com/zaburo-ch/99e58cf8fa9d3d11bd6a.js&#34;&gt;&lt;/script&gt;
-
-&lt;p&gt;Transportの設定難しそうだったのでひとまずhttp.DefaultTransport使ってます。&lt;br /&gt;
-ClientはStatusCodeが301,302,303,307の時にリダイレクトの処理を行うので、&lt;br /&gt;
-たぶんこの20行目の書き方でも上手く行くはずです。&lt;br /&gt;
-複数の値のどれかと一致すればtrueみたいな書き方がわからなかったので&lt;br /&gt;
-愚直に4つ書いて並べてあります。なんかいい方法あるんでしょうか。&lt;br /&gt;
-Pythonみたいにin演算子とかあればいいんですけどね。&lt;/p&gt;
-</description>
+      <description>タイトルのとおりGoでリダイレクト先のURLを取得します。
+Goでは普通にClientを使ってGETやらHEADリクエストを行うと、
+リダイレクトがあったとき自動的にリダイレクト先の内容をとってくるようになっているので、
+今回のようにリダイレクト先に行く必要の無い特殊なケースでは、
+リダイレクト時の動作を変更するか、より低レベルのメソッドを利用することで対応します。
+参考にしたページ
+rest - How Can I Make the Go HTTP Client NOT Follow Redirects Automatically? - Stack Overflow
+リダイレクト時の動作を変更する Client.CheckRedirect func(req *Request, via []*Request) error
+がリダイレクト時の動作を定めているためこれを変更します。
+CheckRedirectがerrorを返すと、Clientはリダイレクト先を取得する代わりに
+前のレスポンスの内容とそのerror(wrapped in a url.Error)を返します。
+ 30行目では型アサーションを用いてRedirectAttemptedErrorが起こったかを確認しています。
+HEADリクエストの場合もBodyをcloseしなきゃいけないのかはちょっとわかりませんが、
+これを見る限りは必要そうなのでcloseしています。
+より低レベルのメソッドを利用する http.TransportのRoundTripメソッドを使ってリクエストを行います。
+ Transportの設定難しそうだったのでひとまずhttp.DefaultTransport使ってます。
+ClientはStatusCodeが301,302,303,307の時にリダイレクトの処理を行うので、
+たぶんこの20行目の書き方でも上手く行くはずです。
+複数の値のどれかと一致すればtrueみたいな書き方がわからなかったので
+愚直に4つ書いて並べてあります。なんかいい方法あるんでしょうか。
+Pythonみたいにin演算子とかあればいいんですけどね。</description>
     </item>
     
     <item>
@@ -678,84 +402,47 @@ Pythonみたいにin演算子とかあればいいんですけどね。&lt;/p&gt
       <pubDate>Thu, 06 Aug 2015 01:41:08 +0900</pubDate>
       
       <guid>https://zaburo-ch.github.io/post/quick-start-google-picker-api/</guid>
-      <description>&lt;p&gt;Google Driveのファイルを利用できるPicker APIを
-GAE上で使ってみたのでメモっておきます。&lt;br /&gt;
-クライアントIDが何かとか詳しい話は抜きにしてとにかく動かすまで。&lt;/p&gt;
-
-&lt;p&gt;こちらのガイドに従ってやります。&lt;br /&gt;
-&lt;a href=&#34;https://developers.google.com/picker/docs/&#34;&gt;https://developers.google.com/picker/docs/&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;まずPciker APIを有効にします。&lt;br /&gt;
-&lt;a href=&#34;https://console.developers.google.com/&#34;&gt;Google Developers Console&lt;/a&gt;にログインしてAPIを使うプロジェクトのページに入ります。&lt;br /&gt;
-左側のサイドバーの「APIと認証」-&amp;gt;「API」を選択。&lt;br /&gt;
-Pickerとかで検索して「Google Picker API」を選択しAPIを有効にします。&lt;/p&gt;
-
-&lt;p&gt;次にクライアントIDとAPIキーを作成します。&lt;br /&gt;
-「APIと認証」-&amp;gt;「認証情報」から2つとも作成できます。&lt;/p&gt;
-
-&lt;p&gt;クライアントIDの方はウェブアプリケーションを選択し、&lt;br /&gt;
-「JavaScript 生成元」にはAPIを使用するページのオリジンを指定。&lt;br /&gt;
-今回はlocalhost:8080でも動いて欲しいので次の二つを指定しました。&lt;br /&gt;
-http://プロジェクトID.appspot.com/&lt;br /&gt;
-&lt;a href=&#34;http://localhost:8080/&#34;&gt;http://localhost:8080/&lt;/a&gt;&lt;br /&gt;
-リダイレクトURLはよくわからなかった。とりあえず、&lt;br /&gt;
-&lt;a href=&#34;http://localhost:8080/oauth2callback&#34;&gt;http://localhost:8080/oauth2callback&lt;/a&gt;&lt;br /&gt;
-みたいな感じで指定してるけどたぶん意味ないです。&lt;/p&gt;
-
-&lt;p&gt;APIキーの方はブラウザキーを選択。&lt;br /&gt;
-リファラーはクライアントIDの時と同じ感じで&lt;br /&gt;
-http://プロジェクトID.appspot.com/*&lt;br /&gt;
-&lt;a href=&#34;http://localhost:8080/*&#34;&gt;http://localhost:8080/*&lt;/a&gt;&lt;br /&gt;
-としました。&lt;/p&gt;
-
-&lt;p&gt;これでクライアントIDとAPIキーが取得できたので&lt;br /&gt;
-先のガイドの「The &amp;ldquo;Hello World&amp;rdquo; Application」のとおりにページを用意して&lt;br /&gt;
-developerKeyとclientIdを書き換えればとりあえず動きます。&lt;/p&gt;
-
-&lt;p&gt;このスクリプトの流れは、&lt;br /&gt;
-&lt;pre&gt;&lt;code&gt;&amp;lt;script type=&amp;ldquo;text/javascript&amp;rdquo; src=&amp;ldquo;&lt;a href=&#34;https://apis.google.com/js/api.js?onload=onApiLoad&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;&#34;&gt;https://apis.google.com/js/api.js?onload=onApiLoad&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;&lt;/a&gt;
-&lt;/code&gt;&lt;/pre&gt;
-でGoogle API Loader scriptを読み込む。&lt;br /&gt;
-読み込みが終わると onload=onApiLoad で指定しているonApiLoadが呼ばれて&lt;br /&gt;
-authとpickerのスクリプトが読み込まれる。&lt;br /&gt;
-両方読み込まれるとcreatePicker()の内容が実行されて&lt;br /&gt;
-pickerのインスタンスが作成、可視化される。&lt;br /&gt;
-という感じになっています。&lt;/p&gt;
-
-&lt;p&gt;pickerの生成時にコールバック用の関数とかいろいろ指定できるのですが、&lt;br /&gt;
-addView()の部分がキモで、ここで表示されるファイルの種類を指定しています。&lt;br /&gt;
-指定方法についてはガイドの「Showing Different Views」に表が載っていて&lt;br /&gt;
-サンプルの通りだとPicasaのWeb Albumsにある写真が表示されるようになっています。&lt;/p&gt;
-
-&lt;p&gt;こことscopeを表に従って変えればGoogle Driveのアイテムとかも表示できるのですが&lt;br /&gt;
-全部取得してしまうとごちゃごちゃになるのでsetMimeTypesでMIME Typeを指定します。&lt;br /&gt;
-MIME Typeは&lt;a href=&#34;http://www.plala.or.jp/access/community/phps/mime.html&#34;&gt;MIME Type 一覧表&lt;/a&gt;を見て適当に。&lt;br /&gt;
-例えばpdfだけを表示するようにしたい場合は次のようにします。&lt;br /&gt;
-&lt;pre&gt;&lt;code&gt;function createPicker() {
-    var view = new google.picker.View(google.picker.ViewId.DOCS);
-    view.setMimeTypes(&amp;ldquo;application/pdf&amp;rdquo;);
-    if (pickerApiLoaded &amp;amp;&amp;amp; oauthToken) {
-        var picker = new google.picker.PickerBuilder().
-            addView(view).
-            setLocale(&amp;lsquo;ja&amp;rsquo;).
-            setOAuthToken(oauthToken).
-            setDeveloperKey(developerKey).
-            setCallback(pickerCallback).
-            build();
-        picker.setVisible(true);
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-setLocale(&amp;lsquo;ja&amp;rsquo;)で日本語で表示するよう指定することができます。&lt;/p&gt;
-
-&lt;p&gt;Pcikerで取得した内容はsetCallbackで指定した関数にJSONで渡されるので&lt;br /&gt;
-これを適当に処理してやればおっけーです。&lt;/p&gt;
-
-&lt;p&gt;以上です。&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://gist.github.com/Daniel15/5994054&#34;&gt;Google Drive File Picker Example&lt;/a&gt;&lt;br /&gt;
-Gistにもっと工夫したものがあったのでこれも参考にするといいと思います。&lt;/p&gt;
-</description>
+      <description>Google Driveのファイルを利用できるPicker APIを GAE上で使ってみたのでメモっておきます。
+クライアントIDが何かとか詳しい話は抜きにしてとにかく動かすまで。
+こちらのガイドに従ってやります。
+https://developers.google.com/picker/docs/
+まずPciker APIを有効にします。
+Google Developers ConsoleにログインしてAPIを使うプロジェクトのページに入ります。
+左側のサイドバーの「APIと認証」-&amp;gt;「API」を選択。
+Pickerとかで検索して「Google Picker API」を選択しAPIを有効にします。
+次にクライアントIDとAPIキーを作成します。
+「APIと認証」-&amp;gt;「認証情報」から2つとも作成できます。
+クライアントIDの方はウェブアプリケーションを選択し、
+「JavaScript 生成元」にはAPIを使用するページのオリジンを指定。
+今回はlocalhost:8080でも動いて欲しいので次の二つを指定しました。
+http://プロジェクトID.appspot.com/
+http://localhost:8080/
+リダイレクトURLはよくわからなかった。とりあえず、
+http://localhost:8080/oauth2callback
+みたいな感じで指定してるけどたぶん意味ないです。
+APIキーの方はブラウザキーを選択。
+リファラーはクライアントIDの時と同じ感じで
+http://プロジェクトID.appspot.com/*
+http://localhost:8080/*
+としました。
+これでクライアントIDとAPIキーが取得できたので
+先のガイドの「The &amp;ldquo;Hello World&amp;rdquo; Application」のとおりにページを用意して
+developerKeyとclientIdを書き換えればとりあえず動きます。
+このスクリプトの流れは、
+&amp;lt;script type=&amp;ldquo;text/javascript&amp;rdquo; src=&amp;ldquo;https://apis.google.com/js/api.js?onload=onApiLoad&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;  でGoogle API Loader scriptを読み込む。
+読み込みが終わると onload=onApiLoad で指定しているonApiLoadが呼ばれて
+authとpickerのスクリプトが読み込まれる。
+両方読み込まれるとcreatePicker()の内容が実行されて
+pickerのインスタンスが作成、可視化される。
+という感じになっています。
+pickerの生成時にコールバック用の関数とかいろいろ指定できるのですが、
+addView()の部分がキモで、ここで表示されるファイルの種類を指定しています。
+指定方法についてはガイドの「Showing Different Views」に表が載っていて
+サンプルの通りだとPicasaのWeb Albumsにある写真が表示されるようになっています。
+こことscopeを表に従って変えればGoogle Driveのアイテムとかも表示できるのですが
+全部取得してしまうとごちゃごちゃになるのでsetMimeTypesでMIME Typeを指定します。
+MIME TypeはMIME Type 一覧表を見て適当に。
+例えばpdfだけを表示するようにしたい場合は次のようにします。</description>
     </item>
     
     <item>
@@ -764,17 +451,849 @@ Gistにもっと工夫したものがあったのでこれも参考にすると�
       <pubDate>Mon, 29 Jun 2015 00:28:20 +0900</pubDate>
       
       <guid>https://zaburo-ch.github.io/post/publishing_asobi_plus/</guid>
-      <description>&lt;p&gt;去年の10月頃公開した&lt;a href=&#34;http://asobi.herokuapp.com/&#34;&gt;ASOBI+&lt;/a&gt;ですが、&lt;br /&gt;
-最近はブラッシュアップすることもなくなり放置状態になっていたので、&lt;br /&gt;
-Githubでソースコード、アイコン等を公開しました。&lt;/p&gt;
+      <description>去年の10月頃公開したASOBI+ですが、
+最近はブラッシュアップすることもなくなり放置状態になっていたので、
+Githubでソースコード、アイコン等を公開しました。
+zaburo-ch/asobi_plus
+Herokuで動いているものをほぼそのまま公開した形ですが、
+APIkeyの部分だけ変えてあるのでそこ変えないと動きません。
+WebRTCを使ったWebアプリ等を作る際に役立てて頂ければと思います。</description>
+    </item>
+    
+    <item>
+      <title>【C&#43;&#43;】mainなどの関数の中では大きな配列を確保できない</title>
+      <link>https://zaburo-ch.github.io/post/20150617_0/</link>
+      <pubDate>Wed, 17 Jun 2015 02:48:23 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/post/20150617_0/</guid>
+      <description>これがSegmentation faultになるのに対して
 
-&lt;p&gt;&lt;a href=&#34;https://github.com/zaburo-ch/asobi_plus&#34;&gt;zaburo-ch/asobi_plus&lt;/a&gt;&lt;/p&gt;
+これは正しく実行される。
 
-&lt;p&gt;Herokuで動いているものをほぼそのまま公開した形ですが、&lt;br /&gt;
-APIkeyの部分だけ変えてあるのでそこ変えないと動きません。&lt;/p&gt;
+グローバル変数はヒープに取られるのに対して、
+ローカル変数はスタックに積まれていく。
+スタックのサイズは制限されていることが多く、
+(bashならulimit -aで確認できる。8192KBだった)
+bool型は1byteなので配列のサイズは10000001/1024≒9765KBとなり
+スタックのサイズ制限を超えてしまうので、
+メモリリミットより小さいがローカル変数として確保できない。
+[参考]
+http://homepage2.nifty.com/well/Variable.html
+[2015/6/30 追記]
+newでもいけるということをコメントで教えて頂きました。
+なるほど確かにnewでもヒープに確保されますね。
+newでいけるということは中でnew使ってくれてるvectorでもいけます。
+ ご指摘ありがとうございました！</description>
+    </item>
+    
+    <item>
+      <title>【C&#43;&#43;】vectorは==で比較できる</title>
+      <link>https://zaburo-ch.github.io/post/20150518_0/</link>
+      <pubDate>Mon, 18 May 2015 19:18:45 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/post/20150518_0/</guid>
+      <description>知らなかったのでメモ
+C++ ベクタ
+http://www.cppll.jp/cppreference/cppvector_details.html
 
-&lt;p&gt;WebRTCを使ったWebアプリ等を作る際に役立てて頂ければと思います。&lt;/p&gt;
-</description>
+Javaでのオブジェクトの比較みたいに
+アドレスが比較されちゃうんだと勘違いしてた。</description>
+    </item>
+    
+    <item>
+      <title>Wikipediaの記事でPageRankを計算してみた。</title>
+      <link>https://zaburo-ch.github.io/post/20150514_1/</link>
+      <pubDate>Thu, 14 May 2015 22:36:00 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/post/20150514_1/</guid>
+      <description>PageRankの記事の続きです。
+【Python】PageRankアルゴリズム
+PageRank実装だけして終わるのももったいないので
+Wikipediaのページ内でPageRank計算してみました。
+コードはこちら
+zaburo-ch/wikipedia_analysis
+https://github.com/zaburo-ch/wikipedia_analysis
+前に作ったwikipedia.pyのコードとまとめてレポジトリにしました。
+pagerank_wiki.pyを実行すると次のような動作をします。
+・http://dumps.wikimedia.orgより1日分のデータを取得
+・国コードがjaのもののうち閲覧数上位10000ページを取り出す
+・各ページの記事内のリンクをエッジとした有向グラフつくる
+・有向グラフ内でPageRankを計算し大きい順に出力する
+やってることはかなりwikipedia.pyに近いですが、
+見返してみるとあまりにもなコードだったのでかなり書き換えました。
+他にもリンク抽出にHTMLParser使ってみたりいろいろ変えてます。
+前のやつと違って計算の部分にそれほど時間がかからないので
+スペック次第ですが少なくとも寝てる間くらいには終わると思います。
+リンク解析もこっちのほうがかなり早いです。
+さて、肝心の実行結果はこんな感じです。
+
+wikipedia_analysis/pagerank_wiki_data/result.txt
+「特別:カテゴリ」がぶっちぎりで大きいですね。
+確認してみたところほぼ全てのページの一番下に
+「特別:カテゴリ」へのリンクがあったのでたぶんそのせいです。
+「Wikipedia:出典を明記する」とかもこの類いかな。
+「日本」や年がおおいのは人とか何かの作品の記事の
+テンプレート化している右の枠内で登場することが多いためだと思います。
+テレビ局が上位に多いのはテレビ番組からほぼ確実にリンクされているのと
+閲覧数上位10000ページで限定しているため
+そのなかでテレビ番組が多かったためではないかと考えています。
+上位はほとんどが誰でも知っているような一般的な言葉なんですが、
+101位のインターネット・ムービー・データベースってやつ、
+全然何のことかわからないです。
+「集英社」とか「台湾」より上なので、
+かなり多くページがここにリンクしてるはずなんですが、
+これどんなページからリンクされてるんでしょう？
+全体的にPageRankはWikipediaのページの重要性判断としては
+あまり向いていないように思いました。
+WikipediaにはPageRankの基本的な考え方が合ってないですしね。
+ほかのWebサイトでも試してみればもっと面白い結果が得られるかもしれません。
+機会があればやってみたいと思います。</description>
+    </item>
+    
+    <item>
+      <title>【Python】PageRankアルゴリズム</title>
+      <link>https://zaburo-ch.github.io/post/20150514_0/</link>
+      <pubDate>Thu, 14 May 2015 20:54:05 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/post/20150514_0/</guid>
+      <description>PageRankというアルゴリズム、
+以前からなんとなくは知ってはいたのですが、
+ランダムサーファーモデルで計算する方法を聞いて、
+めちゃくちゃ賢いなこれーって思ったので実際にやってみました。
+ひとまずPageRankについて調べたことを纏めます。
+PageRankは基本的に次の２つの考え方でページの重要度を推定します。
+・多くのページからリンクされているページの質は高い
+・質の高いページからリンクされているページの質は高い
+これを数学的に考えるのにランダムサーファーモデルを利用します。
+ランダムサーファーモデルでは
+ページのリンク関係を有向グラフとして考え、
+人(サーファー)にこの有向グラフをランダムに辿らせたとき、
+人が居る確率が高いページを重要とします。
+まず、ページの総数をNとし、N次正方行列Mを
+M[i][j] = ページjにいるサーファーがページiに移動する確率
+と定義します。
+例えばページ0にページ1とページ5へのリンクしかないとすると、
+サーファーはランダムに移動するので
+M[i][0]は i=1or5 のとき1/2 となりそれ以外のiでは0となります。
+また、ベクトルP(t)を時刻tに各ページに人がいる確率とすると
+P(0)は全ての要素が 1/N のベクトルとなり
+P(t+1)はMとP(t)の積を取ることで計算できます。
+有向グラフが強連結のとき、この遷移を無限に繰り返すことで
+Pはtに依らない一定の値に収束します。よってこのPは
+M P = P
+の解を要素の和が1になるよう正規化してあげることにより求められます。
+このPの大きさが各ページの重要度となります。
+行列計算において Ax = λx を解く、というのは固有値問題と言って
+色々な方法が考えられているらしいのですが、ここについては
+行列計算における高速アルゴリズム
+http://www.cms-initiative.jp/ja/events/0627yamamoto.pdf
+こちらのページが詳しいです。
+Pythonではscipy.sparse.linalg.eigsを使うと
+Implicitly Restarted Arnoldi で計算してくれます。
+ただ、M P = P を解くだけのためにこれらを使うのが速いのかは
+勉強不足で僕もよくわかっていません。
+実際のウェブページでは、ページ間の関係を有効グラフにしても
+必ずしも上で述べたような強連結になるわけではありません。
+そのため「一定の確率でサーファーはリンクを辿らずにランダムに移動する」
+という考えを新たに導入します。その時はMにあたるものを
+全ての要素が 1/N である N次正方行列Uと普通にリンクを辿る確率αを用いて
+(αM + (1-α)U) として計算することによってPが求められます。
+次の図のようなリンク関係にあるページのPageRankを</description>
+    </item>
+    
+    <item>
+      <title>動的時間伸縮法(DTW)をPythonで試してみた</title>
+      <link>https://zaburo-ch.github.io/post/20150406_0/</link>
+      <pubDate>Mon, 06 Apr 2015 18:36:47 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/post/20150406_0/</guid>
+      <description>ここ数ヶ月くらい、ある時系列データを集めていたのですが、
+そのデータを扱うにあたってまずデータを分類したいと思い
+クラスタリングについて調べたところ
+どうやらクラスタリングにはまず距離を定義しなければいけないらしい。
+時系列データの距離？は？と思っていたら
+このようなページがありました。
+動的時間伸縮法 / DTW (Dynamic Time Warping) を可視化する
+http://sinhrks.hatenablog.com/entry/2014/11/14/232603
+Rの{TSculst}というパッケージを使えば簡単に計算できるそうですが、
+有り難い事にDTW距離算出の実装を載せてくれているので
+Python用に書き直してみました。
+
+英語力低すぎて英語版Wikipediaがあまり理解できなかったのですが、
+dは点同士の距離を定義する関数(初期値は差の絶対値)となる引数で、
+windowは、ある点から距離を計算する対象となる点を
+windowで指定した範囲に制限する場合の引数であってると思います。
+参考にさせて頂いたページにならって
+RのデータセットAirPassengersでテストするようにしていますが、
+PythonでRのデータセット利用する方法については
+以下のページを参照してください。めっちゃ便利です。
+PythonでRの標準データセットを使う。
+http://kumamotosan.hatenablog.com/entry/2014/03/02/231742</description>
+    </item>
+    
+    <item>
+      <title>Mac OS Xで時々ジェスチャーが反応しなくなる</title>
+      <link>https://zaburo-ch.github.io/post/20150324_0/</link>
+      <pubDate>Tue, 24 Mar 2015 17:21:45 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/post/20150324_0/</guid>
+      <description>普段ウインドウの切り替えはMission Controlでやっているのですが、
+ときどきジェスチャーが反応しなくなってしまって、
+仮想デスクトップの切り替えもできなくなるものですから
+再起動しなければならなくなる、というのが近頃起こります。
+原因はよくわからないのですが、
+OSまるごと再起動しなくてもDockを再起動させてやるだけで
+なんとかなるみたいです。
+ps -x | grep Dockで出てきたPIDを指定してkillしてやると
+自動で起動してくれるようなのでこれで済ませていますが
+面倒なので実行ファイルへの変換の勉強がてら
+ちょっと書いてアプリにしてみました。
+
+こんな感じでDockに配置して使っています。
+アイコン画像は以下のものを利用させて頂きました。
+http://www.easyicon.net/language.ja/1088483-stop_icon.html
+ソース等はこちら
+https://github.com/zaburo-ch/DockKiller
+こちらからダウンロードしてご利用ください↓
+DockKiller-1.0.dmgをダウンロード</description>
+    </item>
+    
+    <item>
+      <title>Xcode6でサンプルコードSonofGrabのビルドができない</title>
+      <link>https://zaburo-ch.github.io/post/20150307_0/</link>
+      <pubDate>Sat, 07 Mar 2015 21:50:12 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/post/20150307_0/</guid>
+      <description>実行中のウィンドウのリストを取得する方法が知りたくて
+SonofGrab というサンプルに行き着いたのですが
+エラーでちゃいました。
+環境は OSX10.9.4 Xcode6.1.1 です。
+まず、古いSDKが指定されたままでビルドができないので
+Build SettingsからBase SDKを自分のOSにあったものにします。
+するとビルドが行われますがそこでもエラーがおきます。
+適当にぐぐると以下のページが見つかります。
+objective c - Linking error for inline functions - Stack Overflow
+http://stackoverflow.com/questions/12844729/linking-error-for-inline-functions
+具体的には
+Controller.mの71行目のinlineの前にstaticをつけるだけです。</description>
+    </item>
+    
+    <item>
+      <title>【python】文字列のバイト数を取得する</title>
+      <link>https://zaburo-ch.github.io/post/20150228_0/</link>
+      <pubDate>Sat, 28 Feb 2015 16:18:09 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/post/20150228_0/</guid>
+      <description>str型の文字列sならlen(s)とするだけでバイト数が取得できます。
+てっきり文字数が返ってくるものだと思っていたのでメモ。
+ちなみに文字数の取得は len(s.decode(&amp;lsquo;utf-8&amp;rsquo;))
+マルチバイト文字が入ってない場合はバイト数＝文字数なのでそのままlen(s)でも可能。</description>
+    </item>
+    
+    <item>
+      <title>JQuery mobileでPhonegap(Cordova)アプリをつくる</title>
+      <link>https://zaburo-ch.github.io/post/20141218_0/</link>
+      <pubDate>Thu, 18 Dec 2014 21:51:43 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/post/20141218_0/</guid>
+      <description>cordova4.1.2で動作確認しております。
+基本的には普通にJQuery mobile使って書くだけなんですが、
+そのままだと、iOS7.0以降の上部のステータスバー的なものと
+JQuery mobileのヘッダが重なってしまいます。
+そのため、iOS7.0以降でのみヘッダの上にマージンをが設定されるようにします。
+.css()とかでやってもpage遷移後に機能しなかったので、
+style要素を動的に追加する方法にしたらうまくいきました。
+まずwindow.deviceを使うためにpluginを追加します。
+$ cordova plugin add org.apache.cordova.device
+ソースは以下の通り。</description>
+    </item>
+    
+    <item>
+      <title>【matplotlib】図の余白を設定する</title>
+      <link>https://zaburo-ch.github.io/post/20141217_0/</link>
+      <pubDate>Wed, 17 Dec 2014 17:35:15 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/post/20141217_0/</guid>
+      <description>subplots_adjustが何者か調べたのでメモ。
+matplotlib(1.4.2)で動作確認しました。
+subplots_adjustは図の位置を設定するメソッドです。
+これを使う事で余白を変更指定する事が出来ます。たぶん。
+http://matplotlib.org/api/figure_api.html#matplotlib.figure.Figure.subplots_adjust
+図の大きさを1として、
+topとbottomは下から、leftとrightは左からの長さを指定します。
+wspaceとhspaceは複数のグラフがまとまっているときの余白とかそんな感じ。
+デフォルトの値は下記の通り
+left : 0.125
+right : 0.9
+bottom : 0.1
+top : 0.9
+wspace : 0.2
+hspace : 0.2
+以下のサンプルでは、デフォルトのままのグラフと
+各値を0.05(5%分)減らしたグラフを表示するようにしました。
+ </description>
+    </item>
+    
+    <item>
+      <title>Wikipediaのページ解析に使ったpythonコード</title>
+      <link>https://zaburo-ch.github.io/post/20141130_0/</link>
+      <pubDate>Sun, 30 Nov 2014 01:36:54 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/post/20141130_0/</guid>
+      <description>すっかりわすれていましたがソースコードです。
+とりあえずpython触ってみようくらいの気持ちで書いたコードなので
+pythonに慣習みたいなものがあるならたぶんそれには従えていません。
+multiprocessing、numpy、pandasあたりをちゃんと使えば
+格段に早くすることもできるかもしれません。やんないけど。
+python wikipedia.py 20141101
+のようにして日付指定して使います。
+以下のようなことをやってます。
+・http://dumps.wikimedia.orgから1時間ごとの閲覧数のデータを1日分取ってくる
+・国コード(?)がjaの物だけ抽出する
+・標準ライブラリのCounterで各ページの1日分の閲覧数をカウントする
+・閲覧数上位10000ページを取り出す
+・1ページずつ開き記事内の/wiki/で始まるリンクを抽出する
+・リンクがあれば距離1なければINFとして(ディクショナリで)隣接行列をつくる
+・ワーシャルフロイド法で全点間最短距離を求める
+・ソートして表示
+
+Gistを使ってみました。綺麗に表示してくれますね。
+過去の物をGistに置き換えたりはしませんが
+今後はできるだけこれをつかっていこうと思います。</description>
+    </item>
+    
+    <item>
+      <title>Wikipediaのアクセス上位10000ページの距離を計算した話</title>
+      <link>https://zaburo-ch.github.io/post/20141017_0/</link>
+      <pubDate>Fri, 17 Oct 2014 23:44:17 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/post/20141017_0/</guid>
+      <description>先日の記事の続きです。
+Wikipediaでリンクを辿って遊ぶ
+今回探したのはWikipediaに存在する記事のうち
+最も距離のはなれている記事の組み合わせです。
+ここで言う距離とは、ある記事から記事内のリンクのみを辿って行く時
+何回リンクを踏めばその記事に辿り着くかを表した数字です。
+複数あるルートのうち最も短いものをその組の距離としました。
+さて、Wikipediaについてですが、
+Wikipedia:全言語版の統計
+http://ja.wikipedia.org/wiki/Wikipedia:%E5%85%A8%E8%A8%80%E8%AA%9E%E7%89%88%E3%81%AE%E7%B5%B1%E8%A8%88
+によれば、2014年10月17日現在
+純記事数は全言語総計でなんと33,448,472もあるそうです。
+日本語のものだけで930,619もあるので
+これをすべて解析するとなると人生が終わるまでに
+計算し終わるかという問題が出てきます。
+というわけで今回は、日本語版Wikipediaの記事のうち
+ある日の閲覧数が上位の記事を一定数とって来て
+その記事のみを対象にページ間距離を計算しました。
+技術的なことは後日記事にするとして
+早速結果を書いていきたいと思います。
+まず2014年9月1日の閲覧数上位1000位に限定した場合の結果。
+上位20位のみを抜粋しました。
+&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;#45;&amp;ndash;
+List of longest distance between Wikipedia pages
+20140901 : Page view Top 1000
+1: 8 続柄 -&amp;gt; 近江友里恵
+2: 8 続柄 -&amp;gt; たちかぜ自衛官いじめ自殺事件
+3: 8 国鉄105系電車 -&amp;gt; たちかぜ自衛官いじめ自殺事件
+4: 8 七草 -&amp;gt; 近江友里恵
+5: 8 七草 -&amp;gt; たちかぜ自衛官いじめ自殺事件
+6: 8 カルトの集団自殺 -&amp;gt; 近江友里恵
+7: 8 カルトの集団自殺 -&amp;gt; たちかぜ自衛官いじめ自殺事件</description>
+    </item>
+    
+    <item>
+      <title>とんぺーのミスコンにエントリーした気分になれるブックマークレットつくった</title>
+      <link>https://zaburo-ch.github.io/post/20141007_0/</link>
+      <pubDate>Tue, 07 Oct 2014 22:40:04 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/post/20141007_0/</guid>
+      <description>使い方
+1.幅140px高さ260pxの画像を用意する。
+2.画像のURLをこのテキストボックスに入れる。
+
+3.このリンクを右クリックしてブックマーク
+学祭ミスコン ブックマークレット
+4.コンテストの公式ページに行く
+第6回Mr.&amp;amp;Ms.東北大コンテスト
+http://www.festa-tohoku.org/program/contest/contest.html
+5.先ほどのブックマークを開く！
+5人目のミス候補が現れます。
+マウスを画像にのせたときの白いオーバーレイは実装しましたが、
+名前やNo.5の記述は省略しました。
+以下に元のコードを載せるので、誰かやって！
+ var imgurl = &amp;lsquo;ms1.jpg&amp;rsquo;; var msul = $(&amp;lsquo;ul&amp;rsquo;).eq(1); msul.children().attr(&amp;lsquo;style&amp;rsquo;,&amp;lsquo;margin-right:25px;&amp;lsquo;); var newms = $(&amp;rsquo;&amp;lt;li&amp;gt;&amp;rsquo;); newms.css({ &amp;lsquo;position&amp;rsquo;:&amp;lsquo;relative&amp;rsquo;, &amp;lsquo;float&amp;rsquo;:&amp;lsquo;left&amp;rsquo;, &amp;lsquo;width&amp;rsquo;:&amp;lsquo;150px&amp;rsquo;, &amp;lsquo;height&amp;rsquo;:&amp;lsquo;270px&amp;rsquo;, &amp;lsquo;background-image&amp;rsquo;:&amp;lsquo;-moz-linear-gradient(top,#931f20,#f29d80 50%,#931f20)&amp;rsquo; }); newms.css(&amp;lsquo;background-image&amp;rsquo;,&amp;lsquo;-webkit-gradient(linear,left top,left bottom,from(#931f20),color-stop(0.5, #f29d80),to(#931f20))&amp;rsquo;); var msimg = $(&amp;rsquo;&amp;lt;img&amp;gt;&amp;rsquo;); msimg.attr(&amp;lsquo;src&amp;rsquo;,imgurl); msimg.css({ &amp;lsquo;position&amp;rsquo;:&amp;lsquo;absolute&amp;rsquo;, &amp;lsquo;top&amp;rsquo;:&amp;lsquo;5px&amp;rsquo;, &amp;lsquo;left&amp;rsquo;:&amp;lsquo;5px&amp;rsquo;, }); newms.append(msimg); var overlay = $(&amp;rsquo;&amp;lt;div&amp;gt;&amp;rsquo;); overlay.css({ &amp;lsquo;position&amp;rsquo;:&amp;lsquo;absolute&amp;rsquo;, &amp;lsquo;top&amp;rsquo;:&amp;lsquo;4px&amp;rsquo;, &amp;lsquo;left&amp;rsquo;:&amp;lsquo;4px&amp;rsquo;, &amp;lsquo;width&amp;rsquo;:&amp;lsquo;142px&amp;rsquo;, &amp;lsquo;z-index&amp;rsquo;:&amp;lsquo;100&amp;rsquo;, &amp;lsquo;height&amp;rsquo;:&amp;lsquo;262px&amp;rsquo;, &amp;lsquo;background&amp;rsquo;:&amp;lsquo;rgba(255,255,255,0.15)&amp;rsquo; }); overlay.hide(); newms.append(overlay); newms.hover( function(){ overlay.show(); }, function(){ overlay.</description>
+    </item>
+    
+    <item>
+      <title>Wikipediaでリンクを辿って遊ぶ</title>
+      <link>https://zaburo-ch.github.io/post/20141003_0/</link>
+      <pubDate>Fri, 03 Oct 2014 18:01:51 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/post/20141003_0/</guid>
+      <description>Wikipediaでリンクを辿って遊ぶのがなかなか楽しいです。
+Wikipediaのあるページから全く関係のないページに、
+記事内のリンクだけを使ってどれだけ早くつけるか競うゲームです。
+例えば「リオネル・メッシ」から「貞子3D2」とか。
+リンクを辿るごとに目的の記事に近づいたり離れたりが
+なんとなくですがわかるので結構楽しいです。
+メッシなら「アルゼンチン入った！」とか「サッカーまで来た」とか。
+色々なルートがあるのも楽しいです。
+ゴールしたらそこからスタートすると辿ってる感がでるし、
+負けた方が次のゴール決めたり、
+「戻る」禁止にしたりルール次第でかなり面白くなると思います。
+こんな感じで遊んでいるうちに
+Wikipediaのページ間の距離(?)に興味がわいてきたので、
+Page view statistics for Wikimedia projects
+http://dumps.wikimedia.org/other/pagecounts-raw/
+からデータを頂いてきてpythonでいろいろやってみたので
+近いうちに記事にしようと思います。</description>
+    </item>
+    
+    <item>
+      <title>【JQuery mobile】ポップアップからポップアップを開く方法</title>
+      <link>https://zaburo-ch.github.io/post/20140926_0/</link>
+      <pubDate>Fri, 26 Sep 2014 13:42:20 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/post/20140926_0/</guid>
+      <description>JQuery mobileのポップアップのボタンなどを押して
+更にポップアップを開こうとするとうまく開いてくれません。
+おそらく2重にポップアップが開かれないようになっているのだと思います。
+仕方が無いので今開いているポップアップを閉じてから
+新しくポップアップを開くようにしてみたのですが、
+古いポップアップが閉じるのみで新しいポップアップが開きません。
+ポップアップが閉じてから新しいポップアップが開けるまで
+タイムラグのようなものがあるのかもしれません。
+以下のようにして動かしました。
+function openPopup(){ closePopup(); var timerId; $(&amp;ldquo;#popup&amp;rdquo;).bind({ popupafteropen:function(event, ui){ clearInterval(timerId); } }); timerId = setInterval(function(){ $(&amp;ldquo;#popup&amp;rdquo;).popup(&amp;lsquo;open&amp;rsquo;); },100); }; function closePopup(){ //開いているポップアップを閉じる処理 } 
+ちゃんと開いてくれるまでopenを繰り返して
+openされたら繰り返しを止める感じですね！安直！</description>
+    </item>
+    
+    <item>
+      <title>GitHubアカウント作りました</title>
+      <link>https://zaburo-ch.github.io/post/20140717_0/</link>
+      <pubDate>Thu, 17 Jul 2014 12:58:46 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/post/20140717_0/</guid>
+      <description>つくりました。
+この間参加したイベントでGitHubで公開できるWebページで
+WebRTCを試せるという話を聞いたのでつくってみました。
+https://github.com/zaburo-ch
+使い方の練習もかねて、ICPCの練習で書いたコードを
+https://github.com/zaburo-ch/icpc_practice
+にアップロード(?)しました。
+コードをガシガシ載せていくと言いましたが、
+書いたコードを全部を記事にすることはできないので
+ここにあげたものからピックアップして記事を書く
+という形にしていきたいと思います。
+あれ？これgistっての使った方がいいの？</description>
+    </item>
+    
+    <item>
+      <title>AOJ 2224 Save your cat</title>
+      <link>https://zaburo-ch.github.io/post/20140703_2/</link>
+      <pubDate>Thu, 03 Jul 2014 20:16:51 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/post/20140703_2/</guid>
+      <description>フェンスを辺と考え、閉路をなくせばよいので、
+閉路をなくす　→　全域木の辺の数を最小にする
+壊す長さを最小に　→　長い辺から使っていく
+と考えると最小全域木と同じような解き方で解けます。
+UnionFind木を使ったクラスカル法で解く場合。
+fenceをcostの大きさで降順にソートして、
+使わなかったfenceのcostの和を出力します。
+
+プリム法で解く場合。
+プリム法は最小全域&amp;rdquo;木&amp;rdquo;をつくるので、森をつくるため、
+使われていない頂点に対して何度かプリム法で木を作ります。
+(森に対してプリム法を使う方法これしかおもいつかない……)
+あと、この実装方法だと同じ辺を何度もみることがあるので
+クラスカル法の時のように素直にsumを出力できません。
+ </description>
+    </item>
+    
+    <item>
+      <title>AOJ 2200 Mr. Rito Post Office</title>
+      <link>https://zaburo-ch.github.io/post/20140703_1/</link>
+      <pubDate>Thu, 03 Jul 2014 16:17:45 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/post/20140703_1/</guid>
+      <description>わからなくてぐぐりました。
+http://d.hatena.ne.jp/sune2/20120719/1342723320
+z[i]からz[i+1]に移動するとき、
+陸路のみ 陸路　→　海路　→　陸路  のうち、どちらかのタイプの経路を辿る。
+この考え方で実装するとうまくいきます。
+dp[i][j]に対して、i-1のとき船があった場所をkとし
+z[i-1] →(陸路)→ k →(海路)→ j →(陸路)→ z[i]
+と進む事で船を場所jに移し自分はz[i]に移動することができます。
+k==jのとき、すなわち船を移動させる必要がないときは、
+必ずしもkを経由する必要がないのでz[i-1]からz[i]の陸最短路で良い。
+これがわからなくて何回かWAくらった。
+ </description>
+    </item>
+    
+    <item>
+      <title>AOJ 2249 Road Construction</title>
+      <link>https://zaburo-ch.github.io/post/20140703_0/</link>
+      <pubDate>Thu, 03 Jul 2014 01:13:49 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/post/20140703_0/</guid>
+      <description>ある町に最短で行く経路は複数あり、
+そのうち最低のコストのものだけ残せば良い。
+そこで最短経路で進んだ場合の
+ある町とその一つ前の町をつなぐ道をpreに保存し
+preのコストが最小になるように更新していく。</description>
+    </item>
+    
+    <item>
+      <title>AOJ 0189 Convenient Location</title>
+      <link>https://zaburo-ch.github.io/post/20140702_0/</link>
+      <pubDate>Wed, 02 Jul 2014 22:34:19 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/post/20140702_0/</guid>
+      <description>全点最短路問題です。
+ワーシャル・フロイド法を用いて解きます。
+cost[i][i]を0にするのをお忘れなく！
+
+町の総数が10以下と十分に小さく、負の辺がないため
+ひとつずつダイクストラ法で最短距離を求めることもできます。
+うまく書けてるかはわかりませんがこんな感じ。
+ </description>
+    </item>
+    
+    <item>
+      <title>AOJ 0118 Property Distribution</title>
+      <link>https://zaburo-ch.github.io/post/20140624_4/</link>
+      <pubDate>Tue, 24 Jun 2014 18:40:44 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/post/20140624_4/</guid>
+      <description>蟻本に載ってたPOJ2386とだいたい同じ。
+同じグループを消してく。</description>
+    </item>
+    
+    <item>
+      <title>AOJ 0525 Osenbei</title>
+      <link>https://zaburo-ch.github.io/post/20140624_3/</link>
+      <pubDate>Tue, 24 Jun 2014 18:30:38 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/post/20140624_3/</guid>
+      <description>0の個数を最大にするとき、どの行をひっくり返すか決めると
+ひっくり返すべき列とそれで得られる0の個数が一意的に決まる。
+Rが十分に小さいので行のひっくり返し方を全通り試し
+そのひっくり返し方に対応する0の個数の最大を出力する。
+行のひっくり返し方を再帰で書くとこんな感じ
+
+再帰を使わないで蟻本っぽく解くならこんな感じ？
+通ったから一応あってると思う。
+ </description>
+    </item>
+    
+    <item>
+      <title>AOJ 0121 Seven Puzzle</title>
+      <link>https://zaburo-ch.github.io/post/20140624_2/</link>
+      <pubDate>Tue, 24 Jun 2014 18:11:41 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/post/20140624_2/</guid>
+      <description>幅優先探索の問題
+まず考えたのは、初期状態から0をどんどん移動させて行く方法。
+パズルの状態はstringで表現している。
+mapで状態とそこまでの最短距離を対応させ、
+mapに存在するかどうかでたどり着いたことがあるかを確認。
+ただ、これだとTLEをくらう。
+
+inputは１０００個まで与えられるので、
+毎回一から探索していっているのでは無駄が多い。
+そもそも、ありえる状態は8!通りしかないから
+そろった状態からたどりつけるすべての状態への最短距離を計算しておき
+inputに対応した最短距離を出力するほうがいい。
+同じようにmapを使って状態と最短距離を対応させる。
+ </description>
+    </item>
+    
+    <item>
+      <title>AOJ 0033 Ball</title>
+      <link>https://zaburo-ch.github.io/post/20140624_1/</link>
+      <pubDate>Tue, 24 Jun 2014 17:54:02 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/post/20140624_1/</guid>
+      <description>初めて書いた(?)深さ優先探索
+条件がかなり緩いので全探索可能
+ </description>
+    </item>
+    
+    <item>
+      <title>蟻本やってます</title>
+      <link>https://zaburo-ch.github.io/post/20140624_0/</link>
+      <pubDate>Tue, 24 Jun 2014 17:44:49 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/post/20140624_0/</guid>
+      <description>７月にあるICPC国内予選に向けて蟻本を解いています。
+せっかく書いたソースコードをそのままにしておくのももったいないので
+ここにガシガシ載っけていこうかなと思います。</description>
+    </item>
+    
+    <item>
+      <title>【機能追加】うまかったコレクション【ver2.0】</title>
+      <link>https://zaburo-ch.github.io/post/20140421_0/</link>
+      <pubDate>Mon, 21 Apr 2014 00:30:40 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/post/20140421_0/</guid>
+      <description>リリースから１ヶ月が経過し
+皆様にご愛護頂いているうまかったコレクションですが、
+「写真を複数登録できるようにしてほしい」
+というご要望が寄せられたため
+今回のアップデートで対応させて頂きました。
+ご要望につきましては、
+zaburo.appあっとgmail.com
+までメール頂ければ可能な限り対応させて頂きます。
+これからもよろしくお願いいたします。
+【変更点】
+・写真を複数登録できるようにしました。
+・「No Image」の部分を「No Thumbnail」に変更しました。
+ダウンロードはこちら↓</description>
+    </item>
+    
+    <item>
+      <title>【修正】うまかったコレクション【ver1.1】</title>
+      <link>https://zaburo-ch.github.io/post/20140402_0/</link>
+      <pubDate>Wed, 02 Apr 2014 17:27:04 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/post/20140402_0/</guid>
+      <description>先月公開したうまかったコレクションについて
+機種によって、高画質なカメラでとった画像など
+大きなサイズの写真を開いたとき
+メモリ不足でアプリが終了してしまっていたので
+修正させて頂きました。
+バグレポートを送ってくださった方、ありがとうございます。
+ダウンロードはこちら↓</description>
+    </item>
+    
+    <item>
+      <title>うまかったコレクション【ver1.0】</title>
+      <link>https://zaburo-ch.github.io/post/20140303_0/</link>
+      <pubDate>Mon, 03 Mar 2014 13:26:03 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/post/20140303_0/</guid>
+      <description>レシピ・外食のメモアプリ
+うまかったレシピや外食を
+このアプリにメモしてコレクションしましょう！
+★クックパッドのレシピを保存・メモする機能あり★
+ダウンロードはこちら↓
+
+■こんな方に
+・前においしく作れた料理の味を再現できない！
+・「ここら辺に良い店ない？」にパッと答えられない！
+・普通のメモアプリは入力が面倒、見づらい！
+・レシピサイトに当たり外れが多すぎる！
+■アプリ概要
+あなたが実際に食べて「うまかった」と思えた料理を集めていくアプリです。
+誰かがうまいと言った料理を集めるアプリではありません。
+「うまかった」と思える料理を作れたら
+「レシピを登録」でレシピをメモしましょう。
+事細かく全部書く必要はありません。
+忘れてしまいそうなポイントだけをメモして、
+面倒な項目なんてとばしてしまいましょう。
+誰が見ても分かるレシピをつくるアプリではありません。
+あなたがレシピを思い出すためのメモを作るアプリです。
+「うまかった」と思える外食を食べたら
+「外食を登録」で外食をメモしましょう。
+場所・感想など次にいくときのヒントをメモします。
+位置情報ネットワークかGPSを使えば
+アプリが自動で現在地の住所を入力してくれます。
+そして、
+レシピ・外食を思い出すとき、また
+うまかったもののコレクションをみたくなったときに
+このアプリを起動します。
+「一覧」「検索」「カテゴリ表示」などの機能を使えば
+あなたが見つけたいメモは簡単に見つかります！
+■解像度・文字サイズによらないつくり
+文字が小さくなってしまって見づらい
+ということはありえません！
+機種やそれぞれの端末ごとに様々な
+解像度・文字サイズによらず
+どの端末でも同様の見た目で
+レシピを見たり登録したりすることができます。
+■馴染みのあるデザイン
+このアプリのUIのデザインは
+あなたが普段使っているアプリと同様の
+直感的操作ができるようになっています。
+新しく使い方を覚えることは限りなく少ないです。
+■レシピアプリとしての機能
+画像やWebへのリンクが使えることはもちろん、
+マップとの連携や検索・編集・削除など
+一般的なレシピアプリとしての機能も充実しています。
+スクリーンショット</description>
+    </item>
+    
+    <item>
+      <title>OpenCV for Android で特定の色を抽出 (NDK)</title>
+      <link>https://zaburo-ch.github.io/post/20140202_1/</link>
+      <pubDate>Sun, 02 Feb 2014 22:50:06 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/post/20140202_1/</guid>
+      <description>書きました。
+・ネイティブメソッドの記述
+//色抽出 public static native void colorExtract(long matAddr,int code, int lowH,int highH, int lowS,int highS, int lowV,int highV); ・ネイティブコード
+JNIEXPORT void JNICALL Java_com_fc2_blog_zaburoapp_markerdetection_MainActivity_colorExtract (JNIEnv * jenv, jclass, jlong matAddr, jint code, jint lowH, jint highH, jint lowS, jint highS, jint lowV, jint highV){ Mat inputImg; inputImg = (Mat) matAddr; int height = inputImg-&amp;gt;rows; int width = inputImg-&amp;gt;cols; Mat hsvImg = Mat(height,width,CV_8UC3); cvtColor(*inputImg,hsvImg,code); vector singleCh; split(hsvImg,singleCh); Mat h1,h2,h,s1,s2,s,v1,v2,v,hs,mask; if(lowH&amp;lt;=highH){ threshold((Mat)singleCh[0],h1,lowH,255,CV_THRESH_BINARY); threshold((Mat)singleCh[0],h2,highH,255,CV_THRESH_BINARY_INV); bitwise_and(h1,h2,h); }else{ threshold((Mat)singleCh[0],h1,lowH,255,CV_THRESH_BINARY); threshold((Mat)singleCh[0],h2,highH,255,CV_THRESH_BINARY_INV); bitwise_or(h1,h2,h); } if(lowS&amp;lt;=highS){ threshold((Mat)singleCh[1],s1,lowS,255,CV_THRESH_BINARY); threshold((Mat)singleCh[1],s2,highS,255,CV_THRESH_BINARY_INV); bitwise_and(s1,s2,s); }else{ threshold((Mat)singleCh[1],s1,lowS,255,CV_THRESH_BINARY); threshold((Mat)singleCh[1],s2,highS,255,CV_THRESH_BINARY_INV); bitwise_or(s1,s2,s); } if(lowH&amp;lt;=highH){ threshold((Mat)singleCh[2],v1,lowV,255,CV_THRESH_BINARY); threshold((Mat)singleCh[2],v2,highV,255,CV_THRESH_BINARY_INV); bitwise_and(v1,v2,v); }else{ threshold((Mat)singleCh[2],v1,lowV,255,CV_THRESH_BINARY); threshold((Mat)singleCh[2],v2,highV,255,CV_THRESH_BINARY_INV); bitwise_or(v1,v2,v); } bitwise_and(h,s,hs); bitwise_and(hs,v,mask); Mat dstImg = Mat(height,width,inputImg-&amp;gt;type(),Scalar(0,0,0)); inputImg-&amp;gt;copyTo(dstImg,mask); dstImg.</description>
+    </item>
+    
+    <item>
+      <title>【Android】BitmapのgetPixels()について</title>
+      <link>https://zaburo-ch.github.io/post/20140202_0/</link>
+      <pubDate>Sun, 02 Feb 2014 14:09:21 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/post/20140202_0/</guid>
+      <description>分かりやすく解説しているページがあったのでメモ
+しずくくんのAndroidでゲームプログラミングしてみたいなblog
+Bitmap.getPixels()のstride引数の意味がわかった
+http://blog.livedoor.jp/shizuku_kun/archives/51385763.html</description>
+    </item>
+    
+    <item>
+      <title>【Android】NDK から OpenCV を使うプロジェクトを作る手順</title>
+      <link>https://zaburo-ch.github.io/post/20140106_0/</link>
+      <pubDate>Mon, 06 Jan 2014 23:37:13 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/post/20140106_0/</guid>
+      <description>久しぶりにAndroidでOpenCVを使おうとしたら
+書き始めるまでに必要な準備を忘れていたのでメモ。
+コメントを書き入れている部分は
+「ここにかかなければいけない、というわけではないけど
+ここに書いておくのが便利」という部分です
+環境 Eclipse 3.7.2
+・「プロパティ」→「Android」からOpenCVのライブラリを登録
+・OpenCVを使うActivityのメンバに以下を追加し
+private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) { @Override public void onManagerConnected(int status) { switch (status) { case LoaderCallbackInterface.SUCCESS: //ここで後で自分で作成するC/C++でopencvを動かすライブラリをロードしておく System.loadLibrary(&amp;ldquo;my_opencv_method&amp;rdquo;); //ロードが成功した場合にのみボタンを有効にする mButton.setEnabled(true); break; default: super.onManagerConnected(status); break; } } };onResumeを以下のようにオーバーライド
+@Override public void onResume() { super.onResume(); //ボタンはロード成功するまでは無効化しておく mButton1.setEnabled(false); OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_2_4_3, this, mLoaderCallback); }・プロジェクトを右クリック→「Android ツール」→「Add native support」
+・プロジェクトを右クリック→「プロパティ」→「C/C++一般」→「パスおよびシンボル」→「インクルード」タブ→「追加」ボタン
+で最低でも以下の３つを登録
+/opt/OpenCV-2.4.6-android-sdk/sdk/native/jni/include
+/opt/android-ndk-r9/sources/cxx-stl/gnu-libstdc++/4.6/include
+/opt/android-ndk-r9/sources/cxx-stl/gnu-libstdc++/4.6/libs/armeabi-v7a/include
+(僕は/optに各ライブラリを置いているのでそのへんは適宜修正)
+・jniフォルダを作成して、Android.mkとApplication.mkを用意
+(他のプロジェクトからコピペして編集)
+Android.mk
+LOCAL_PATH := $(call my-dir) include $(CLEAR_VARS) #OPENCV_CAMERA_MODULES:=off #OPENCV_INSTALL_MODULES:=off #OPENCV_LIB_TYPE:=SHARED include /opt/OpenCV-2.</description>
+    </item>
+    
+    <item>
+      <title>AndroidのSQLiteで部分一致している文字列を検索</title>
+      <link>https://zaburo-ch.github.io/post/20131212_0/</link>
+      <pubDate>Thu, 12 Dec 2013 16:32:38 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/post/20131212_0/</guid>
+      <description>AndroidでSQLiteを使うようなアプリを作成していて、
+「Android SQLite」でぐぐっても
+基本的な「検索」「挿入」「更新」「削除」あたりの
+ざっくりした方法しか見つけられないので、
+補足的な感じで、部分一致している文字列の検索とか
+検索条件の詳しい書き方の調べ方をメモっておきます。
+どうにも改行が下手です。
+
+【部分一致している文字列の検索】
+SQLで言う(SQL分からないけど)「LIKE句」と
+ワイルドカードである「%」を使うらしいです。
+たとえば、
+cursor = mydb.query(&amp;ldquo;my_table&amp;rdquo;, null, &amp;ldquo;name like ?&amp;rdquo;, new String[]{&amp;ldquo;%&amp;rdquo;+ &amp;ldquo;検索対象文字列&amp;rdquo; +&amp;ldquo;%&amp;rdquo;}, null, null, null);ってしてやると、
+nameっていうフィールドにある各文字列から
+「検索対象文字列」を含む文字列を検索してくれる。
+mydbっていうのはSQLiteDatabaseのインスタンスで
+my_tableはテーブル名。
+【検索条件の詳しい書き方の調べ方】
+SQLiteってAndroidに独特なものではないから、
+素直に「SQLite」でぐぐる。もしくは「SQL」。
+すると
+select * from customer where address = &amp;lsquo;東京&amp;rsquo;;って感じの全然文法の違う文がでてくるけど、この検索条件はAndroid版の
+cursor = mydb.query(&amp;ldquo;customer&amp;rdquo;, null, &amp;ldquo;address = ?&amp;rdquo;, new String[]{&amp;ldquo;東京&amp;rdquo;}, null, null, null);と大体同じ意味。
+というのも、内部での動作なんて調べてないから分からないけど、
+たぶん、mydb.queryってしたときAndroid側で
+select 第2引数 from 第1引数 where 第3引数と第4引数という文を作ってSQLite側に投げてくれてるってイメージでいいと思います。
+（第3引数の?に第4変数で指定した文字列の配列から順に文字列が入ります）
+（Cのprintfに近いものを感じた……）
+第5引数とかも指定すればgroup by句とかとして文に入ってくるはず。
+それがわかってれば、
+http://www.dbonline.jp/sqlite/select/
+こういうSQLiteの解説サイトを読み替えできるので</description>
+    </item>
+    
+    <item>
+      <title>【AndEngine】onPauseでNullPointerException</title>
+      <link>https://zaburo-ch.github.io/post/20131117_0/</link>
+      <pubDate>Sun, 17 Nov 2013 18:13:44 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/post/20131117_0/</guid>
+      <description>一部機種において(Androidのバージョンの問題？)
+起動直後に強制終了してしまうバグに悩まされたのでメモ。
+logcatでシステムのログを確認すると
+SimpleLayoutGameActivityを継承しているMainActivityが
+謎の挙動をしている模様。
+onCreate,onResumeの後になぜかonPauseが呼び出され
+NullPointerExceptionで強制終了していました。
+MainActivityのメンバとして以下を定義し
+private boolean isGoing = false;onPauseの処理をisGoingがtrueのときにしかしないように
+ifで指定してやることで解決。
+onCreateSceneでisGoingをtrueにしてます。
+onResumeの後にonPauseが呼ばれるなんて
+ライフサイクル無視しすぎやん！ってすごく困ったんですが、
+どうやらonResumeあたりでエラーが発生して
+AndEngineがアプリを再起動しようとした結果
+onPauseが呼ばれていたみたいです。
+で、onCreateSceneあたりで生成する予定のオブジェクトは
+ここでonPauseが呼ばれたときにはまだ生成されていないので
+それらのオブジェクトを操作する処理がonPauseにかかれていると
+NullPointerExceptionで落ちるというわけでした。
+ちなみにそのエラーには以下のようなコメントがついていて
+UpdateThread interrupted. Don&amp;rsquo;t worry - this EngineDestroyedException is most likely expected!
+UpdateThreadが中断されちゃったよ！
+まあこのEngineが落ちちゃう例外はよくあることだから安心して！
+ってなわけなのでどうやらAndEngine側に問題がある模様。
+Forumなどを探して見たところ
+ソースはありませんでしたが「99.999%そのエラーは起きるよ」
+というコメントがあるほどで私の技術力では何ともしがたい問題のようです。
+なんだかなー</description>
+    </item>
+    
+    <item>
+      <title>Don&#39;t touch the wall【ver1.1公開】</title>
+      <link>https://zaburo-ch.github.io/post/20131106_1/</link>
+      <pubDate>Wed, 06 Nov 2013 20:55:34 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/post/20131106_1/</guid>
+      <description>画面を傾けてゴールを目指せ！
+本格難易度のイライラ棒風ゲーム。
+壁や障害物をかわしてゴールにたどり着けばクリア。
+全６ステージを全てクリアすれば、
+EXTRAステージで遊べます！
+操作するポインターは重さがないため
+繊細な操作のサクサク感と
+敏感すぎる動きのイライラ感が
+体感できる作りになっています。
+イライラとクリア時の達成感をお楽しみください！
+↓ダウンロードはこちら！
+
+スクリーンショット
+（画像は開発中のものです）
+
+
+
+音楽等の素材の一部を
+下記サイト様からお借りしています。
+魔王魂
+http://maoudamashii.jokersounds.com/</description>
+    </item>
+    
+    <item>
+      <title>ブログ作りました。</title>
+      <link>https://zaburo-ch.github.io/post/20131106_0/</link>
+      <pubDate>Wed, 06 Nov 2013 20:21:01 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/post/20131106_0/</guid>
+      <description>つくったゲームをGoogle playで公開するにあたり、
+自分が情報を発信する場所を持っておこうという事で、
+ウェブサイト代わりにブログ作りました。
+アプリの詳細やメモ的なことを残していくつもりです。</description>
     </item>
     
   </channel>

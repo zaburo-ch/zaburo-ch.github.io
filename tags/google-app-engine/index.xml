@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>ZABURO app</title>
-    <link>https://zaburo-ch.github.io/tags/google-app-engine/index.xml</link>
-    <description>Recent content on ZABURO app</description>
+    <title>Google App Engine on ZABURO app</title>
+    <link>https://zaburo-ch.github.io/tags/google-app-engine/</link>
+    <description>Recent content in Google App Engine on ZABURO app</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
     <copyright>Written by ZABURO</copyright>
-    <atom:link href="https://zaburo-ch.github.io/tags/google-app-engine/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 06 Aug 2015 01:41:08 +0900</lastBuildDate>
+    
+	<atom:link href="https://zaburo-ch.github.io/tags/google-app-engine/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>Google Picker API を使ってみる</title>
@@ -15,84 +18,47 @@
       <pubDate>Thu, 06 Aug 2015 01:41:08 +0900</pubDate>
       
       <guid>https://zaburo-ch.github.io/post/quick-start-google-picker-api/</guid>
-      <description>&lt;p&gt;Google Driveのファイルを利用できるPicker APIを
-GAE上で使ってみたのでメモっておきます。&lt;br /&gt;
-クライアントIDが何かとか詳しい話は抜きにしてとにかく動かすまで。&lt;/p&gt;
-
-&lt;p&gt;こちらのガイドに従ってやります。&lt;br /&gt;
-&lt;a href=&#34;https://developers.google.com/picker/docs/&#34;&gt;https://developers.google.com/picker/docs/&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;まずPciker APIを有効にします。&lt;br /&gt;
-&lt;a href=&#34;https://console.developers.google.com/&#34;&gt;Google Developers Console&lt;/a&gt;にログインしてAPIを使うプロジェクトのページに入ります。&lt;br /&gt;
-左側のサイドバーの「APIと認証」-&amp;gt;「API」を選択。&lt;br /&gt;
-Pickerとかで検索して「Google Picker API」を選択しAPIを有効にします。&lt;/p&gt;
-
-&lt;p&gt;次にクライアントIDとAPIキーを作成します。&lt;br /&gt;
-「APIと認証」-&amp;gt;「認証情報」から2つとも作成できます。&lt;/p&gt;
-
-&lt;p&gt;クライアントIDの方はウェブアプリケーションを選択し、&lt;br /&gt;
-「JavaScript 生成元」にはAPIを使用するページのオリジンを指定。&lt;br /&gt;
-今回はlocalhost:8080でも動いて欲しいので次の二つを指定しました。&lt;br /&gt;
-http://プロジェクトID.appspot.com/&lt;br /&gt;
-&lt;a href=&#34;http://localhost:8080/&#34;&gt;http://localhost:8080/&lt;/a&gt;&lt;br /&gt;
-リダイレクトURLはよくわからなかった。とりあえず、&lt;br /&gt;
-&lt;a href=&#34;http://localhost:8080/oauth2callback&#34;&gt;http://localhost:8080/oauth2callback&lt;/a&gt;&lt;br /&gt;
-みたいな感じで指定してるけどたぶん意味ないです。&lt;/p&gt;
-
-&lt;p&gt;APIキーの方はブラウザキーを選択。&lt;br /&gt;
-リファラーはクライアントIDの時と同じ感じで&lt;br /&gt;
-http://プロジェクトID.appspot.com/*&lt;br /&gt;
-&lt;a href=&#34;http://localhost:8080/*&#34;&gt;http://localhost:8080/*&lt;/a&gt;&lt;br /&gt;
-としました。&lt;/p&gt;
-
-&lt;p&gt;これでクライアントIDとAPIキーが取得できたので&lt;br /&gt;
-先のガイドの「The &amp;ldquo;Hello World&amp;rdquo; Application」のとおりにページを用意して&lt;br /&gt;
-developerKeyとclientIdを書き換えればとりあえず動きます。&lt;/p&gt;
-
-&lt;p&gt;このスクリプトの流れは、&lt;br /&gt;
-&lt;pre&gt;&lt;code&gt;&amp;lt;script type=&amp;ldquo;text/javascript&amp;rdquo; src=&amp;ldquo;&lt;a href=&#34;https://apis.google.com/js/api.js?onload=onApiLoad&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;&#34;&gt;https://apis.google.com/js/api.js?onload=onApiLoad&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;&lt;/a&gt;
-&lt;/code&gt;&lt;/pre&gt;
-でGoogle API Loader scriptを読み込む。&lt;br /&gt;
-読み込みが終わると onload=onApiLoad で指定しているonApiLoadが呼ばれて&lt;br /&gt;
-authとpickerのスクリプトが読み込まれる。&lt;br /&gt;
-両方読み込まれるとcreatePicker()の内容が実行されて&lt;br /&gt;
-pickerのインスタンスが作成、可視化される。&lt;br /&gt;
-という感じになっています。&lt;/p&gt;
-
-&lt;p&gt;pickerの生成時にコールバック用の関数とかいろいろ指定できるのですが、&lt;br /&gt;
-addView()の部分がキモで、ここで表示されるファイルの種類を指定しています。&lt;br /&gt;
-指定方法についてはガイドの「Showing Different Views」に表が載っていて&lt;br /&gt;
-サンプルの通りだとPicasaのWeb Albumsにある写真が表示されるようになっています。&lt;/p&gt;
-
-&lt;p&gt;こことscopeを表に従って変えればGoogle Driveのアイテムとかも表示できるのですが&lt;br /&gt;
-全部取得してしまうとごちゃごちゃになるのでsetMimeTypesでMIME Typeを指定します。&lt;br /&gt;
-MIME Typeは&lt;a href=&#34;http://www.plala.or.jp/access/community/phps/mime.html&#34;&gt;MIME Type 一覧表&lt;/a&gt;を見て適当に。&lt;br /&gt;
-例えばpdfだけを表示するようにしたい場合は次のようにします。&lt;br /&gt;
-&lt;pre&gt;&lt;code&gt;function createPicker() {
-    var view = new google.picker.View(google.picker.ViewId.DOCS);
-    view.setMimeTypes(&amp;ldquo;application/pdf&amp;rdquo;);
-    if (pickerApiLoaded &amp;amp;&amp;amp; oauthToken) {
-        var picker = new google.picker.PickerBuilder().
-            addView(view).
-            setLocale(&amp;lsquo;ja&amp;rsquo;).
-            setOAuthToken(oauthToken).
-            setDeveloperKey(developerKey).
-            setCallback(pickerCallback).
-            build();
-        picker.setVisible(true);
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-setLocale(&amp;lsquo;ja&amp;rsquo;)で日本語で表示するよう指定することができます。&lt;/p&gt;
-
-&lt;p&gt;Pcikerで取得した内容はsetCallbackで指定した関数にJSONで渡されるので&lt;br /&gt;
-これを適当に処理してやればおっけーです。&lt;/p&gt;
-
-&lt;p&gt;以上です。&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://gist.github.com/Daniel15/5994054&#34;&gt;Google Drive File Picker Example&lt;/a&gt;&lt;br /&gt;
-Gistにもっと工夫したものがあったのでこれも参考にするといいと思います。&lt;/p&gt;
-</description>
+      <description>Google Driveのファイルを利用できるPicker APIを GAE上で使ってみたのでメモっておきます。
+クライアントIDが何かとか詳しい話は抜きにしてとにかく動かすまで。
+こちらのガイドに従ってやります。
+https://developers.google.com/picker/docs/
+まずPciker APIを有効にします。
+Google Developers ConsoleにログインしてAPIを使うプロジェクトのページに入ります。
+左側のサイドバーの「APIと認証」-&amp;gt;「API」を選択。
+Pickerとかで検索して「Google Picker API」を選択しAPIを有効にします。
+次にクライアントIDとAPIキーを作成します。
+「APIと認証」-&amp;gt;「認証情報」から2つとも作成できます。
+クライアントIDの方はウェブアプリケーションを選択し、
+「JavaScript 生成元」にはAPIを使用するページのオリジンを指定。
+今回はlocalhost:8080でも動いて欲しいので次の二つを指定しました。
+http://プロジェクトID.appspot.com/
+http://localhost:8080/
+リダイレクトURLはよくわからなかった。とりあえず、
+http://localhost:8080/oauth2callback
+みたいな感じで指定してるけどたぶん意味ないです。
+APIキーの方はブラウザキーを選択。
+リファラーはクライアントIDの時と同じ感じで
+http://プロジェクトID.appspot.com/*
+http://localhost:8080/*
+としました。
+これでクライアントIDとAPIキーが取得できたので
+先のガイドの「The &amp;ldquo;Hello World&amp;rdquo; Application」のとおりにページを用意して
+developerKeyとclientIdを書き換えればとりあえず動きます。
+このスクリプトの流れは、
+&amp;lt;script type=&amp;ldquo;text/javascript&amp;rdquo; src=&amp;ldquo;https://apis.google.com/js/api.js?onload=onApiLoad&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;  でGoogle API Loader scriptを読み込む。
+読み込みが終わると onload=onApiLoad で指定しているonApiLoadが呼ばれて
+authとpickerのスクリプトが読み込まれる。
+両方読み込まれるとcreatePicker()の内容が実行されて
+pickerのインスタンスが作成、可視化される。
+という感じになっています。
+pickerの生成時にコールバック用の関数とかいろいろ指定できるのですが、
+addView()の部分がキモで、ここで表示されるファイルの種類を指定しています。
+指定方法についてはガイドの「Showing Different Views」に表が載っていて
+サンプルの通りだとPicasaのWeb Albumsにある写真が表示されるようになっています。
+こことscopeを表に従って変えればGoogle Driveのアイテムとかも表示できるのですが
+全部取得してしまうとごちゃごちゃになるのでsetMimeTypesでMIME Typeを指定します。
+MIME TypeはMIME Type 一覧表を見て適当に。
+例えばpdfだけを表示するようにしたい場合は次のようにします。</description>
     </item>
     
   </channel>

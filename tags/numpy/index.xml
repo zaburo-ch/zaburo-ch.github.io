@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>ZABURO app</title>
-    <link>https://zaburo-ch.github.io/tags/numpy/index.xml</link>
-    <description>Recent content on ZABURO app</description>
+    <title>Numpy on ZABURO app</title>
+    <link>https://zaburo-ch.github.io/tags/numpy/</link>
+    <description>Recent content in Numpy on ZABURO app</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
     <copyright>Written by ZABURO</copyright>
-    <atom:link href="https://zaburo-ch.github.io/tags/numpy/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 17 Mar 2016 13:37:58 +0900</lastBuildDate>
+    
+	<atom:link href="https://zaburo-ch.github.io/tags/numpy/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>Pythonで Neural Fitted Q Iteration を実装する</title>
@@ -15,108 +18,28 @@
       <pubDate>Thu, 17 Mar 2016 13:37:58 +0900</pubDate>
       
       <guid>https://zaburo-ch.github.io/post/neural-fitted-q-iteration/</guid>
-      <description>&lt;p&gt;&lt;a href=&#34;https://zaburo-ch.github.io/post/mlp/&#34;&gt;前々回に実装した多層パーセプトロン&lt;/a&gt;と&lt;a href=&#34;https://zaburo-ch.github.io/post/inverted-pendulum/&#34;&gt;前回実装した倒立振子のシミュレータ&lt;/a&gt;を用いて、&lt;br /&gt;
-&lt;a href=&#34;http://ml.informatik.uni-freiburg.de/_media/publications/rieecml05.pdf&#34;&gt;Neural Fitted Q Iteration&lt;/a&gt;(NFQ)の実験を行います。&lt;/p&gt;
+      <description>前々回に実装した多層パーセプトロンと前回実装した倒立振子のシミュレータを用いて、
+Neural Fitted Q Iteration(NFQ)の実験を行います。
+NFQはQ学習の最適行動価値関数を多層パーセプトロンを用いて近似する手法の一つで、
+学習中にはデータを追加せず、事前に集められたデータのみから学習を行います。
+コードはこんな感じ。MLPはkerasで構築しました。
 
-&lt;p&gt;NFQはQ学習の最適行動価値関数を多層パーセプトロンを用いて近似する手法の一つで、&lt;br /&gt;
-学習中にはデータを追加せず、事前に集められたデータのみから学習を行います。&lt;/p&gt;
-
-&lt;p&gt;コードはこんな感じ。MLPはkerasで構築しました。&lt;br /&gt;
-&lt;script src=&#34;https://gist.github.com/zaburo-ch/f2f61a94ee722447d2d7.js&#34;&gt;&lt;/script&gt;&lt;/p&gt;
-
-&lt;p&gt;mはepisodeの個数にあたる変数になっていて、&lt;br /&gt;
-[50, 100, 150, 200, 300, 400]の各m対して、50回実験を行うようになっています。&lt;br /&gt;
-実験の大まかな流れは、&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;make_episodes(m)でm個のepisodeを作る&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;多層パーセプトロンを構築&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;Neural Fitted Q Iterationを実行&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;倒立振子を立たせるタスクを実行&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;停止するまでの時間を記録(t&amp;lt;299なら失敗、t==299なら成功)&lt;br /&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;という感じです。肝心の3.では、&lt;br /&gt;
-episodesの中からpattern_set_size個ずつepisodesを取り出し、&lt;br /&gt;
-その中の各cycleから入力xと教師信号tを作成して、&lt;br /&gt;
-多層パーセプトロンをこれにfitさせるのを繰り返すことで学習を行っています。&lt;br /&gt;
-episodes1周だけではうまくタスクを成功させることができなかったので、&lt;br /&gt;
-毎回取り出す順番をランダムに変えてepisodesを5周させるようにしています。&lt;/p&gt;
-
-&lt;p&gt;実験結果は次のようになりました。&lt;/p&gt;
-
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;m&lt;/th&gt;
-&lt;th&gt;成功した回数&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;50&lt;/td&gt;
-&lt;td&gt;25 / 50 (50%)&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;100&lt;/td&gt;
-&lt;td&gt;41 / 50 (82%)&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;150&lt;/td&gt;
-&lt;td&gt;43 / 50 (86%)&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;200&lt;/td&gt;
-&lt;td&gt;43 / 50 (86%)&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;300&lt;/td&gt;
-&lt;td&gt;48 / 50 (96%)&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;400&lt;/td&gt;
-&lt;td&gt;46 / 50 (92%)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;m = 50 の場合については論文とほぼ同程度成功できています。&lt;br /&gt;
-しかし、それ以外の場合では論文の結果よりもやや悪い数字が出てしまっています。&lt;br /&gt;
-特に m &amp;gt;= 200 では100%となるらしいのですが、100%は出ませんでした。&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Rpropを使うところをSGDでやったこと(sigmoid関数がフラットになる範囲で学習が停滞する)&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;episodesの周回数(5)やpattern_set_size(=m/10)をテキトーに決めたこと&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;fitの時のepoch数が1000で固定されていること&lt;br /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;あたりかなが原因なのかなと思っています。&lt;br /&gt;
-この辺りをちゃんと設定すれば100%も出せると思うのですが、&lt;br /&gt;
-まあそれほど悪くない結果が出ているのでひとまずこれで良いことにします。&lt;/p&gt;
-
-&lt;p&gt;倒立振子のアニメーションは以下のような感じ。&lt;br /&gt;
-コスト関数が単純(倒れたら1、倒れないなら0)なため、&lt;br /&gt;
-直立した状態でキープしようとするのではなく、&lt;br /&gt;
-倒れそうになってから直そうとするので台車ごとすっ飛んで行きます。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://zaburo-ch.github.io/images/pendulum_m50_fail.gif&#34; alt=&#34;m=50,失敗&#34; /&gt;
-m = 50, 失敗&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://zaburo-ch.github.io/images/pendulum_m50_success.gif&#34; alt=&#34;m=50,成功&#34; /&gt;
-m = 50, 成功(gifは10秒で打ち切り)&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://zaburo-ch.github.io/images/pendulum_m400_fail.gif&#34; alt=&#34;m=400,失敗&#34; /&gt;
-m = 400, 失敗&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://zaburo-ch.github.io/images/pendulum_m400_success.gif&#34; alt=&#34;m=400,成功&#34; /&gt;
-m = 400, 成功(gifは10秒で打ち切り)&lt;/p&gt;
-</description>
+mはepisodeの個数にあたる変数になっていて、
+[50, 100, 150, 200, 300, 400]の各m対して、50回実験を行うようになっています。
+実験の大まかな流れは、
+ make_episodes(m)でm個のepisodeを作る
+ 多層パーセプトロンを構築
+ Neural Fitted Q Iterationを実行
+ 倒立振子を立たせるタスクを実行
+ 停止するまでの時間を記録(t&amp;lt;299なら失敗、t==299なら成功)
+  という感じです。肝心の3.では、
+episodesの中からpattern_set_size個ずつepisodesを取り出し、
+その中の各cycleから入力xと教師信号tを作成して、
+多層パーセプトロンをこれにfitさせるのを繰り返すことで学習を行っています。
+episodes1周だけではうまくタスクを成功させることができなかったので、
+毎回取り出す順番をランダムに変えてepisodesを5周させるようにしています。
+実験結果は次のようになりました。
+   m 成功した回数     50 25 / 50 (50%)   100 41 / 50 (82%)   150 43 / 50 (86%)   200 43 / 50 (86%)   300 48 / 50 (96%)   400 46 / 50 (92%)    m = 50 の場合については論文とほぼ同程度成功できています。</description>
     </item>
     
     <item>
@@ -125,36 +48,24 @@ m = 400, 成功(gifは10秒で打ち切り)&lt;/p&gt;
       <pubDate>Tue, 15 Mar 2016 21:00:44 +0900</pubDate>
       
       <guid>https://zaburo-ch.github.io/post/inverted-pendulum/</guid>
-      <description>&lt;p&gt;&lt;a href=&#34;http://ml.informatik.uni-freiburg.de/_media/publications/rieecml05.pdf&#34;&gt;Neural Fitted Q Iteration&lt;/a&gt;の実験で使う倒立振子のシミュレータを書きました。&lt;br /&gt;
-論文ではCLSquareというシステムを使って実験が行われているのですが、&lt;br /&gt;
-頑張ってインストールしたものの上手く動かせなかったので自分で書きました。&lt;/p&gt;
-
-&lt;p&gt;倒立振子の運動方程式については&lt;a href=&#34;http://www.robot.mach.mie-u.ac.jp/~nkato/class/sc/Invpend_eq3.pdf&#34;&gt;こちら&lt;/a&gt;のスライドが詳しいです。&lt;br /&gt;
-今回は摩擦を無視するのでスライドでいう B と C が 0 になります。&lt;/p&gt;
-
-&lt;p&gt;台車の重さやポールの長さなどの各種定数は、NFQの論文に倣い、&lt;br /&gt;
-&lt;a href=&#34;https://scholar.google.com/citations?view_op=view_citation&amp;amp;hl=ja&amp;amp;user=VqHiIg8AAAAJ&amp;amp;citation_for_view=VqHiIg8AAAAJ:u5HHmVD_uO8C&#34;&gt;これ&lt;/a&gt;のInverted Pendulumの実験と同じにしました。&lt;/p&gt;
-
-&lt;p&gt;コードはこんな感じ。
-&lt;script src=&#34;https://gist.github.com/zaburo-ch/ebeb65b7b1e97f2ece80.js&#34;&gt;&lt;/script&gt;&lt;/p&gt;
-
-&lt;p&gt;アクションは[-50N, 50N, 0N]の3種類で、[0, 1, 2]で表現しました。&lt;br /&gt;
-do_action(a)でアクションが実行され t だけ時間が進みます。&lt;/p&gt;
-
-&lt;p&gt;matplotlibでビジュアライズできるようにしたので、&lt;br /&gt;
-実行すると次のようなアニメーションが表示されます。&lt;br /&gt;
-&lt;img src=&#34;https://zaburo-ch.github.io/images/pendulum01.gif&#34; alt=&#34;inverted pendulum&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;加速度がこの式で与えられるのは微分してみたらわかるけど、&lt;br /&gt;
-速度や位置(角速度や角度)をどうやって更新していいのかわからなかったので、&lt;br /&gt;
-tが小さければ高校物理のvt+&lt;sup&gt;1&lt;/sup&gt;&amp;frasl;&lt;sub&gt;2&lt;/sub&gt;*at^2で大丈夫でしょって感じで&lt;br /&gt;
-t_sum回ループ回して細かく更新することでそれっぽい結果を得ました。&lt;/p&gt;
-
-&lt;p&gt;ちゃんと検索してみると&lt;a href=&#34;https://searchcode.com/codesearch/view/34802371/&#34;&gt;C言語での実装&lt;/a&gt;が見つかったので、&lt;br /&gt;
-これを真似してupdate_stateを書き換えてみるとこんな感じ。
-&lt;script src=&#34;https://gist.github.com/zaburo-ch/70f16749efeef5beb95e.js&#34;&gt;&lt;/script&gt;
-物理が分からない自分が書いたコードより安心なので、実験ではこっちを使おうと思います。&lt;/p&gt;
-</description>
+      <description>Neural Fitted Q Iterationの実験で使う倒立振子のシミュレータを書きました。
+論文ではCLSquareというシステムを使って実験が行われているのですが、
+頑張ってインストールしたものの上手く動かせなかったので自分で書きました。
+倒立振子の運動方程式についてはこちらのスライドが詳しいです。
+今回は摩擦を無視するのでスライドでいう B と C が 0 になります。
+台車の重さやポールの長さなどの各種定数は、NFQの論文に倣い、
+これのInverted Pendulumの実験と同じにしました。
+コードはこんな感じ。 
+アクションは[-50N, 50N, 0N]の3種類で、[0, 1, 2]で表現しました。
+do_action(a)でアクションが実行され t だけ時間が進みます。
+matplotlibでビジュアライズできるようにしたので、
+実行すると次のようなアニメーションが表示されます。
+加速度がこの式で与えられるのは微分してみたらわかるけど、
+速度や位置(角速度や角度)をどうやって更新していいのかわからなかったので、
+tが小さければ高校物理のvt+1&amp;frasl;2*at^2で大丈夫でしょって感じで
+t_sum回ループ回して細かく更新することでそれっぽい結果を得ました。
+ちゃんと検索してみるとC言語での実装が見つかったので、
+これを真似してupdate_stateを書き換えてみるとこんな感じ。  物理が分からない自分が書いたコードより安心なので、実験ではこっちを使おうと思います。</description>
     </item>
     
     <item>
@@ -163,78 +74,54 @@ t_sum回ループ回して細かく更新することでそれっぽい結果を
       <pubDate>Sat, 20 Feb 2016 01:29:30 +0900</pubDate>
       
       <guid>https://zaburo-ch.github.io/post/mlp/</guid>
-      <description>&lt;p&gt;前回は古典的Q学習を実装しましたが、次はニューラルネットを用いたQ学習として、&lt;br /&gt;
-&lt;a href=&#34;http://ml.informatik.uni-freiburg.de/_media/publications/rieecml05.pdf&#34;&gt;Neural Fitted Q Iteration&lt;/a&gt;を使ったQ学習を実装しようと考えています。&lt;/p&gt;
+      <description>前回は古典的Q学習を実装しましたが、次はニューラルネットを用いたQ学習として、
+Neural Fitted Q Iterationを使ったQ学習を実装しようと考えています。
+今回はその前の勉強として、
+誤差逆伝播法を用いた多層パーセプトロンをNumPyだけで実装してみます。
+誤差逆伝播法についてはこちらのスライドが詳しいです。
 
-&lt;p&gt;今回はその前の勉強として、&lt;br /&gt;
-誤差逆伝播法を用いた多層パーセプトロンをNumPyだけで実装してみます。&lt;br /&gt;
-誤差逆伝播法についてはこちらのスライドが詳しいです。&lt;/p&gt;
-
-&lt;p&gt;&lt;iframe src=&#34;//www.slideshare.net/slideshow/embed_code/key/1T0PJeFTRBMnCG?startSlide=32&#34; width=&#34;425&#34; height=&#34;355&#34; frameborder=&#34;0&#34; marginwidth=&#34;0&#34; marginheight=&#34;0&#34; scrolling=&#34;no&#34; style=&#34;border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;&#34; allowfullscreen&gt; &lt;/iframe&gt;&lt;br /&gt;
-&lt;a href=&#34;//www.slideshare.net/weda654/3-45366686&#34; title=&#34;わかりやすいパターン認識_3章&#34; target=&#34;_blank&#34;&gt;わかりやすいパターン認識_3章&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;コードはこんな感じ。
-&lt;script src=&#34;https://gist.github.com/zaburo-ch/7ab05a6dda71b5ccfe4f.js&#34;&gt;&lt;/script&gt;&lt;/p&gt;
-
-&lt;p&gt;活性化関数は全てシグモイド関数で、コスト関数は残差の平方和を用いました。&lt;br /&gt;
-各層はforwardで出力を計算して、&lt;br /&gt;
-backwardで前の層の誤差を計算しつつ W や b の更新を行います。&lt;br /&gt;
-tanhなどの層も同じような関数を実装してMLPのinitを適宜変えれば使える(はず)。&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://deeplearning.net/tutorial/mlp.html&#34;&gt;DeepLearningTutorialsのMLPのコード&lt;/a&gt;っぽくしたくて、&lt;br /&gt;
-&lt;a href=&#34;http://blog.yusugomori.com/post/40250499669/python%E3%81%AB%E3%82%88%E3%82%8Bdeep-learning%E3%81%AE%E5%AE%9F%E8%A3%85deep-belief-nets-%E7%B7%A8&#34;&gt;DeepLearningTutorialsのDBNをNumPyで実装した方のコード&lt;/a&gt;とか、&lt;br /&gt;
-&lt;a href=&#34;http://aidiary.hatenablog.com/entry/20140201/1391218771&#34;&gt;NumPyでMLPを実装を実装した方のコード&lt;/a&gt;などを参考に書きました。&lt;/p&gt;
-
-&lt;p&gt;各所に載っている式を見る限りは出力層も活性化関数を使うっぽいんですが、&lt;br /&gt;
-Chainerの多層パーセプトロンのサンプルをはじめとして、&lt;br /&gt;
-出力層で線形変換するだけ(活性化関数を使わない)のものが結構あって混乱しました。&lt;br /&gt;
-たぶんシグモイド関数やtanhだと出力できる範囲が狭くて不便なので&lt;br /&gt;
-出力層だけ恒等関数使ってるんだろうという感じでとりあえず考えています。&lt;br /&gt;
-先のNFQの論文で、全ての層でシグモイドを使ったみたいなことが書いてあったので、&lt;br /&gt;
-今回は出力層にもシグモイド関数を使うことにしています。&lt;br /&gt;
-あと出力層での誤差も、出力層の活性化関数の微分をかけるのかどうかがわからなくて&lt;br /&gt;
-結構悩みましたが、スライドの式に従ってかけることにしました。&lt;/p&gt;
-
-&lt;p&gt;また、確率的勾配降下法(SGD)でミニバッチを使った学習ができるように書きましたが、&lt;br /&gt;
-ミニバッチを使う時に W や b の更新をどうやるのかがよくわからなくて、&lt;br /&gt;
-結局ループ回して学習パターン1つずつ使って更新を行うようにしました。&lt;br /&gt;
-出力層の時点で誤差の和をとってそれを伝播するんだと思ったのですが、&lt;br /&gt;
-そしたらそれと掛け合わせる前の層の出力はどうするんだ！？ってなって&lt;br /&gt;
-結局わからず、まあ結局やってること大体一緒でしょってことでこの形にしました。&lt;/p&gt;
-
-&lt;p&gt;結果はこんな感じになります。赤が教師信号、青がMLPの出力で、&lt;br /&gt;
-左が1000回反復した場合、右が10000回反復した場合です。&lt;br /&gt;
-&lt;img src=&#34;https://zaburo-ch.github.io/images/mlp_approximate_abs_1000.png&#34; width=&#34;300px&#34; /&gt;
-&lt;img src=&#34;https://zaburo-ch.github.io/images/mlp_approximate_abs_10000.png&#34; width=&#34;300px&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;たぶん学習できていると思うのですが、&lt;br /&gt;
-いまいちうまくいっているのか確証が持てなかったので、&lt;br /&gt;
-同じネットワークをChainerでも実装してみました。&lt;/p&gt;
-
-&lt;p&gt;コードは&lt;a href=&#34;https://gist.github.com/zaburo-ch/8f4fe27e898b42a38635&#34;&gt;ここ&lt;/a&gt;。Tutorialのものをちょっといじっただけです。&lt;/p&gt;
-
-&lt;p&gt;結果は次の通り。&lt;br /&gt;
-&lt;img src=&#34;https://zaburo-ch.github.io/images/mlp_approximate_abs_chainer_1000.png&#34; width=&#34;300px&#34; /&gt;
-&lt;img src=&#34;https://zaburo-ch.github.io/images/mlp_approximate_abs_chainer_10000.png&#34; width=&#34;300px&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Chainerの方が若干うまく近似できていますが、&lt;br /&gt;
-概ね同じような感じの結果が得られたので、自分で書いた方も大丈夫なはず。&lt;/p&gt;
-
-&lt;p&gt;実行時間はNumPyだけの方がかなり早いです。&lt;br /&gt;
-ただ自分で微分する必要もなく適当に層つなぐだけで出来ちゃったのでChainerすごい&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;2016/03/15 追記&lt;/strong&gt;&lt;br /&gt;
-Kerasでも試してみました。コードは&lt;a href=&#34;https://gist.github.com/zaburo-ch/13b9bfc221246b319a19&#34;&gt;ここ&lt;/a&gt;。&lt;/p&gt;
-
-&lt;p&gt;結果はだいたい同じような感じ&lt;br /&gt;
-&lt;img src=&#34;https://zaburo-ch.github.io/images/mlp_approximate_abs_keras_1000.png&#34; width=&#34;300px&#34; /&gt;
-&lt;img src=&#34;https://zaburo-ch.github.io/images/mlp_approximate_abs_keras_10000.png&#34; width=&#34;300px&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;後ろでTheanoが使われていることもありかなり速いです。&lt;br /&gt;
-まだMLP書いただけなので、もっと大規模なモデルを実装するときにどうなるかはわかりませんが、&lt;br /&gt;
-モデルの記述の仕方や、sklearnっぽいfit・predictの書き方など、&lt;br /&gt;
-結構書きやすいように感じました。もっと使ってみたい。&lt;/p&gt;
-</description>
+わかりやすいパターン認識_3章
+コードはこんな感じ。 
+活性化関数は全てシグモイド関数で、コスト関数は残差の平方和を用いました。
+各層はforwardで出力を計算して、
+backwardで前の層の誤差を計算しつつ W や b の更新を行います。
+tanhなどの層も同じような関数を実装してMLPのinitを適宜変えれば使える(はず)。
+DeepLearningTutorialsのMLPのコードっぽくしたくて、
+DeepLearningTutorialsのDBNをNumPyで実装した方のコードとか、
+NumPyでMLPを実装を実装した方のコードなどを参考に書きました。
+各所に載っている式を見る限りは出力層も活性化関数を使うっぽいんですが、
+Chainerの多層パーセプトロンのサンプルをはじめとして、
+出力層で線形変換するだけ(活性化関数を使わない)のものが結構あって混乱しました。
+たぶんシグモイド関数やtanhだと出力できる範囲が狭くて不便なので
+出力層だけ恒等関数使ってるんだろうという感じでとりあえず考えています。
+先のNFQの論文で、全ての層でシグモイドを使ったみたいなことが書いてあったので、
+今回は出力層にもシグモイド関数を使うことにしています。
+あと出力層での誤差も、出力層の活性化関数の微分をかけるのかどうかがわからなくて
+結構悩みましたが、スライドの式に従ってかけることにしました。
+また、確率的勾配降下法(SGD)でミニバッチを使った学習ができるように書きましたが、
+ミニバッチを使う時に W や b の更新をどうやるのかがよくわからなくて、
+結局ループ回して学習パターン1つずつ使って更新を行うようにしました。
+出力層の時点で誤差の和をとってそれを伝播するんだと思ったのですが、
+そしたらそれと掛け合わせる前の層の出力はどうするんだ！？ってなって
+結局わからず、まあ結局やってること大体一緒でしょってことでこの形にしました。
+結果はこんな感じになります。赤が教師信号、青がMLPの出力で、
+左が1000回反復した場合、右が10000回反復した場合です。
+たぶん学習できていると思うのですが、
+いまいちうまくいっているのか確証が持てなかったので、
+同じネットワークをChainerでも実装してみました。
+コードはここ。Tutorialのものをちょっといじっただけです。
+結果は次の通り。
+Chainerの方が若干うまく近似できていますが、
+概ね同じような感じの結果が得られたので、自分で書いた方も大丈夫なはず。
+実行時間はNumPyだけの方がかなり早いです。
+ただ自分で微分する必要もなく適当に層つなぐだけで出来ちゃったのでChainerすごい
+2016/03/15 追記
+Kerasでも試してみました。コードはここ。
+結果はだいたい同じような感じ
+後ろでTheanoが使われていることもありかなり速いです。
+まだMLP書いただけなので、もっと大規模なモデルを実装するときにどうなるかはわかりませんが、
+モデルの記述の仕方や、sklearnっぽいfit・predictの書き方など、
+結構書きやすいように感じました。もっと使ってみたい。</description>
     </item>
     
     <item>
@@ -243,63 +130,37 @@ Kerasでも試してみました。コードは&lt;a href=&#34;https://gist.gith
       <pubDate>Sun, 14 Feb 2016 14:28:18 +0900</pubDate>
       
       <guid>https://zaburo-ch.github.io/post/q-learning/</guid>
-      <description>&lt;p&gt;Deep Q-Networkについて調べてみたら面白い記事を見つけました。&lt;br /&gt;
-&lt;a href=&#34;http://qiita.com/Ugo-Nama/items/08c6a5f6a571335972d5&#34;&gt;DQNの生い立ち　＋　Deep Q-NetworkをChainerで書いた&lt;br /&gt;
-http://qiita.com/Ugo-Nama/items/08c6a5f6a571335972d5&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;この記事を読んで、Deep Q-Networkが&lt;br /&gt;
-Q学習 -&amp;gt; Q-Network -&amp;gt; Deep Q-Network という流れ生まれたものだということがわかりました。&lt;br /&gt;
-この流れをPythonで実装しながら辿ってみようと思います。&lt;/p&gt;
-
-&lt;p&gt;今回はQ学習を実装します。&lt;br /&gt;
-Q学習について下記のページに詳しく載っているので割愛します。&lt;br /&gt;
-&lt;a href=&#34;http://www.sist.ac.jp/~kanakubo/research/reinforcement_learning.html&#34;&gt;強化学習&lt;br /&gt;
-http://www.sist.ac.jp/~kanakubo/research/reinforcement_learning.html&lt;/a&gt;&lt;br /&gt;
-&lt;a href=&#34;http://sysplan.nams.kyushu-u.ac.jp/gen/edu/RL_intro.html&#34;&gt;強化学習とは？&lt;br /&gt;
-http://sysplan.nams.kyushu-u.ac.jp/gen/edu/RL_intro.html&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;まず、Q学習で適応する環境として次のような簡単な環境を考えます。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;環境の状態は、&#39;A&#39;または&#39;B&#39;からなる長さ8の文字列で表され、  
-その文字列にはある法則により得点がつけられる。  
-プレイヤーはその法則についての知識を予め持たないが、  
-文字列中の任意の1文字を選んで&#39;A&#39;または&#39;B&#39;に置き換えることができ、  
-その結果、その操作による得点の変化量を報酬として受け取る。  
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;たぶんマルコフ決定過程になっていると思います。マルコフ性、&lt;a href=&#34;http://ibisforest.org/index.php?%E3%82%A8%E3%83%AB%E3%82%B4%E3%83%BC%E3%83%89%E6%80%A7&#34;&gt;エルゴート性&lt;/a&gt;も持つはず。&lt;/p&gt;
-
-&lt;p&gt;文字列に得点をつける法則はなんでも良いのですが、&lt;br /&gt;
-今回は、特定の文字列(単語)に次のように得点を割り当てて、&lt;br /&gt;
-{&amp;ldquo;A&amp;rdquo;: 1, &amp;ldquo;BB&amp;rdquo;: 1, &amp;ldquo;AB&amp;rdquo;: 2, &amp;ldquo;ABB&amp;rdquo;: 3, &amp;ldquo;BBA&amp;rdquo;: 3, &amp;ldquo;BBBB&amp;rdquo;: 4}&lt;br /&gt;
-文字列中に含まれる単語の合計得点を文字列の得点とするということにします。&lt;br /&gt;
-例えば&amp;rdquo;AAAAAAAA&amp;rdquo;なら8点(1 * 8)、&amp;rdquo;AAAAAAAB&amp;rdquo;なら9点(1 * 7 + 2)です。&lt;/p&gt;
-
-&lt;p&gt;環境のとりうる状態は長さ8のそれぞれに&amp;rsquo;A&amp;rsquo;, &amp;lsquo;B&amp;rsquo;の2通りあるので2^8通りあり、&lt;br /&gt;
-アクションは、何もしないのと、位置1~8のそれぞれを&amp;rsquo;A&amp;rsquo;または&amp;rsquo;B&amp;rsquo;なのでを計17通りあります。&lt;br /&gt;
-今回のコードでは状態は文字列、アクションは整数(0~16)で管理します。&lt;/p&gt;
-
-&lt;script src=&#34;https://gist.github.com/zaburo-ch/9ee5fd731d40d47c82ad.js&#34;&gt;&lt;/script&gt;
-
-&lt;p&gt;先述した強化学習の記事では、Q学習の学習中に、&lt;br /&gt;
-一定の回数遷移を繰り返した後、状態をs0に戻すものとそうでないものがあり、&lt;br /&gt;
-どちらを採用するか悩んだので QLearning(n_rounds, t_max)として&lt;br /&gt;
-2重のループにすることで一応どちらの方法でも実行できるようにしました。&lt;/p&gt;
-
-&lt;p&gt;これを実行結果はこんな感じ&lt;br /&gt;
-&lt;img src=&#34;https://zaburo-ch.github.io/images/q_learning_figure_1.png&#34; alt=&#34;/images/q_learning_figure_1.png&#34; /&gt;
-軸のラベルを書き忘れていますが、&lt;br /&gt;
-横軸が外側のループが回った数で、縦軸がそれまでに学習したQを使ってt_max回遷移した時のスコアですね。&lt;br /&gt;
-&amp;ldquo;ABBBBBBB&amp;rdquo;に遷移して終わるのとき最大値28をとるのですが、&lt;br /&gt;
-約900セット(t_max * 900回)の学習でそれを実現する遷移ができるようになっています。&lt;/p&gt;
-
-&lt;p&gt;この問題だとイマイチQ学習のイメージがつかみにくいので、&lt;br /&gt;
-素直に最短路問題とかにしとけば良かったなーと思っています。&lt;/p&gt;
-
-&lt;p&gt;最短路問題を使ったわかりやすい例はこちら&lt;br /&gt;
-&lt;a href=&#34;http://d.hatena.ne.jp/poor_code/20090628/1246176165&#34;&gt;Q学習による最短経路学習 - poor_codeの日記&lt;br /&gt;
-http://d.hatena.ne.jp/poor_code/20090628/1246176165&lt;/a&gt;&lt;/p&gt;
-</description>
+      <description>Deep Q-Networkについて調べてみたら面白い記事を見つけました。
+DQNの生い立ち　＋　Deep Q-NetworkをChainerで書いた
+http://qiita.com/Ugo-Nama/items/08c6a5f6a571335972d5
+この記事を読んで、Deep Q-Networkが
+Q学習 -&amp;gt; Q-Network -&amp;gt; Deep Q-Network という流れ生まれたものだということがわかりました。
+この流れをPythonで実装しながら辿ってみようと思います。
+今回はQ学習を実装します。
+Q学習について下記のページに詳しく載っているので割愛します。
+強化学習
+http://www.sist.ac.jp/~kanakubo/research/reinforcement_learning.html
+強化学習とは？
+http://sysplan.nams.kyushu-u.ac.jp/gen/edu/RL_intro.html
+まず、Q学習で適応する環境として次のような簡単な環境を考えます。
+環境の状態は、&#39;A&#39;または&#39;B&#39;からなる長さ8の文字列で表され、 その文字列にはある法則により得点がつけられる。 プレイヤーはその法則についての知識を予め持たないが、 文字列中の任意の1文字を選んで&#39;A&#39;または&#39;B&#39;に置き換えることができ、 その結果、その操作による得点の変化量を報酬として受け取る。  たぶんマルコフ決定過程になっていると思います。マルコフ性、エルゴート性も持つはず。
+文字列に得点をつける法則はなんでも良いのですが、
+今回は、特定の文字列(単語)に次のように得点を割り当てて、
+{&amp;ldquo;A&amp;rdquo;: 1, &amp;ldquo;BB&amp;rdquo;: 1, &amp;ldquo;AB&amp;rdquo;: 2, &amp;ldquo;ABB&amp;rdquo;: 3, &amp;ldquo;BBA&amp;rdquo;: 3, &amp;ldquo;BBBB&amp;rdquo;: 4}
+文字列中に含まれる単語の合計得点を文字列の得点とするということにします。
+例えば&amp;rdquo;AAAAAAAA&amp;rdquo;なら8点(1 * 8)、&amp;rdquo;AAAAAAAB&amp;rdquo;なら9点(1 * 7 + 2)です。
+環境のとりうる状態は長さ8のそれぞれに&amp;rsquo;A&amp;rsquo;, &amp;lsquo;B&amp;rsquo;の2通りあるので2^8通りあり、
+アクションは、何もしないのと、位置1~8のそれぞれを&amp;rsquo;A&amp;rsquo;または&amp;rsquo;B&amp;rsquo;なのでを計17通りあります。
+今回のコードでは状態は文字列、アクションは整数(0~16)で管理します。
+ 先述した強化学習の記事では、Q学習の学習中に、
+一定の回数遷移を繰り返した後、状態をs0に戻すものとそうでないものがあり、
+どちらを採用するか悩んだので QLearning(n_rounds, t_max)として
+2重のループにすることで一応どちらの方法でも実行できるようにしました。
+これを実行結果はこんな感じ
+軸のラベルを書き忘れていますが、
+横軸が外側のループが回った数で、縦軸がそれまでに学習したQを使ってt_max回遷移した時のスコアですね。
+&amp;ldquo;ABBBBBBB&amp;rdquo;に遷移して終わるのとき最大値28をとるのですが、
+約900セット(t_max * 900回)の学習でそれを実現する遷移ができるようになっています。</description>
     </item>
     
   </channel>

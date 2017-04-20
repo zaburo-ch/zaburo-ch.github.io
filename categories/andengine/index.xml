@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>ZABURO app</title>
-    <link>https://zaburo-ch.github.io/categories/andengine/index.xml</link>
-    <description>Recent content on ZABURO app</description>
+    <title>Andengine on ZABURO app</title>
+    <link>https://zaburo-ch.github.io/categories/andengine/</link>
+    <description>Recent content in Andengine on ZABURO app</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
     <copyright>Written by ZABURO</copyright>
-    <atom:link href="https://zaburo-ch.github.io/categories/andengine/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 17 Nov 2013 18:13:44 +0900</lastBuildDate>
+    
+	<atom:link href="https://zaburo-ch.github.io/categories/andengine/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>【AndEngine】onPauseでNullPointerException</title>
@@ -15,41 +18,35 @@
       <pubDate>Sun, 17 Nov 2013 18:13:44 +0900</pubDate>
       
       <guid>https://zaburo-ch.github.io/post/20131117_0/</guid>
-      <description>&lt;p&gt;一部機種において(Androidのバージョンの問題？)&lt;br /&gt;
-起動直後に強制終了してしまうバグに悩まされたのでメモ。&lt;/p&gt;
-
-&lt;p&gt;logcatでシステムのログを確認すると&lt;br /&gt;
-SimpleLayoutGameActivityを継承しているMainActivityが&lt;br /&gt;
-謎の挙動をしている模様。&lt;/p&gt;
-
-&lt;p&gt;onCreate,onResumeの後になぜかonPauseが呼び出され&lt;br /&gt;
-NullPointerExceptionで強制終了していました。&lt;/p&gt;
-
-&lt;p&gt;MainActivityのメンバとして以下を定義し&lt;br /&gt;
-&lt;pre&gt;&lt;code&gt;private boolean isGoing = false;&lt;/code&gt;&lt;/pre&gt;onPauseの処理をisGoingがtrueのときにしかしないように&lt;br /&gt;
-ifで指定してやることで解決。&lt;br /&gt;
-onCreateSceneでisGoingをtrueにしてます。&lt;/p&gt;
-
-&lt;p&gt;onResumeの後にonPauseが呼ばれるなんて&lt;br /&gt;
-ライフサイクル無視しすぎやん！ってすごく困ったんですが、&lt;br /&gt;
-どうやらonResumeあたりでエラーが発生して&lt;br /&gt;
-AndEngineがアプリを再起動しようとした結果&lt;br /&gt;
-onPauseが呼ばれていたみたいです。&lt;br /&gt;
-で、onCreateSceneあたりで生成する予定のオブジェクトは&lt;br /&gt;
-ここでonPauseが呼ばれたときにはまだ生成されていないので&lt;br /&gt;
-それらのオブジェクトを操作する処理がonPauseにかかれていると&lt;br /&gt;
-NullPointerExceptionで落ちるというわけでした。&lt;/p&gt;
-
-&lt;p&gt;ちなみにそのエラーには以下のようなコメントがついていて&lt;br /&gt;
-&lt;blockquote&gt;&lt;p&gt;UpdateThread interrupted. Don&amp;rsquo;t worry - this EngineDestroyedException is most likely expected!&lt;/p&gt;&lt;/blockquote&gt;UpdateThreadが中断されちゃったよ！&lt;br /&gt;
-まあこのEngineが落ちちゃう例外はよくあることだから安心して！&lt;br /&gt;
-ってなわけなのでどうやらAndEngine側に問題がある模様。&lt;/p&gt;
-
-&lt;p&gt;Forumなどを探して見たところ&lt;br /&gt;
-ソースはありませんでしたが「99.999%そのエラーは起きるよ」&lt;br /&gt;
-というコメントがあるほどで私の技術力では何ともしがたい問題のようです。&lt;br /&gt;
-なんだかなー&lt;/p&gt;
-</description>
+      <description>一部機種において(Androidのバージョンの問題？)
+起動直後に強制終了してしまうバグに悩まされたのでメモ。
+logcatでシステムのログを確認すると
+SimpleLayoutGameActivityを継承しているMainActivityが
+謎の挙動をしている模様。
+onCreate,onResumeの後になぜかonPauseが呼び出され
+NullPointerExceptionで強制終了していました。
+MainActivityのメンバとして以下を定義し
+private boolean isGoing = false;onPauseの処理をisGoingがtrueのときにしかしないように
+ifで指定してやることで解決。
+onCreateSceneでisGoingをtrueにしてます。
+onResumeの後にonPauseが呼ばれるなんて
+ライフサイクル無視しすぎやん！ってすごく困ったんですが、
+どうやらonResumeあたりでエラーが発生して
+AndEngineがアプリを再起動しようとした結果
+onPauseが呼ばれていたみたいです。
+で、onCreateSceneあたりで生成する予定のオブジェクトは
+ここでonPauseが呼ばれたときにはまだ生成されていないので
+それらのオブジェクトを操作する処理がonPauseにかかれていると
+NullPointerExceptionで落ちるというわけでした。
+ちなみにそのエラーには以下のようなコメントがついていて
+UpdateThread interrupted. Don&amp;rsquo;t worry - this EngineDestroyedException is most likely expected!
+UpdateThreadが中断されちゃったよ！
+まあこのEngineが落ちちゃう例外はよくあることだから安心して！
+ってなわけなのでどうやらAndEngine側に問題がある模様。
+Forumなどを探して見たところ
+ソースはありませんでしたが「99.999%そのエラーは起きるよ」
+というコメントがあるほどで私の技術力では何ともしがたい問題のようです。
+なんだかなー</description>
     </item>
     
   </channel>

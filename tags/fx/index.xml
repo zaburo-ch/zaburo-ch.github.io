@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>ZABURO app</title>
-    <link>https://zaburo-ch.github.io/tags/fx/index.xml</link>
-    <description>Recent content on ZABURO app</description>
+    <title>Fx on ZABURO app</title>
+    <link>https://zaburo-ch.github.io/tags/fx/</link>
+    <description>Recent content in Fx on ZABURO app</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
     <copyright>Written by ZABURO</copyright>
-    <atom:link href="https://zaburo-ch.github.io/tags/fx/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 08 Oct 2015 22:26:21 +0900</lastBuildDate>
+    
+	<atom:link href="https://zaburo-ch.github.io/tags/fx/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>Forexiteから為替データを取得するスクリプトを書いた【Python】</title>
@@ -15,21 +18,16 @@
       <pubDate>Thu, 08 Oct 2015 22:26:21 +0900</pubDate>
       
       <guid>https://zaburo-ch.github.io/post/get-exchange-data-from-forexite/</guid>
-      <description>&lt;p&gt;書きました。&lt;/p&gt;
+      <description>書きました。
+Forexiteから分足データをダウンロードしてきて
+解凍したものを適当な形にpandasで加工してcsvで出力する、というのを n 日分行います。
+ひとまず n は200にしているので、そのままコピペして実行すれば200日分のデータが集まるはずです。
+Forexiteのデータは１日毎に分けられているのですが、
+これから使う用途ではその方が都合が良いのでそのままにしてます。
+コードは以下の通り。
 
-&lt;p&gt;&lt;a href=&#34;https://www.forexite.com/&#34;&gt;Forexite&lt;/a&gt;から分足データをダウンロードしてきて&lt;br /&gt;
-解凍したものを適当な形にpandasで加工してcsvで出力する、というのを n 日分行います。&lt;br /&gt;
-ひとまず n は200にしているので、そのままコピペして実行すれば200日分のデータが集まるはずです。&lt;/p&gt;
-
-&lt;p&gt;Forexiteのデータは１日毎に分けられているのですが、&lt;br /&gt;
-これから使う用途ではその方が都合が良いのでそのままにしてます。&lt;/p&gt;
-
-&lt;p&gt;コードは以下の通り。&lt;br /&gt;
-&lt;script src=&#34;https://gist.github.com/zaburo-ch/2ad144ae43a10844a646.js&#34;&gt;&lt;/script&gt;&lt;/p&gt;
-
-&lt;p&gt;ブログ用に処理を綺麗に関数にまとめたかったのですが、&lt;br /&gt;
-逆に強引な書き方が増えてしまいました&amp;hellip;&amp;hellip;&lt;/p&gt;
-</description>
+ブログ用に処理を綺麗に関数にまとめたかったのですが、
+逆に強引な書き方が増えてしまいました&amp;hellip;&amp;hellip;</description>
     </item>
     
     <item>
@@ -38,25 +36,18 @@
       <pubDate>Thu, 08 Oct 2015 00:59:54 +0900</pubDate>
       
       <guid>https://zaburo-ch.github.io/post/handle-exchange-data-by-pandas/</guid>
-      <description>&lt;p&gt;データ分析を本格的にやっていきたいと考えていて、&lt;br /&gt;
-その足がかりとしてpandasの使い方を勉強をしています。&lt;/p&gt;
-
-&lt;p&gt;今回は為替データを扱ってみたいと思います。&lt;br /&gt;
-&lt;a href=&#34;https://www.forexite.com/&#34;&gt;Forexite&lt;/a&gt;というサイトで分足データが無料でダウンロードできるので、これを使います。&lt;br /&gt;
-さっそく&lt;a href=&#34;https://www.forexite.com/free_forex_quotes/2015/10/061015.zip&#34;&gt;こちら(2015年10月6日分)&lt;/a&gt;からzipをダウンロードしてきて解凍すると&lt;br /&gt;
-色々な通貨のデータが一つのtxtファイルにまとまっています。&lt;/p&gt;
-
-&lt;p&gt;USDJPYのデータを抽出し5分足の終値と&lt;br /&gt;
-ボリンジャーバンド、指数加重移動平均をプロットするところまでやります。&lt;/p&gt;
-
-&lt;p&gt;IPythonで試行錯誤しながらやったものをまとめたコードが以下の通りです。
-&lt;script src=&#34;https://gist.github.com/zaburo-ch/12e9ada46ee2b7a16e5f.js&#34;&gt;&lt;/script&gt;&lt;/p&gt;
-
-&lt;p&gt;こんな感じのグラフが表示されます。&lt;br /&gt;
-&lt;img src=&#34;https://zaburo-ch.github.io/images/pandas_study_01.png&#34; alt=&#34;図1&#34; /&gt;&lt;br /&gt;
-&amp;lt;DTYYYYMMDD&amp;gt;と&amp;lt;TIME&amp;gt;をマージする部分の強引さが酷いですね。&lt;br /&gt;
-きっともっとスマートにできるんだろうなぁ&lt;/p&gt;
-</description>
+      <description>データ分析を本格的にやっていきたいと考えていて、
+その足がかりとしてpandasの使い方を勉強をしています。
+今回は為替データを扱ってみたいと思います。
+Forexiteというサイトで分足データが無料でダウンロードできるので、これを使います。
+さっそくこちら(2015年10月6日分)からzipをダウンロードしてきて解凍すると
+色々な通貨のデータが一つのtxtファイルにまとまっています。
+USDJPYのデータを抽出し5分足の終値と
+ボリンジャーバンド、指数加重移動平均をプロットするところまでやります。
+IPythonで試行錯誤しながらやったものをまとめたコードが以下の通りです。 
+こんな感じのグラフが表示されます。
+&amp;lt;DTYYYYMMDD&amp;gt;と&amp;lt;TIME&amp;gt;をマージする部分の強引さが酷いですね。
+きっともっとスマートにできるんだろうなぁ</description>
     </item>
     
   </channel>

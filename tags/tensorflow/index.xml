@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>ZABURO app</title>
-    <link>https://zaburo-ch.github.io/tags/tensorflow/index.xml</link>
-    <description>Recent content on ZABURO app</description>
+    <title>Tensorflow on ZABURO app</title>
+    <link>https://zaburo-ch.github.io/tags/tensorflow/</link>
+    <description>Recent content in Tensorflow on ZABURO app</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
     <copyright>Written by ZABURO</copyright>
-    <atom:link href="https://zaburo-ch.github.io/tags/tensorflow/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 17 Dec 2016 17:04:54 +0900</lastBuildDate>
+    
+	<atom:link href="https://zaburo-ch.github.io/tags/tensorflow/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>Style Transfer いろいろ</title>
@@ -15,77 +18,39 @@
       <pubDate>Sat, 17 Dec 2016 17:04:54 +0900</pubDate>
       
       <guid>https://zaburo-ch.github.io/post/style-transfer/</guid>
-      <description>&lt;p&gt;研究室のゼミでStyle Transferに関して論文紹介を行った際に使用したスライドを&lt;br /&gt;
-少し修正してslide shareにアップロードしました．&lt;/p&gt;
-
-&lt;p&gt;&lt;iframe src=&#34;//www.slideshare.net/slideshow/embed_code/key/crr96NXhlx6ow9&#34; width=&#34;595&#34; height=&#34;485&#34; frameborder=&#34;0&#34; marginwidth=&#34;0&#34; marginheight=&#34;0&#34; scrolling=&#34;no&#34; style=&#34;border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;&#34; allowfullscreen&gt; &lt;/iframe&gt; &lt;div style=&#34;margin-bottom:5px&#34;&gt; &lt;strong&gt; &lt;a href=&#34;//www.slideshare.net/zaburo/style-transfer&#34; title=&#34;Style transfer&#34; target=&#34;_blank&#34;&gt;Style transfer&lt;/a&gt; &lt;/strong&gt; from &lt;strong&gt;&lt;a target=&#34;_blank&#34; href=&#34;//www.slideshare.net/zaburo&#34;&gt;zaburo&lt;/a&gt;&lt;/strong&gt; &lt;/div&gt;&lt;/p&gt;
-
-&lt;p&gt;TensorFlowの練習も兼ねて実装してみたので&lt;br /&gt;
-この記事では，実装するときに悩んだところなどついていくつか取り上げたいと思います．&lt;/p&gt;
-
-&lt;p&gt;下記の実装を参考にさせていただきました．&lt;br /&gt;
-&lt;a href=&#34;https://github.com/cysmith/neural-style-tf&#34;&gt;https://github.com/cysmith/neural-style-tf&lt;/a&gt;&lt;br /&gt;
-&lt;a href=&#34;https://github.com/tensorflow/magenta/tree/master/magenta/models/image_stylization&#34;&gt;https://github.com/tensorflow/magenta/tree/master/magenta/models/image_stylization&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;まずはスライド中でGatys et al. 2016aとして紹介している&lt;br /&gt;
-もっとも基本的なStyle Transferを実装します．コードは&lt;a href=&#34;https://github.com/zaburo-ch/style_transfer/blob/master/my_style_transfer.py&#34;&gt;こちら&lt;/a&gt;．&lt;/p&gt;
-
-&lt;p&gt;基本的には論文の式を実装するだけですが&lt;br /&gt;
-コンテンツの損失の式がピクセル数で割るような形になっていないのに&lt;br /&gt;
-論文に入力画像のサイズが書いていないので(見逃しているだけ？)，&lt;br /&gt;
-論文のalphaとbetaの比をそのままつかってもうまくいきませんでした．&lt;/p&gt;
-
-&lt;p&gt;そこでJohnson et al. 2016に書かれている式を使うことにしました．&lt;br /&gt;
-具体的にはコンテンツの損失で二乗和をとっているところを二乗平均にしました．&lt;br /&gt;
-ついでに，スタイルの損失についてもJohnson et al. 2016に従って修正します．&lt;br /&gt;
-ここはGram matrixを&lt;code&gt;height * width&lt;/code&gt;で割って二乗平均をとる形にしました．&lt;br /&gt;
-(Gram matrixを&lt;code&gt;channel * height * width&lt;/code&gt;で割るのと等価なはずです)&lt;/p&gt;
-
-&lt;p&gt;VGGについてはTensorFlow-Slimを使ってサクッと書きました．&lt;br /&gt;
-基本は&lt;a href=&#34;https://github.com/tensorflow/tensorflow/blob/master/tensorflow/contrib/slim/python/slim/nets/vgg.py&#34;&gt;slimの下にあるvgg_16&lt;/a&gt;から全結合層を除いたものになっています．&lt;br /&gt;
-endpointはそのままだとkeyが&lt;code&gt;vgg_16/convN/convN_M&lt;/code&gt;のような形になるので，&lt;br /&gt;
-使いやすいようにkeyを変更して使っています．&lt;br /&gt;
-slimを使うと数行でVGG16が実装できるので非常に便利でした．&lt;/p&gt;
-
-&lt;p&gt;また，損失の定義する方法としては，コンテンツ・スタイル画像をテンソルとして別々に定義し&lt;br /&gt;
-最適化の際にそれらをVGGに入力した値などを計算させるような方法も考えられますが，&lt;br /&gt;
-損失を定義する段階でコンテンツ・スタイル画像を入力した場合の計算しておき，&lt;br /&gt;
-それを定数として扱った方が高速に動作したのでそのように書きました．&lt;/p&gt;
-
-&lt;p&gt;次にGatys et al. 2016bで提案された色を保存したままStyle Transferを行う手法の1つである&lt;br /&gt;
-Luminance-only Transferを実装します．コードは&lt;a href=&#34;https://github.com/zaburo-ch/style_transfer/blob/master/luminance_only.py&#34;&gt;こちら&lt;/a&gt;&lt;br /&gt;
-これは&lt;a href=&#34;https://en.wikipedia.org/wiki/YIQ&#34;&gt;英語版WikipediaのYIQの記事&lt;/a&gt;にYIQとRGBの相互変換が載っているので&lt;br /&gt;
-これを実装すればほとんどおしまいです．&lt;/p&gt;
-
-&lt;p&gt;あとは，RGB -&amp;gt; YIQ -&amp;gt; YチャンネルはそのままでIQチャンネルを全て0にしたもの -&amp;gt; RGB&lt;br /&gt;
-という流れで変換してStyle Transferして結果のIQチャンネルを元のIQチャンネルに戻すだけです．&lt;br /&gt;
-また，コンテンツのYチャンネルとスタイルのYチャンネルの平均・分散が
-同じになるように途中でスタイルのYチャンネルを変換するとより結果がよくなるそうです．&lt;/p&gt;
-
-&lt;p&gt;Johnson et al. 2016についても&lt;a href=&#34;https://github.com/tensorflow/magenta/tree/master/magenta/models/image_stylization&#34;&gt;magentaのimage_stylization&lt;/a&gt;を参考にして実装してみましたが，&lt;br /&gt;
-いまひとつ綺麗な画像が生成できていないので要改善という感じです&amp;hellip;&lt;br /&gt;
-コードは&lt;a href=&#34;https://github.com/zaburo-ch/style_transfer/tree/master/fast_transfer&#34;&gt;こちら&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;もしかしたらTensorFlowのバージョンによって違うのかもしれませんが，&lt;br /&gt;
-&lt;code&gt;tf.image.convert_image_dtype(image, dtype=tf.float32)&lt;/code&gt;&lt;br /&gt;
-は使った段階で[0, 1)に値が丸められるので，この後で255で割る必要はないようです．&lt;br /&gt;
-参考にしたコードでは255で割っていたのでそれを真似していたらハマってしまいました&amp;hellip;&lt;/p&gt;
-
-&lt;p&gt;あとデバッグの際にはsummaryで値を眺めてみるというのもありですが，&lt;br /&gt;
-&lt;code&gt;tf.Print&lt;/code&gt;で実際の値を見るのも非常に役に立ちました．↓このへんを参考に．
-&lt;a href=&#34;http://stackoverflow.com/questions/38810424/how-does-one-debug-nan-values-in-tensorflow/38813502&#34;&gt;http://stackoverflow.com/questions/38810424/how-does-one-debug-nan-values-in-tensorflow/38813502&lt;/a&gt;
-&lt;a href=&#34;https://www.tensorflow.org/api_docs/python/control_flow_ops/debugging_operations#Print&#34;&gt;https://www.tensorflow.org/api_docs/python/control_flow_ops/debugging_operations#Print&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;とりあえず思いつくことは以上になります．&lt;br /&gt;
-ついこの間1ネットワークで任意のスタイルに適用できるという凄い論文&lt;br /&gt;
-(Chen &amp;amp; Schmidt 2016)が出たのでこれについても試してみたいですね．&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;参考文献&lt;/strong&gt;&lt;br /&gt;
- - Gatys et al. 2016a &lt;a href=&#34;http://www.cv-foundation.org/openaccess/content_cvpr_2016/papers/Gatys_Image_Style_Transfer_CVPR_2016_paper.pdf&#34;&gt;Image Style Transfer Using Convolutional Neural Networks&lt;/a&gt;&lt;br /&gt;
- - Gatys et al. 2016b &lt;a href=&#34;https://arxiv.org/abs/1606.05897&#34;&gt;Preserving Color in Neural Artistic Style Transfer&lt;/a&gt;&lt;br /&gt;
- - Johnson et al. 2016 &lt;a href=&#34;https://arxiv.org/abs/1603.08155&#34;&gt;Perceptual Losses for Real-Time Style Transfer and Super-Resolution&lt;/a&gt;&lt;br /&gt;
- - Chen &amp;amp; Schmidt 2016 &lt;a href=&#34;https://arxiv.org/abs/1612.04337&#34;&gt;Fast Patch-based Style Transfer of Arbitrary Style&lt;/a&gt;&lt;/p&gt;
-</description>
+      <description>研究室のゼミでStyle Transferに関して論文紹介を行った際に使用したスライドを
+少し修正してslide shareにアップロードしました．
+  Style transfer  from zaburo 
+TensorFlowの練習も兼ねて実装してみたので
+この記事では，実装するときに悩んだところなどついていくつか取り上げたいと思います．
+下記の実装を参考にさせていただきました．
+https://github.com/cysmith/neural-style-tf
+https://github.com/tensorflow/magenta/tree/master/magenta/models/image_stylization
+まずはスライド中でGatys et al. 2016aとして紹介している
+もっとも基本的なStyle Transferを実装します．コードはこちら．
+基本的には論文の式を実装するだけですが
+コンテンツの損失の式がピクセル数で割るような形になっていないのに
+論文に入力画像のサイズが書いていないので(見逃しているだけ？)，
+論文のalphaとbetaの比をそのままつかってもうまくいきませんでした．
+そこでJohnson et al. 2016に書かれている式を使うことにしました．
+具体的にはコンテンツの損失で二乗和をとっているところを二乗平均にしました．
+ついでに，スタイルの損失についてもJohnson et al. 2016に従って修正します．
+ここはGram matrixをheight * widthで割って二乗平均をとる形にしました．
+(Gram matrixをchannel * height * widthで割るのと等価なはずです)
+VGGについてはTensorFlow-Slimを使ってサクッと書きました．
+基本はslimの下にあるvgg_16から全結合層を除いたものになっています．
+endpointはそのままだとkeyがvgg_16/convN/convN_Mのような形になるので，
+使いやすいようにkeyを変更して使っています．
+slimを使うと数行でVGG16が実装できるので非常に便利でした．
+また，損失の定義する方法としては，コンテンツ・スタイル画像をテンソルとして別々に定義し
+最適化の際にそれらをVGGに入力した値などを計算させるような方法も考えられますが，
+損失を定義する段階でコンテンツ・スタイル画像を入力した場合の計算しておき，
+それを定数として扱った方が高速に動作したのでそのように書きました．
+次にGatys et al. 2016bで提案された色を保存したままStyle Transferを行う手法の1つである
+Luminance-only Transferを実装します．コードはこちら
+これは英語版WikipediaのYIQの記事にYIQとRGBの相互変換が載っているので
+これを実装すればほとんどおしまいです．
+あとは，RGB -&amp;gt; YIQ -&amp;gt; YチャンネルはそのままでIQチャンネルを全て0にしたもの -&amp;gt; RGB</description>
     </item>
     
   </channel>
