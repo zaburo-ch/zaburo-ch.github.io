@@ -215,8 +215,7 @@ $F_t(x)$ が各 $(x_i, y_i)$ に対して次のようになってくれればう
 <p>$$F_T(x) = f_0(x) + \sum_{t=1}^{T} \alpha_t f_t(x)$$</p>
 
 <p>これが最もベーシックなGradient Boostingになります．<br />
-初期値については元論文[3]に&rsquo;an initial guess&rsquo;としか記載がありませんが，<br />
-全データに対して普通に弱学習器を構築するのだと思います．たぶん(XGBの実装とか確認してない)</p>
+初期値については元論文[3]では目的関数を最小化するような定数にしています(XGBBoostの実装は確認してない)．</p>
 
 <p>疑似コードにすると次のようになります．<br />
 <img src="/images/gradient_boosting_pseudo_code.png" width="400px"></p>
