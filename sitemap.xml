@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://zaburo-ch.github.io/post/xgboost/</loc>
+    <lastmod>2017-05-06T03:02:50+09:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://zaburo-ch.github.io/portfolio_ja/</loc>
     <lastmod>2017-04-20T00:00:00+09:00</lastmod>
   </url>
@@ -354,7 +359,7 @@
   
   <url>
     <loc>https://zaburo-ch.github.io/post/</loc>
-    <lastmod>2016-12-17T17:04:54+09:00</lastmod>
+    <lastmod>2017-05-06T03:02:50+09:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -389,8 +394,14 @@
   </url>
   
   <url>
+    <loc>https://zaburo-ch.github.io/tags/xgboost/</loc>
+    <lastmod>2017-05-06T03:02:50+09:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://zaburo-ch.github.io/</loc>
-    <lastmod>2017-04-20T00:00:00+09:00</lastmod>
+    <lastmod>2017-05-06T03:02:50+09:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -432,7 +443,7 @@
   
   <url>
     <loc>https://zaburo-ch.github.io/tags/%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92/</loc>
-    <lastmod>2016-06-29T13:06:24+09:00</lastmod>
+    <lastmod>2017-05-06T03:02:50+09:00</lastmod>
     <priority>0</priority>
   </url>
   
