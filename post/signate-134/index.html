@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns#">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>SIGNATE 134 台風コンペのメモ &middot; ZABURO</title>
+        <meta name="description" content="CNNを使ってやりたいことがあったのでその練習に参加．
+10月13日に始めて2週間くらいちょこちょこやってた．
+5位/210チーム，Publicが13位だったので実質そのくらいだと思う．
+Overview CNNの上にGBDTを載せてStackingした．
+閾値の決め方とValidation時の評価  validation dataで一番条件付きPrecisionが高くなる閾値を使う
+ 出力した確率が合っていると仮定してその確率に従って正解ラベルをランダムに決めて各閾値での条件付きPrecisionを計算．10000回繰り返して平均とかmedianを取って一番良い物を使う．全データだと10000回で2分くらいかかって遅い．  1.の決め方をvalidationに使って，2.のmedianのやつをsubmissionに使った． 最終的な手元のスコアは1.が0.58307，2.のmeanが0.57491，medianが0.58627．閾値はそれぞれ0.20716, 0.19939, 0.21035
+CNN Data Augmentation  cropping (64x64-&gt;54x54)
+ 44x44 も1回やったけど精度が落ちたので以降やらなかった
+  flip (水平，垂直，両方(180度回転))
+ 90, 270度が抜けてることに今気づいた
+  rotation (±12度)
+ ちょっとくらい回転してもええやろという気持ち
+ 良いのかどうかは知らない
+   TTA 10回
+Subsampling 正例の1倍，4倍，8倍を試したが8倍は遅かったので結局使わなかった．
+不例を多めにした方が良くなる傾向があったが，上に載せるGBDTがなんとかしてくれるやろという気持ち．
+Architecture  普通のCNN
+convが[32, 48, 64]，denseが[64, 32]の普通のCNN
+色々試そうと思ってたけど適当に試してResNet50が良かったのでほかは試してない
+ ResNet50
+このレポジトリの実装を使った．CIFAR向けに最初のpooling or strideが無かったりBottleNeckのAddの後にreluが無かったりする．
+ SEResNet50
+ChainerCVのSEBlockを上のResNet50に使った．コンペ期間中，まだSENetはReleaseに無かったがmasterにはあったので使った．  Optimization だいたい全部 Adam, lr 1e-3, 40 epochでやった．">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="generator" content="Hugo 0.41" />
+        <meta name="robots" content="index,follow">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta property="og:title" content="SIGNATE 134 台風コンペのメモ">
+<meta property="og:description" content="CNNを使ってやりたいことがあったのでその練習に参加．
+10月13日に始めて2週間くらいちょこちょこやってた．
+5位/210チーム，Publicが13位だったので実質そのくらいだと思う．
+Overview CNNの上にGBDTを載せてStackingした．
+閾値の決め方とValidation時の評価  validation dataで一番条件付きPrecisionが高くなる閾値を使う
+ 出力した確率が合っていると仮定してその確率に従って正解ラベルをランダムに決めて各閾値での条件付きPrecisionを計算．10000回繰り返して平均とかmedianを取って一番良い物を使う．全データだと10000回で2分くらいかかって遅い．  1.の決め方をvalidationに使って，2.のmedianのやつをsubmissionに使った． 最終的な手元のスコアは1.が0.58307，2.のmeanが0.57491，medianが0.58627．閾値はそれぞれ0.20716, 0.19939, 0.21035
+CNN Data Augmentation  cropping (64x64-&gt;54x54)
+ 44x44 も1回やったけど精度が落ちたので以降やらなかった
+  flip (水平，垂直，両方(180度回転))
+ 90, 270度が抜けてることに今気づいた
+  rotation (±12度)
+ ちょっとくらい回転してもええやろという気持ち
+ 良いのかどうかは知らない
+   TTA 10回
+Subsampling 正例の1倍，4倍，8倍を試したが8倍は遅かったので結局使わなかった．
+不例を多めにした方が良くなる傾向があったが，上に載せるGBDTがなんとかしてくれるやろという気持ち．
+Architecture  普通のCNN
+convが[32, 48, 64]，denseが[64, 32]の普通のCNN
+色々試そうと思ってたけど適当に試してResNet50が良かったのでほかは試してない
+ ResNet50
+このレポジトリの実装を使った．CIFAR向けに最初のpooling or strideが無かったりBottleNeckのAddの後にreluが無かったりする．
+ SEResNet50
+ChainerCVのSEBlockを上のResNet50に使った．コンペ期間中，まだSENetはReleaseに無かったがmasterにはあったので使った．  Optimization だいたい全部 Adam, lr 1e-3, 40 epochでやった．">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://zaburo-ch.github.io/post/signate-134/">
+        <link rel="stylesheet" href="https://zaburo-ch.github.io/dist/styles.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300&subset=latin,cyrillic-ext,latin-ext,cyrillic">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        
+        
+        
+    </head>
+    <body>
+        
+
+        <div id="wrapper">
+            <header class="site-header">
+                <div class="container">
+                    
+
+                    <ul class="site-nav">
+                        
+    <li class="site-nav-item">
+        <a title="Blog" href="/">Blog</a>
+    </li>
+
+    <li class="site-nav-item">
+        <a title="About" href="/about/">About</a>
+    </li>
+
+    <li class="site-nav-item">
+        <a title="Product" href="/product/">Product</a>
+    </li>
+
+    <li class="site-nav-item">
+        <a title="Github" href="https://github.com/zaburo-ch">Github</a>
+    </li>
+
+                    </ul>
+                </div>
+            </header>
+
+            <div id="container">
+
+
+<div class="container">
+    <article class="post-container" itemscope="" itemtype="http://schema.org/BlogPosting">
+        <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">SIGNATE 134 台風コンペのメモ</h1>
+    
+    <p class="post-date">
+        <span>Published <time datetime="2018-11-01" itemprop="datePublished">Thu, Nov 1, 2018</time></span>
+        <span>by</span>
+        <span itemscope="" itemprop="author" itemtype="https://schema.org/Person">
+            <span itemprop="name">
+                <a href="https://zaburo-ch.github.io/" itemprop="url" rel="author">ZABURO</a>
+            </span>
+        </span>
+    </p>
+</header>
+
+        <div class="post-content clearfix" itemprop="articleBody">
+    
+
+    
+
+<p>CNNを使ってやりたいことがあったのでその練習に参加．<br />
+10月13日に始めて2週間くらいちょこちょこやってた．<br />
+5位/210チーム，Publicが13位だったので実質そのくらいだと思う．</p>
+
+<h1 id="overview">Overview</h1>
+
+<p>CNNの上にGBDTを載せてStackingした．</p>
+
+<h1 id="閾値の決め方とvalidation時の評価">閾値の決め方とValidation時の評価</h1>
+
+<ol>
+<li>validation dataで一番条件付きPrecisionが高くなる閾値を使う<br /></li>
+<li>出力した確率が合っていると仮定してその確率に従って正解ラベルをランダムに決めて各閾値での条件付きPrecisionを計算．10000回繰り返して平均とかmedianを取って一番良い物を使う．全データだと10000回で2分くらいかかって遅い．</li>
+</ol>
+
+<p>1.の決め方をvalidationに使って，2.のmedianのやつをsubmissionに使った．
+ 最終的な手元のスコアは1.が0.58307，2.のmeanが0.57491，medianが0.58627．閾値はそれぞれ0.20716, 0.19939, 0.21035</p>
+
+<h1 id="cnn">CNN</h1>
+
+<h2 id="data-augmentation">Data Augmentation</h2>
+
+<ul>
+<li>cropping (64x64-&gt;54x54)<br />
+
+<ul>
+<li>44x44 も1回やったけど精度が落ちたので以降やらなかった<br /></li>
+</ul></li>
+<li>flip (水平，垂直，両方(180度回転))<br />
+
+<ul>
+<li>90, 270度が抜けてることに今気づいた<br /></li>
+</ul></li>
+<li>rotation (±12度)<br />
+
+<ul>
+<li>ちょっとくらい回転してもええやろという気持ち<br /></li>
+<li>良いのかどうかは知らない<br /></li>
+</ul></li>
+</ul>
+
+<h2 id="tta">TTA</h2>
+
+<p>10回</p>
+
+<h2 id="subsampling">Subsampling</h2>
+
+<p>正例の1倍，4倍，8倍を試したが8倍は遅かったので結局使わなかった．<br />
+不例を多めにした方が良くなる傾向があったが，上に載せるGBDTがなんとかしてくれるやろという気持ち．</p>
+
+<h2 id="architecture">Architecture</h2>
+
+<ul>
+<li>普通のCNN<br />
+convが[32, 48, 64]，denseが[64, 32]の普通のCNN<br />
+色々試そうと思ってたけど適当に試してResNet50が良かったのでほかは試してない<br /></li>
+<li>ResNet50<br />
+<a href="https://github.com/mitmul/chainer-cifar10">このレポジトリ</a>の実装を使った．CIFAR向けに最初のpooling or strideが無かったりBottleNeckのAddの後にreluが無かったりする．<br /></li>
+<li>SEResNet50<br />
+<a href="https://github.com/chainer/chainercv/blob/master/chainercv/links/connection/seblock.py">ChainerCVのSEBlock</a>を上のResNet50に使った．コンペ期間中，まだSENetはReleaseに無かったがmasterにはあったので使った．</li>
+</ul>
+
+<h2 id="optimization">Optimization</h2>
+
+<p>だいたい全部 Adam, lr 1e-3, 40 epochでやった．<br />
+MomentumSGD, lr 0.1, step shift, 300 epochとかもやったけど全然うまく行かなかった．<br />
+batchsizeはGCPでP100借りた時は128，手元の1080Tiでは64でやった．</p>
+
+<h1 id="gbdt">GBDT</h1>
+
+<p>LightGBMに投げた．最終日にやっとここまで来たのであんまり凝ったことはしてない<br />
+モデルのArchitectureとかSubsampleの割合とかのグループでmeanとかquantileとか取ったものも追加してみたけどほとんど変化なし．<br />
+普通のCNNは単体の性能は低かったものの入れると0.001くらい上がって面白かった．</p>
+
+<h1 id="感想">感想</h1>
+
+<ul>
+<li>不例が多いと学習に時間かかるのでSubsampleしてStackingをしたんだけど，StackingのためにCVしなきゃいけなくなって結局1モデル回すのにだいぶ時間がかかった．<br /></li>
+<li>SEBlockは時間はあまり増えないけど性能はあがるのでお得．</li>
+<li>この評価指標でどうValidationするのが良いのかイマイチわからず  ．</li>
+<li>3層くらいのCNNとResNet50しか試していなくて極端．一気に複雑にしすぎた．<br /></li>
+</ul>
+
+<h1 id="おまけ">おまけ</h1>
+
+<p>訓練データのファイル名が時系列順に付いているかもと思ってplotしてみたら明らかに季節性があった．
+これに気づいたのが最終日の10時半くらいで，急いでdayofyear的な特徴量 <code>ファイル名 % (len(train) // 15)</code> を作ってGBDTの特徴量に加えたら0.761209が出て「これがリークか」という気持ちになったけどサブミットしてみたら0でワロタ．<br />
+CVのsplitがrandomのままだったので過学習しちゃったのかもしれないけど，直す時間なく終了．<br />
+そもそもテストデータのファイル名が時系列順になっているのかもわからないけど，予測した確率値に対して同じようなプロットをすると偏りがあるので時系列順にはなっているんだと思う．1位はこれ使ってたりしないかなー．</p>
+
+<h1 id="links">links</h1>
+
+<p>あれどこでみたっけってなった時のためのリンク</p>
+
+<ul>
+<li>畳み込みニューラルネットワークの最新研究動向 (〜2017)<br />
+<a href="https://www.slideshare.net/ren4yu/ss-84282514">https://www.slideshare.net/ren4yu/ss-84282514</a><br />
+<a href="https://qiita.com/yu4u/items/7e93c454c9410c4b5427">https://qiita.com/yu4u/items/7e93c454c9410c4b5427</a><br />
+神資料．</li>
+<li>データ分析コンテストの勝者解答から学ぶ<br />
+<a href="https://speakerdeck.com/smly/detafen-xi-kontesutofalse-sheng-zhe-jie-da-karaxue-bu">https://speakerdeck.com/smly/detafen-xi-kontesutofalse-sheng-zhe-jie-da-karaxue-bu</a><br />
+smlyさんのスライド．データ自体はIceberg Classifier Challengeに近いと思っていたので．<br /></li>
+<li>Iceberg Classifier Challengeの2nd place solution<br />
+<a href="https://www.kaggle.com/c/statoil-iceberg-classifier-challenge/discussion/48294">https://www.kaggle.com/c/statoil-iceberg-classifier-challenge/discussion/48294</a><br /></li>
+<li>Optimizing Deep Learning with Chainer<br />
+<a href="https://www.slideshare.net/pfi/gtcj2018-optimizing-deep-learning-with-chainerpfn">https://www.slideshare.net/pfi/gtcj2018-optimizing-deep-learning-with-chainerpfn</a><br />
+比較的新しい，Chainerの高速化に関する資料<br /></li>
+</ul>
+
+</div>
+
+        <footer class="post-footer clearfix">
+    
+
+    <div class="share">
+        
+            <a class="icon-twitter" href="https://twitter.com/share?text=SIGNATE%20134%20%e5%8f%b0%e9%a2%a8%e3%82%b3%e3%83%b3%e3%83%9a%e3%81%ae%e3%83%a1%e3%83%a2&url=https%3a%2f%2fzaburo-ch.github.io%2fpost%2fsignate-134%2f"
+                onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                <i class="fa fa-twitter"></i>
+                <span class="hidden">Twitter</span>
+            </a>
+        
+
+        
+            <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fzaburo-ch.github.io%2fpost%2fsignate-134%2f"
+                onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                <i class="fa fa-facebook"></i>
+                <span class="hidden">Facebook</span>
+            </a>
+        
+
+        
+            <a class="icon-google-plus" href="https://plus.google.com/share?url=https%3a%2f%2fzaburo-ch.github.io%2fpost%2fsignate-134%2f"
+              onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+              <i class="fa fa-google-plus"></i>
+                <span class="hidden">Google+</span>
+            </a>
+        
+        
+    </div>
+</footer>
+
+
+
+        
+    <div class="comments">
+        
+    </div>
+
+    </article>
+</div>
+
+            </div>
+        </div>
+
+        <footer class="footer">
+            <div class="container">
+                <div class="site-title-wrapper">
+                    <h1 class="site-title">
+                        <a title="ZABURO app" href="https://zaburo-ch.github.io/">ZABURO app</a>
+                    </h1>
+                    <a class="button-square button-jump-top js-jump-top" href="#">
+                        <i class="fa fa-angle-up"></i>
+                    </a>
+                </div>
+
+                <p class="footer-copyright">
+                    <span>&copy; 2018 / Powered by <a href="https://gohugo.io/">Hugo</a></span>
+                </p>
+                <p class="footer-copyright">
+                    <span><a href="https://github.com/roryg/ghostwriter">Ghostwriter theme</a> By <a href="http://jollygoodthemes.com">JollyGoodThemes</a></span>
+                    <span>/ <a href="https://github.com/jbub/ghostwriter">Ported</a> to Hugo By <a href="https://github.com/jbub">jbub</a></span>
+                </p>
+            </div>
+        </footer>
+
+        <script src="https://zaburo-ch.github.io/js/jquery-1.11.3.min.js"></script>
+        <script src="https://zaburo-ch.github.io/js/jquery.fitvids.js"></script>
+        
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        
+        
+        <script src="https://zaburo-ch.github.io/js/scripts.js"></script>
+    </body>
+</html>
+

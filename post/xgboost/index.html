@@ -1,99 +1,95 @@
-
 <!DOCTYPE html>
-<html lang="ja">
-<head>
-
-  
-  <meta charset="UTF-8">
-  <title>
-    Gradient Boosting と XGBoost | ZABURO app
-  </title>
-
-  
-  <meta name="twitter:card" content="summary" />
-  <meta name="og:title" content="Gradient Boosting と XGBoost" />
-  <meta name="og:description" content="Gradient Boosting や XGBoostについて調べたことをまとめました．
+<html prefix="og: http://ogp.me/ns#">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Gradient Boosting と XGBoost &middot; ZABURO</title>
+        <meta name="description" content="Gradient Boosting や XGBoostについて調べたことをまとめました．
 Gradient Descent や Newton法と絡めて説明していきたいと思います．
-目次  Boosting Gradient Descent (Steepest Descent) Gradient Boosting Regression Tree Gradient Tree Boosting Learning rate Newton Boosting XGBoost Generalization Error Conclusion Reference  Boosting Boostingとは，ランダムより少し良い程度の&rdquo;弱い&rdquo;学習アルゴリズムを使って，
-そのアルゴリズムよりも&rdquo;強い&rdquo;学習アルゴリズムをつくることです．
-イメージとしては，弱い学習アルゴリズムを&rdquo;boost&rdquo;してあげる感じでしょうか．
-そもそもそんなことって理論的に可能なの？という問いからBoostingの歴史が始まったわけですが，
-Boostingが可能であることは，1989年にRobert E. Schapire大先生によって
-PAC Learningという枠組みで実際にBoostingを行うアルゴリズムを示す形で証明されました[1]．
-Boostingのアルゴリズムで大きな成功を収めたもののひとつが，[2]で提案されたAdaBoostで
-以降のBoostingアルゴリズムはAdaBoostに大きな影響を受けています．
-なんとなくBoostingと言えば逐次的に学習器を構築して，その和をとる，
-というようなイメージがありますが，それもAdaBoost由来だと思います．たぶん．
-$t$ 回目の反復で&rdquo;弱い&rdquo;学習アルゴリズムにより構築された学習器(弱学習器)を $f_t$とすると，
-よく使われているBoostingアルゴリズムのほとんどは次のような形で表されます．
+目次  Boosting Gradient Descent (Steepest Descent) Gradient Boosting Regression Tree Gradient Tree Boosting Learning rate Newton Boosting XGBoost Generalization Error Conclusion Reference  Boosting Boostingとは，ランダムより少し良い程度の&rdquo;弱い&rdquo;学習アルゴリズムを使って， そのアルゴリズムよりも&rdquo;強い&rdquo;学習アルゴリズムをつくることです． イメージとしては，弱い学習アルゴリズムを&rdquo;boost&rdquo;してあげる感じでしょうか．
+そもそもそんなことって理論的に可能なの？という問いからBoostingの歴史が始まったわけですが， Boostingが可能であることは，1989年にRobert E. Schapire大先生によって PAC Learningという枠組みで実際にBoostingを行うアルゴリズムを示す形で証明されました[1]．
+Boostingのアルゴリズムで大きな成功を収めたもののひとつが，[2]で提案されたAdaBoostで 以降のBoostingアルゴリズムはAdaBoostに大きな影響を受けています． なんとなくBoostingと言えば逐次的に学習器を構築して，その和をとる， というようなイメージがありますが，それもAdaBoost由来だと思います．たぶん．
+$t$ 回目の反復で&rdquo;弱い&rdquo;学習アルゴリズムにより構築された学習器(弱学習器)を $f_t$とすると， よく使われているBoostingアルゴリズムのほとんどは次のような形で表されます．
 $$F_T(x)=\sum_{t=1}^{T}\alpha_t f_t(x)$$
 ここで $F_T(x)$ がBoostingアルゴリズムの出力で，$\alpha_t$ は適当に設定された係数です．
-Gradient Descent (Steepest Descent) Gradiet Boostingの説明をする前に
-Gradiet Boosting非常に関連の強いGradient descent (勾配降下法)に触れておきます．
-Steepest Descent (最急降下法)とも呼ばれているアレです．" />
-  <meta name="twitter:url" content="https://zaburo-ch.github.io/post/xgboost/" />
-  <meta name="twitter:site" content="@musharna000" />
+Gradient Descent (Steepest Descent) Gradiet Boostingの説明をする前に Gradiet Boosting非常に関連の強いGradient descent (勾配降下法)に触れておきます． Steepest Descent (最急降下法)とも呼ばれているアレです．">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="generator" content="Hugo 0.41" />
+        <meta name="robots" content="index,follow">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta property="og:title" content="Gradient Boosting と XGBoost">
+<meta property="og:description" content="Gradient Boosting や XGBoostについて調べたことをまとめました．
+Gradient Descent や Newton法と絡めて説明していきたいと思います．
+目次  Boosting Gradient Descent (Steepest Descent) Gradient Boosting Regression Tree Gradient Tree Boosting Learning rate Newton Boosting XGBoost Generalization Error Conclusion Reference  Boosting Boostingとは，ランダムより少し良い程度の&rdquo;弱い&rdquo;学習アルゴリズムを使って， そのアルゴリズムよりも&rdquo;強い&rdquo;学習アルゴリズムをつくることです． イメージとしては，弱い学習アルゴリズムを&rdquo;boost&rdquo;してあげる感じでしょうか．
+そもそもそんなことって理論的に可能なの？という問いからBoostingの歴史が始まったわけですが， Boostingが可能であることは，1989年にRobert E. Schapire大先生によって PAC Learningという枠組みで実際にBoostingを行うアルゴリズムを示す形で証明されました[1]．
+Boostingのアルゴリズムで大きな成功を収めたもののひとつが，[2]で提案されたAdaBoostで 以降のBoostingアルゴリズムはAdaBoostに大きな影響を受けています． なんとなくBoostingと言えば逐次的に学習器を構築して，その和をとる， というようなイメージがありますが，それもAdaBoost由来だと思います．たぶん．
+$t$ 回目の反復で&rdquo;弱い&rdquo;学習アルゴリズムにより構築された学習器(弱学習器)を $f_t$とすると， よく使われているBoostingアルゴリズムのほとんどは次のような形で表されます．
+$$F_T(x)=\sum_{t=1}^{T}\alpha_t f_t(x)$$
+ここで $F_T(x)$ がBoostingアルゴリズムの出力で，$\alpha_t$ は適当に設定された係数です．
+Gradient Descent (Steepest Descent) Gradiet Boostingの説明をする前に Gradiet Boosting非常に関連の強いGradient descent (勾配降下法)に触れておきます． Steepest Descent (最急降下法)とも呼ばれているアレです．">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://zaburo-ch.github.io/post/xgboost/">
+        <link rel="stylesheet" href="https://zaburo-ch.github.io/dist/styles.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300&subset=latin,cyrillic-ext,latin-ext,cyrillic">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        
+        
+        
+    </head>
+    <body>
+        
+
+        <div id="wrapper">
+            <header class="site-header">
+                <div class="container">
+                    
+
+                    <ul class="site-nav">
+                        
+    <li class="site-nav-item">
+        <a title="Blog" href="/">Blog</a>
+    </li>
+
+    <li class="site-nav-item">
+        <a title="About" href="/about/">About</a>
+    </li>
+
+    <li class="site-nav-item">
+        <a title="Product" href="/product/">Product</a>
+    </li>
+
+    <li class="site-nav-item">
+        <a title="Github" href="https://github.com/zaburo-ch">Github</a>
+    </li>
+
+                    </ul>
+                </div>
+            </header>
+
+            <div id="container">
 
 
-  
-  <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
-
-
-  
-  <link rel="stylesheet" href="/css/sanitize.css">
-  <link rel="stylesheet" href="/css/responsive.css">
-  <link rel="stylesheet" href="/css/highlight_monokai.css">
-  
-  <link rel="stylesheet" href="/css/custom.css">
-  <link rel="stylesheet" href="/css/theme.css">
-
-
-  
-  
-
-
-</head>
-
-
-
-<body>
 <div class="container">
+    <article class="post-container" itemscope="" itemtype="http://schema.org/BlogPosting">
+        <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Gradient Boosting と XGBoost</h1>
+    
+    <p class="post-date">
+        <span>Published <time datetime="2017-05-06" itemprop="datePublished">Sat, May 6, 2017</time></span>
+        <span>by</span>
+        <span itemscope="" itemprop="author" itemtype="https://schema.org/Person">
+            <span itemprop="name">
+                <a href="https://zaburo-ch.github.io/" itemprop="url" rel="author">ZABURO</a>
+            </span>
+        </span>
+    </p>
+</header>
 
-  
-  <header role="banner">
-    <div class="row gutters">
-      <div id="site-title" class="col span_6">
-        <h1><a href="/">ZABURO app</a></h1>
-        <h2>アプリ作ったり、なんやかんや</h2>
-      </div>
-      <div id="social" class="col span_6">
-        <ul>
-          <li><a href="/about/">About</a></li>
-          <li><a href="/product/">Product</a></li>
-          
-          
-          <li><a href="https://github.com/zaburo-ch" target="_blank">GitHub</a></li>
-        </ul>
-      </div>
-    </div>
-  </header>
+        <div class="post-content clearfix" itemprop="articleBody">
+    
 
-
-  
-  <main id="single" role="main">
-    <div class="article-header">
-      <h1>Gradient Boosting と XGBoost</h1>
-      <div class="meta">
-        May 6, 2017 &nbsp;
-        
-          #<a href="/tags/%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92">機械学習</a>&nbsp;
-        
-          #<a href="/tags/xgboost">XGBoost</a>&nbsp;
-        
-      </div>
-    </div>
-    <article>
-      
+    
 
 <p>Gradient Boosting や XGBoostについて調べたことをまとめました．<br />
 Gradient Descent や Newton法と絡めて説明していきたいと思います．</p>
@@ -116,20 +112,20 @@ Gradient Descent や Newton法と絡めて説明していきたいと思いま�
 
 <h2 id="boosting">Boosting</h2>
 
-<p>Boostingとは，ランダムより少し良い程度の&rdquo;弱い&rdquo;学習アルゴリズムを使って，<br />
-そのアルゴリズムよりも&rdquo;強い&rdquo;学習アルゴリズムをつくることです．<br />
+<p>Boostingとは，ランダムより少し良い程度の&rdquo;弱い&rdquo;学習アルゴリズムを使って，
+そのアルゴリズムよりも&rdquo;強い&rdquo;学習アルゴリズムをつくることです．
 イメージとしては，弱い学習アルゴリズムを&rdquo;boost&rdquo;してあげる感じでしょうか．</p>
 
-<p>そもそもそんなことって理論的に可能なの？という問いからBoostingの歴史が始まったわけですが，<br />
-Boostingが可能であることは，1989年にRobert E. Schapire大先生によって<br />
+<p>そもそもそんなことって理論的に可能なの？という問いからBoostingの歴史が始まったわけですが，
+Boostingが可能であることは，1989年にRobert E. Schapire大先生によって
 PAC Learningという枠組みで実際にBoostingを行うアルゴリズムを示す形で証明されました[1]．</p>
 
-<p>Boostingのアルゴリズムで大きな成功を収めたもののひとつが，[2]で提案された<strong>AdaBoost</strong>で<br />
-以降のBoostingアルゴリズムはAdaBoostに大きな影響を受けています．<br />
-なんとなくBoostingと言えば逐次的に学習器を構築して，その和をとる，<br />
+<p>Boostingのアルゴリズムで大きな成功を収めたもののひとつが，[2]で提案された<strong>AdaBoost</strong>で
+以降のBoostingアルゴリズムはAdaBoostに大きな影響を受けています．
+なんとなくBoostingと言えば逐次的に学習器を構築して，その和をとる，
 というようなイメージがありますが，それもAdaBoost由来だと思います．たぶん．</p>
 
-<p>$t$ 回目の反復で&rdquo;弱い&rdquo;学習アルゴリズムにより構築された学習器(弱学習器)を $f_t$とすると，<br />
+<p>$t$ 回目の反復で&rdquo;弱い&rdquo;学習アルゴリズムにより構築された学習器(弱学習器)を $f_t$とすると，
 よく使われているBoostingアルゴリズムのほとんどは次のような形で表されます．</p>
 
 <p>$$F_T(x)=\sum_{t=1}^{T}\alpha_t f_t(x)$$</p>
@@ -138,43 +134,43 @@ PAC Learningという枠組みで実際にBoostingを行うアルゴリズムを
 
 <h2 id="gradient-descent-steepest-descent">Gradient Descent (Steepest Descent)</h2>
 
-<p>Gradiet Boostingの説明をする前に<br />
-Gradiet Boosting非常に関連の強い<a href="https://en.wikipedia.org/wiki/Gradient_descent">Gradient descent</a> (勾配降下法)に触れておきます．<br />
+<p>Gradiet Boostingの説明をする前に
+Gradiet Boosting非常に関連の強い<a href="https://en.wikipedia.org/wiki/Gradient_descent">Gradient descent</a> (勾配降下法)に触れておきます．
 Steepest Descent (最急降下法)とも呼ばれているアレです．</p>
 
-<p>Gradient Descent は関数 $\phi:\mathbb{R}^n \rightarrow \mathbb{R}$ を最小化するような $p\in\mathbb{R}^n$ を探すアルゴリズムで，<br />
-繰り返し $\phi$ が小さくなる方向に解を更新し，最適解に近づけていきます．<br />
+<p>Gradient Descent は関数 $\phi:\mathbb{R}^n \rightarrow \mathbb{R}$ を最小化するような $p\in\mathbb{R}^n$ を探すアルゴリズムで，
+繰り返し $\phi$ が小さくなる方向に解を更新し，最適解に近づけていきます．
 具体的には $t-1$ 回目の反復が終わった後の解を $p_{t-1}$ として，</p>
 
 <p>$$p_t = p_{t-1} - \alpha_t \nabla \phi(p_{t-1})$$</p>
 
-<p>と解の更新を行います．ここで $- \nabla \phi(p_{t-1})$ が減少する方向を表していて，<br />
+<p>と解の更新を行います．ここで $- \nabla \phi(p_{t-1})$ が減少する方向を表していて，
 $\alpha_t$ がこの更新でその方向にどれだけ動かすかを表しています．</p>
 
-<p>$\alpha_t$ の決め方はいくつか提案されていますが，<br />
+<p>$\alpha_t$ の決め方はいくつか提案されていますが，
 <a href="https://en.wikipedia.org/wiki/Line_search">Line Search</a> と呼ばれる手法では
 $\phi(p_{t-1} - \alpha \nabla \phi(p_{t-1}))$ を最小化する $\alpha$ を用います．</p>
 
-<p>ニューラルネットの学習などの文脈でGradient Descnetが使われる場合には，<br />
-N個のデータ $(x_i, y_i)$ と損失関数$L$に対して，<br />
+<p>ニューラルネットの学習などの文脈でGradient Descnetが使われる場合には，
+N個のデータ $(x_i, y_i)$ と損失関数$L$に対して，
 $p$ をパラメータ，$F(x; p)$ を $p$ の下での関数(学習器)の出力として，</p>
 
 <p>$$\phi(p)=\sum_{i=1}^{N} L(y_i, F(x_i;p))$$</p>
 
-<p>を最小化するパラメータ $p$ を求めるために使われることが多いです．<br />
-この場合のGradient Descentを，パラメータを変化させて目的関数を最小化するという意味で，<br />
+<p>を最小化するパラメータ $p$ を求めるために使われることが多いです．
+この場合のGradient Descentを，パラメータを変化させて目的関数を最小化するという意味で，
 <strong>パラメータ空間におけるGradient Descent</strong>と言うことにしましょう．</p>
 
-<p>パラメータ空間におけるGradient Descentで，$T$回反復を終えた後の解は<br />
+<p>パラメータ空間におけるGradient Descentで，$T$回反復を終えた後の解は
 $p_t&rsquo; = - \nabla \phi(p_{t-1})$ とおいて，初期値を $p_0$ とすると，次のように表すことができます．</p>
 
 <p>$$p_T = p_0 + \sum_{t=1}^{T} \alpha_t p_t&rsquo;$$</p>
 
 <p>なんとなくBoostingの式と似てませんか？</p>
 
-<p>Boostingでは，すでに学習した弱学習器のパラメータを変化させるのではなく，<br />
-新しい弱学習器を加えることにより全体の出力を変化させることができます．<br />
-そこで，目的関数を $F_{t-1}$ で微分して降下方向を出し $f_t$ をそれにfitさせることで，<br />
+<p>Boostingでは，すでに学習した弱学習器のパラメータを変化させるのではなく，
+新しい弱学習器を加えることにより全体の出力を変化させることができます．
+そこで，目的関数を $F_{t-1}$ で微分して降下方向を出し $f_t$ をそれにfitさせることで，
 <strong>関数の空間でGradient Descent</strong>をしよう，というのがGradient Boostingになります．</p>
 
 <h2 id="gradient-boosting-3">Gradient Boosting [3]</h2>
@@ -183,13 +179,13 @@ $p_t&rsquo; = - \nabla \phi(p_{t-1})$ とおいて，初期値を $p_0$ とす�
 
 <p>$$\phi(F) = \sum_{i=1}^{N}L(y_i, F(x_i))$$</p>
 
-<p>しかし各データの損失の和を最小化する方向を求めるのは一般には難しいので，<br />
+<p>しかし各データの損失の和を最小化する方向を求めるのは一般には難しいので，
 各データ $(x_i, y_i)$ についてそれぞれで
-損失 $L(y_i, F(x_i))$ を小さくすることを考えます．<br />
+損失 $L(y_i, F(x_i))$ を小さくすることを考えます．
 つまり各 $x_i$ について損失が小さくなる向きに関数の出力を変化させるわけです．</p>
 
-<p>$t-1$ 回目の反復が終わった後の全体の出力を$F_{t-1}(x)$として，<br />
-$F_t(x)$ が各 $(x_i, y_i)$ に対して次のようになってくれればうれしいです．<br />
+<p>$t-1$ 回目の反復が終わった後の全体の出力を$F_{t-1}(x)$として，
+$F_t(x)$ が各 $(x_i, y_i)$ に対して次のようになってくれればうれしいです．
 (出力に1次元を想定しているので $\nabla$ はただの偏微分になります)</p>
 
 <p>$$F_{t}(x_i) = F_{t-1}(x_i) - \alpha_t \frac{\partial L(y_i, F_{t-1}(x_i))}{\partial F_{t-1}(x_i)}$$</p>
@@ -198,7 +194,7 @@ $F_t(x)$ が各 $(x_i, y_i)$ に対して次のようになってくれればう
 
 <p>$$f_t(x_i) = - \frac{\partial L(y_i, F_{t-1}(x_i))}{\partial F_{t-1(x_i)}}$$</p>
 
-<p>となるように弱学習器 $f_t$ の学習を行います．<br />
+<p>となるように弱学習器 $f_t$ の学習を行います．
 具体的には各 $x_i$ に対して次のような $\tilde{y_i}$ を考え，</p>
 
 <p>$$\tilde{y_i} = - \frac{\partial L(y_i, F_{t-1}(x_i))}{\partial F_{t-1}(x_i)}$$</p>
@@ -207,40 +203,40 @@ $F_t(x)$ が各 $(x_i, y_i)$ に対して次のようになってくれればう
 
 <p>$$\sum_{i=1}^N(\tilde{y_i} - f_t(x_i))^2$$</p>
 
-<p>が最小になるように弱学習器 $f_t$ をfitさせます．<br />
+<p>が最小になるように弱学習器 $f_t$ をfitさせます．
 その後，全体の損失 $\phi(F_{t-1} + \alpha_t f_t)$ が小さくなるように$\alpha_t$ をLine Searchなどで決定します．</p>
 
 <p>$T$回反復を終えた後の解は，初期値を $f_0$ として，次のように表すことができます．</p>
 
 <p>$$F_T(x) = f_0(x) + \sum_{t=1}^{T} \alpha_t f_t(x)$$</p>
 
-<p>これが最もベーシックなGradient Boostingになります．<br />
+<p>これが最もベーシックなGradient Boostingになります．
 初期値については元論文[3]では目的関数を最小化するような定数にしています(XGBBoostの実装は確認してない)．</p>
 
-<p>疑似コードにすると次のようになります．<br />
+<p>疑似コードにすると次のようになります．
 <img src="/images/gradient_boosting_pseudo_code.png" width="400px"></p>
 
 <h2 id="regression-tree">Regression Tree</h2>
 
-<p>これまでは弱学習器に何を用いるか特に決めずに解説しましたが，<br />
-Gradient Boosting では回帰木 (Regression Trees) が使われることが多いため，<br />
-回帰木の<strong>CART</strong>[4]による構築について触れておきます．<br />
+<p>これまでは弱学習器に何を用いるか特に決めずに解説しましたが，
+Gradient Boosting では回帰木 (Regression Trees) が使われることが多いため，
+回帰木の<strong>CART</strong>[4]による構築について触れておきます．
 Gradient Boostingの話からは少しずれるので興味ない場合は飛ばしても大丈夫だと思います．</p>
 
-<p>回帰木では葉に値が紐づいています(その値を葉の重みと呼びます)．<br />
-葉が$T$ 個あるとして，適当に葉に1から$T$までの番号をふり，<br />
-その葉の重みを $w_j (j=1,2,&hellip;,T)$ と表すことにします．<br />
-また，木への入力 $x$ がたどり着く葉の番号を $q(x)$ としましょう．<br />
+<p>回帰木では葉に値が紐づいています(その値を葉の重みと呼びます)．
+葉が$T$ 個あるとして，適当に葉に1から$T$までの番号をふり，
+その葉の重みを $w_j (j=1,2,&hellip;,T)$ と表すことにします．
+また，木への入力 $x$ がたどり着く葉の番号を $q(x)$ としましょう．
 $x$ に対する木の出力 $f(x)$ は次のように書けます．</p>
 
 <p>$$f(x) = w_{q(x)}$$</p>
 
-<p>今回はGradient Boostingに使う弱学習器という文脈なので，<br />
+<p>今回はGradient Boostingに使う弱学習器という文脈なので，
 N個のデータ$(x_i, \tilde{y_i})$に対して，二乗誤差和を最小化する木の構築を考えてみます．</p>
 
 <p>$$\sum_{i=1}^N (\tilde{y_i} - f(x_i))^2$$</p>
 
-<p>この式は，木の構造が決まっているとき，すなわち関数 $q$ が決まっているとき，<br />
+<p>この式は，木の構造が決まっているとき，すなわち関数 $q$ が決まっているとき，
 $j$ 番目の葉にたどり着くデータの集合 $I_j = \{ i~|~1\leq i\leq N, q(x_i) = j \}$を用いて</p>
 
 <p>$$\sum_{j=1}^T \sum_{i\in I_j} (\tilde{y_i} - w_j)^2$$</p>
@@ -249,71 +245,71 @@ $j$ 番目の葉にたどり着くデータの集合 $I_j = \{ i~|~1\leq i\leq N
 
 <p>$$\sum_{j=1}^T |I_j|(w_j - \sum_{i=1}^N \frac{y_i}{|I_j|})^2 + constant$$</p>
 
-<p>となり$w_j$ の値を $I_j$ に含まれる $y_i$ の平均にすることで最小値を取ることがわかります．<br />
-このように，最小化したいものが二乗誤差和である場合には，<br />
-<strong>ある木が実現できる最小値が解析的に求められます</strong>．<br />
+<p>となり$w_j$ の値を $I_j$ に含まれる $y_i$ の平均にすることで最小値を取ることがわかります．
+このように，最小化したいものが二乗誤差和である場合には，
+<strong>ある木が実現できる最小値が解析的に求められます</strong>．
 (今回は二乗誤差でしたが他にも様々な損失関数に対して使えます)</p>
 
-<p>この最小値をその木の評価値(一般的には<strong>不純度</strong>と呼ばれます)として扱い，<br />
-この評価値が低くなるように木の構築を行います．<br />
-木の構築では，ルートノード1つしかない状態から始めて，<br />
+<p>この最小値をその木の評価値(一般的には<strong>不純度</strong>と呼ばれます)として扱い，
+この評価値が低くなるように木の構築を行います．
+木の構築では，ルートノード1つしかない状態から始めて，
 一定の深さになるか損失が下がらなくなるまでノードの分割を繰り返します．</p>
 
-<p>分割対象になったノードに対して，そのノードに到達するデータの集合を $I$とし，<br />
-ある特徴量のある値を閾値として $I$ が $I_L$ と $I_R$ に分割されたとします．<br />
+<p>分割対象になったノードに対して，そのノードに到達するデータの集合を $I$とし，
+ある特徴量のある値を閾値として $I$ が $I_L$ と $I_R$ に分割されたとします．
 その分割による木の評価値の変化(減少量)は次のように表されます．</p>
 
 <p>Gain = ( $I$ の評価値) - ( $I_L$ の評価値 + $I_R$ の評価値)</p>
 
 <p>これを$I$のすべてのデータのすべての特徴量で試し一番Gainが大きくなるものを選びます．</p>
 
-<p>この厳密に全ての候補について試すという方法は<br />
+<p>この厳密に全ての候補について試すという方法は
 XGBoostの論文では <strong>&ldquo;Exact&rdquo; Greedy Algorithm</strong> と呼ばれています．</p>
 
 <h2 id="gradient-tree-boosting-3">Gradient Tree Boosting [3]</h2>
 
-<p>回帰木を使う場合にはGradient Boostingをさらに効率的に行うことができます．<br />
+<p>回帰木を使う場合にはGradient Boostingをさらに効率的に行うことができます．
 Gradient Boosting で最小化したい目的関数は，木の構造が決まると，</p>
 
 <p>$$\sum_{j=1}^T \sum_{i\in I_j} L(y_i, F_{t-1}(x_i) + w_j)$$</p>
 
-<p>と変形することができます．この式が解析的に解ける場合には，<br />
-$(x_i, \tilde{y_i})$ にfitするように木を構築した後，$w_j$ をこの式を最小化するように再び変更することで<br />
+<p>と変形することができます．この式が解析的に解ける場合には，
+$(x_i, \tilde{y_i})$ にfitするように木を構築した後，$w_j$ をこの式を最小化するように再び変更することで
 Line Search などで $\alpha_t$ を決める処理を行う必要がなくなるわけです．</p>
 
 <p>でもその式が解析的に解けるのであれば，最初から $(x_i, \tilde{y_i})$ の二乗誤差和じゃなくて</p>
 
 <p>$$\sum_{i=1}^N L(y_i, F_{t-1}(x_i) + f_t(x_i))$$</p>
 
-<p>を最小化するように木を構築すればいいじゃないかと思うわけですが，<br />
+<p>を最小化するように木を構築すればいいじゃないかと思うわけですが，
 二乗誤差和を損失に使うほうが断然早いので良いという感じらしいです．</p>
 
 <h2 id="learning-rate-3">Learning rate [3]</h2>
 
-<p>Gradient Boostingの正則化として，更新を行う際に<br />
+<p>Gradient Boostingの正則化として，更新を行う際に
 次のように Learning Rate (学習率) $\eta$ を使う方法が提案されています．</p>
 
 <p>$$F_t(x) = F_{t-1}(x) + \eta \alpha_t f_t(x)$$</p>
 
-<p>学習率を低くするとパフォーマンスが良くなるということが経験的に知られていて，<br />
-学習率を低くするとその分最適な反復回数は大きくなることも言われています．<br />
+<p>学習率を低くするとパフォーマンスが良くなるということが経験的に知られていて，
+学習率を低くするとその分最適な反復回数は大きくなることも言われています．
 (ここで言う最適はleave-out test sampleで損失が最小になる回数)</p>
 
-<p>(XGBoostを)実際に使ってみている感覚としては学習率は確かに小さいほうが良くて，<br />
-0.01とか0.005くらいで十分に小さいという印象があります．<br />
-それ以上は小さくしても遅くなるだけであまり精度に違いはでない感じがします．<br />
-0.1とかだとやや大きいけどやや大きいけどデータによっては十分精度が出て，<br />
+<p>(XGBoostを)実際に使ってみている感覚としては学習率は確かに小さいほうが良くて，
+0.01とか0.005くらいで十分に小さいという印象があります．
+それ以上は小さくしても遅くなるだけであまり精度に違いはでない感じがします．
+0.1とかだとやや大きいけどやや大きいけどデータによっては十分精度が出て，
 1.0だとかなり過学習しやすいような感じです(個人の感想です)．</p>
 
 <h2 id="newton-boosting">Newton Boosting</h2>
 
-<p>さて，これまで説明した Gradient Boosting は<br />
+<p>さて，これまで説明した Gradient Boosting は
 関数空間でGradient Descentを用いて目的関数を最小化しているのでした．</p>
 
-<p>次はこの最小化をGradient Descentでなく<a href="https://en.wikipedia.org/wiki/Newton%27s_method_in_optimization"><strong>Newton法</strong></a>で行う場合について考えてみます．<br />
+<p>次はこの最小化をGradient Descentでなく<a href="https://en.wikipedia.org/wiki/Newton%27s_method_in_optimization"><strong>Newton法</strong></a>で行う場合について考えてみます．
 (ここでいうNewton法は<a href="https://en.wikipedia.org/wiki/Newton%27s_method">根を見つける手法</a>のことではありません)</p>
 
-<p>Newton法では目的関数をテイラー展開で<strong>二次の項</strong>まで近似して，<br />
+<p>Newton法では目的関数をテイラー展開で<strong>二次の項</strong>まで近似して，
 高校数学で習った二次関数の最小化と同じノリで最小化を行います．</p>
 
 <p>弱学習器 $f_t$ を加えるときの目的関数は次の式で表せます．</p>
@@ -324,24 +320,24 @@ Line Search などで $\alpha_t$ を決める処理を行う必要がなくな�
 
 <p>$$\sum_{i=1}^{N}[~L(y_i, F_{t-1}(x)) + g_i f_t(x_i) + \frac{1}{2}h_i f_t^2(x_i)~]$$</p>
 
-<p>ここで $g_i = \frac{\partial L(y_i, F_{t-1}(x_i))}{\partial F_{t-1}(x_i)}$ で $h_i = \frac{\partial^2 L(y_i, F_{t-1}(x_i))}{\partial^2 F_{t-1}(x_i)}$です．<br />
-(ちなみに $-g_i$ は Gradient Boostingでの $\tilde{y_i}$ と一致します)<br />
+<p>ここで $g_i = \frac{\partial L(y_i, F_{t-1}(x_i))}{\partial F_{t-1}(x_i)}$ で $h_i = \frac{\partial^2 L(y_i, F_{t-1}(x_i))}{\partial^2 F_{t-1}(x_i)}$です．
+(ちなみに $-g_i$ は Gradient Boostingでの $\tilde{y_i}$ と一致します)
 この式を変形して $f_t$ に関係の無い項をconstantとすると次のようになります．</p>
 
 <p>$$\sum_{i=1}^{N}[~\frac{h_i}{2} (f_t(x_i) + \frac{g_i}{h_i})^2 ~] + constant$$</p>
 
-<p>$(x_i, - g_i / h_i)$ に対する二乗誤差が $h_i$ で重みづけされた形になりました．<br />
-この式を最小化するように $f_t$ の構築を行う方法を<strong>Newton Boosting</strong>と呼びます[5]．<br />
+<p>$(x_i, - g_i / h_i)$ に対する二乗誤差が $h_i$ で重みづけされた形になりました．
+この式を最小化するように $f_t$ の構築を行う方法を<strong>Newton Boosting</strong>と呼びます[5]．
 回帰木では先の二乗誤差和の例と同様に，この式を直接目的関数として扱うことができます．</p>
 
-<p>Newton法では，目的関数が二次でない場合は適当に定めた $\alpha_t$ を使うのですが，<br />
-これは Learning Rate を適当にスケールして吸収すればよいので，<br />
+<p>Newton法では，目的関数が二次でない場合は適当に定めた $\alpha_t$ を使うのですが，
+これは Learning Rate を適当にスケールして吸収すればよいので，
 Newton Boosting の場合は $\alpha_t=1$ とします．</p>
 
 <h2 id="xgboost-6">XGBoost [6]</h2>
 
-<p>XGBoostではこのNewton Boostingが採用されています．<br />
-さらに，<strong>木の正則化</strong>を行うための項を最小化する目的関数 $\phi$ に直接入れているのが特徴的です．<br />
+<p>XGBoostではこのNewton Boostingが採用されています．
+さらに，<strong>木の正則化</strong>を行うための項を最小化する目的関数 $\phi$ に直接入れているのが特徴的です．
 (個人的には木はtrimとかで正則化するイメージですが直接目的関数にいれています)</p>
 
 <p>具体的には次のような目的関数を設定しています．</p>
@@ -349,78 +345,78 @@ Newton Boosting の場合は $\alpha_t=1$ とします．</p>
 <p>$$\phi(F_t) = \sum_{i=1}^{N}L(y_i, F_t(x_i)) + \sum_{k=0}^t \Omega(f_k)$$
 $$\Omega(f) = \gamma T + \frac{1}{2}\lambda||w||^2$$</p>
 
-<p>ここで，$T$ は回帰木 $f$ の葉の数，$w$ は葉の重みで，$\gamma, \lambda$はハイパーパラメータです．<br />
-この形の正則化項であれば，普通のNewton Boostingと同じように<br />
+<p>ここで，$T$ は回帰木 $f$ の葉の数，$w$ は葉の重みで，$\gamma, \lambda$はハイパーパラメータです．
+この形の正則化項であれば，普通のNewton Boostingと同じように
 二次近似して変形することで同じように回帰木を構築しやすい形にできます．</p>
 
-<p>XGBoostを実際に使うときの指定としては<br />
-そのまま $\gamma$ は <code>gamma</code>，$\lambda$ は <code>lambda</code> というパラメータがあります．<br />
-デフォルトの値はそれぞれ $0$ と $1$ です．<br />
-論文には載っていませんが，doc/parameter.md を見る限り<br />
+<p>XGBoostを実際に使うときの指定としては
+そのまま $\gamma$ は <code>gamma</code>，$\lambda$ は <code>lambda</code> というパラメータがあります．
+デフォルトの値はそれぞれ $0$ と $1$ です．
+論文には載っていませんが，doc/parameter.md を見る限り
 <code>alpha</code> というパラメータで葉の重みのL1ノルムでの正則化も行えるようです．</p>
 
-<p>また，高速化のための工夫として，データの数や次元数が大きくなった場合，<br />
-木の構築に Exact Greedy Algorithm を使うと時間がかかりすぎてしまうのを改善するため，<br />
+<p>また，高速化のための工夫として，データの数や次元数が大きくなった場合，
+木の構築に Exact Greedy Algorithm を使うと時間がかかりすぎてしまうのを改善するため，
 分割に使う候補を絞る <strong>Weighted Quantile Sketch</strong> という手法も提案されています．</p>
 
-<p>データが沢山あって，ここから分割の候補を $m$ 個選んでください，と言われたとき，<br />
-素直な方法として，小さい順に並べて等間隔に $m$ 個取る，という方法が考えられます．<br />
-この，同じ要素数の $m$ 個の部分集合に分割する点を $m$-Quantiles ($m$-分位点) と言い，<br />
+<p>データが沢山あって，ここから分割の候補を $m$ 個選んでください，と言われたとき，
+素直な方法として，小さい順に並べて等間隔に $m$ 個取る，という方法が考えられます．
+この，同じ要素数の $m$ 個の部分集合に分割する点を $m$-Quantiles ($m$-分位点) と言い，
 Quantileを高速に求めるアルゴリズムとして Quantile Sketch[7] があります．</p>
 
-<p>Weighted Quantile Sketchはその名の通り，<br />
+<p>Weighted Quantile Sketchはその名の通り，
 このQuantile Sketchを重み付きに拡張したものです．</p>
 
-<p>Newton Boosting の項で説明した通り，<br />
-XGBoostの目的関数は二乗誤差が $h_i$ で重みづけられた形になるため，<br />
-$h_i$ が大きいほど $f_t$ でうまくfitできなかったとき目的関数に与える影響が大きくなります．<br />
-そこで通常のQuantile Sketchのように各々1つとして扱ってQuantileを求めるのでなく，<br />
+<p>Newton Boosting の項で説明した通り，
+XGBoostの目的関数は二乗誤差が $h_i$ で重みづけられた形になるため，
+$h_i$ が大きいほど $f_t$ でうまくfitできなかったとき目的関数に与える影響が大きくなります．
+そこで通常のQuantile Sketchのように各々1つとして扱ってQuantileを求めるのでなく，
 $h_i$ で重みづけしQuantile Sketchを行います．</p>
 
-<p>既存研究では無かった理論保証付きのアルゴリズムを提案したそうで，論文でめっちゃ推されてます．<br />
+<p>既存研究では無かった理論保証付きのアルゴリズムを提案したそうで，論文でめっちゃ推されてます．
 詳しい内容についてはXGBoost論文の<a href="http://homes.cs.washington.edu/~tqchen/pdf/xgboost-supp.pdf">Supplementary Material</a>に載っています．</p>
 
-<p>Sketchingを使用するように明示的に指定するには<br />
-パラメータの <code>tree_method</code> を <code>'approx'</code>にすれば良いです．<br />
+<p>Sketchingを使用するように明示的に指定するには
+パラメータの <code>tree_method</code> を <code>'approx'</code>にすれば良いです．
 また <code>sketch_eps</code> で候補点がどれくらい離れるかを指定できます．</p>
 
-<p>この他にも，スパースなデータに対して高速に分割を見つけるアルゴリズムが実装されていたり，<br />
-データをブロック化して効率的に扱う機能がついていたりなど，<br />
+<p>この他にも，スパースなデータに対して高速に分割を見つけるアルゴリズムが実装されていたり，
+データをブロック化して効率的に扱う機能がついていたりなど，
 大規模な環境で高速に動作するために様々な工夫が行われています．</p>
 
 <h2 id="generalization-error">Generalization Error</h2>
 
 <p>理論的な汎化誤差についてはまだわかっていることは少ないようです(たぶん)．</p>
 
-<p>ここが私が一番気になっているところで，<br />
-Gradient Boostingでは加えた後の経験損失が小さくなるように弱学習器を足しているわけですが，<br />
-なんで弱学習器をより複雑にして損失をさげるよりも，<br />
-複雑でない弱学習器でこの手続きを繰り返すほうがうまくいくのでしょうか．<br />
-また，なんで $\alpha_t$ を求めた上でさらに学習率をかける方法がうまくいくのでしょうか．<br />
+<p>ここが私が一番気になっているところで，
+Gradient Boostingでは加えた後の経験損失が小さくなるように弱学習器を足しているわけですが，
+なんで弱学習器をより複雑にして損失をさげるよりも，
+複雑でない弱学習器でこの手続きを繰り返すほうがうまくいくのでしょうか．
+また，なんで $\alpha_t$ を求めた上でさらに学習率をかける方法がうまくいくのでしょうか．
 不思議です．その辺について，汎化誤差から理論的に何か言えることはないのかなと思っています．</p>
 
-<p>AdaBoostについては元々統計的機械学習というより学習理論の分野で出てきたこともあって，<br />
-古くから汎化誤差について研究が進められています．<br />
-ここら辺は正直ちゃんと理解できておらずうまく説明できる気がしないので，詳しくは<br />
-AdaBoostに関するsurvey論文[8]の章とか，marginの話の論文[9]とかを読んでくださいという感じです．<br />
+<p>AdaBoostについては元々統計的機械学習というより学習理論の分野で出てきたこともあって，
+古くから汎化誤差について研究が進められています．
+ここら辺は正直ちゃんと理解できておらずうまく説明できる気がしないので，詳しくは
+AdaBoostに関するsurvey論文[8]の章とか，marginの話の論文[9]とかを読んでくださいという感じです．
 参照している論文が結構古いのでもしかしたらそこらへんの研究はもう少し進んでいるかもしません．</p>
 
-<p>また，Gradient Boosting の汎化誤差については調べてみたものの見つからなかったので，<br />
-これらについて何か情報があったら教えてもらえると非常に助かります．<br />
-もしかしたらGradient Descentのほうから調べていったほうが良いのかもしれません．<br />
+<p>また，Gradient Boosting の汎化誤差については調べてみたものの見つからなかったので，
+これらについて何か情報があったら教えてもらえると非常に助かります．
+もしかしたらGradient Descentのほうから調べていったほうが良いのかもしれません．
 よくわからんという感じです．強い人教えてください．</p>
 
 <h2 id="conclusion">Conclusion</h2>
 
-<p>かなり書き散らした感じになって今いましたがとりあえず以上になります．<br />
-いま自分が抱えている研究のタスクが終わったら，<br />
-このAdaBoostの汎化誤差の論文をちゃんと読んだり，Gradient Boostingの汎化誤差のことを調たりしつつ<br />
+<p>かなり書き散らした感じになって今いましたがとりあえず以上になります．
+いま自分が抱えている研究のタスクが終わったら，
+このAdaBoostの汎化誤差の論文をちゃんと読んだり，Gradient Boostingの汎化誤差のことを調たりしつつ
 XGBoostの学習アルゴリズムをいろいろと改造して遊んでみたいと思っています．</p>
 
-<p>ご指摘等ありましたら<a href="https://github.com/zaburo-ch">Github</a>に載ってるアドレスか，<br />
+<p>ご指摘等ありましたら<a href="https://github.com/zaburo-ch">Github</a>に載ってるアドレスか，
 <a href="https://twitter.com/musharna000">Twitter</a>等で連絡いただければと思います．</p>
 
-<p>HugoにReferenceの機能がないのでぽちぽち自分で番号書いたりした&hellip;<br />
+<p>HugoにReferenceの機能がないのでぽちぽち自分で番号書いたりした&hellip;
 ここだけbibtex使いたい&hellip;</p>
 
 <h2 id="reference">Reference</h2>
@@ -441,44 +437,98 @@ The Annals of Statistics, 29(5), 2001.<br />
 margin: A new explanation for the effectiveness of voting methods. The Annals of
 Statistics, 26(5):1651–1686, 1998.</p>
 
-    </article>
-
-    
-    <div style="margin: 60px 0 10px;">
-      <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="vertical-normal" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-      <a href="https://twitter.com/share" class="twitter-share-button" data-via="musharna000">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-    </div>
-    
-    
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-          tex2jax: { inlineMath: [['$','$'], ["\\(","\\)"]] }
-      });
-    </script>
-    <script
-        type="text/javascript"
-        src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" />
-    </script>
-    
-  </main>
-
-
-  
-  <footer role="contentinfo">
-    <div style="text-align:center;">
-      
-      Written by ZABURO
-    </div>
-  </footer>
-
-
 </div>
 
-<script src="/js/highlight.pack.js"></script>
-<script>hljs.initHighlightingOnLoad();</script>
+        <footer class="post-footer clearfix">
+    
+        <p class="post-tags">
+            <span>Tagged:</span>
+            
+            
+                <a href="/tags/%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92/">機械学習</a>, 
+            
+                <a href="/tags/xgboost/">XGBoost</a>
+            
+        </p>
+    
+
+    <div class="share">
+        
+            <a class="icon-twitter" href="https://twitter.com/share?text=Gradient%20Boosting%20%e3%81%a8%20XGBoost&url=https%3a%2f%2fzaburo-ch.github.io%2fpost%2fxgboost%2f"
+                onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                <i class="fa fa-twitter"></i>
+                <span class="hidden">Twitter</span>
+            </a>
+        
+
+        
+            <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fzaburo-ch.github.io%2fpost%2fxgboost%2f"
+                onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                <i class="fa fa-facebook"></i>
+                <span class="hidden">Facebook</span>
+            </a>
+        
+
+        
+            <a class="icon-google-plus" href="https://plus.google.com/share?url=https%3a%2f%2fzaburo-ch.github.io%2fpost%2fxgboost%2f"
+              onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+              <i class="fa fa-google-plus"></i>
+                <span class="hidden">Google+</span>
+            </a>
+        
+        
+    </div>
+</footer>
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+    });
+</script>
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 
-</body>
+
+        
+    <div class="comments">
+        
+    </div>
+
+    </article>
+</div>
+
+            </div>
+        </div>
+
+        <footer class="footer">
+            <div class="container">
+                <div class="site-title-wrapper">
+                    <h1 class="site-title">
+                        <a title="ZABURO app" href="https://zaburo-ch.github.io/">ZABURO app</a>
+                    </h1>
+                    <a class="button-square button-jump-top js-jump-top" href="#">
+                        <i class="fa fa-angle-up"></i>
+                    </a>
+                </div>
+
+                <p class="footer-copyright">
+                    <span>&copy; 2018 / Powered by <a href="https://gohugo.io/">Hugo</a></span>
+                </p>
+                <p class="footer-copyright">
+                    <span><a href="https://github.com/roryg/ghostwriter">Ghostwriter theme</a> By <a href="http://jollygoodthemes.com">JollyGoodThemes</a></span>
+                    <span>/ <a href="https://github.com/jbub/ghostwriter">Ported</a> to Hugo By <a href="https://github.com/jbub">jbub</a></span>
+                </p>
+            </div>
+        </footer>
+
+        <script src="https://zaburo-ch.github.io/js/jquery-1.11.3.min.js"></script>
+        <script src="https://zaburo-ch.github.io/js/jquery.fitvids.js"></script>
+        
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        
+        
+        <script src="https://zaburo-ch.github.io/js/scripts.js"></script>
+    </body>
 </html>
 

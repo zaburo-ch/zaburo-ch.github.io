@@ -5,8 +5,8 @@
     <link>https://zaburo-ch.github.io/tags/xgboost/</link>
     <description>Recent content in Xgboost on ZABURO app</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>ja</language>
-    <copyright>Written by ZABURO</copyright>
+    <language>ja-jp</language>
+    <copyright>ZABURO</copyright>
     <lastBuildDate>Sat, 06 May 2017 03:02:50 +0900</lastBuildDate>
     
 	<atom:link href="https://zaburo-ch.github.io/tags/xgboost/index.xml" rel="self" type="application/rss+xml" />
@@ -20,23 +20,13 @@
       <guid>https://zaburo-ch.github.io/post/xgboost/</guid>
       <description>Gradient Boosting や XGBoostについて調べたことをまとめました．
 Gradient Descent や Newton法と絡めて説明していきたいと思います．
-目次  Boosting Gradient Descent (Steepest Descent) Gradient Boosting Regression Tree Gradient Tree Boosting Learning rate Newton Boosting XGBoost Generalization Error Conclusion Reference  Boosting Boostingとは，ランダムより少し良い程度の&amp;rdquo;弱い&amp;rdquo;学習アルゴリズムを使って，
-そのアルゴリズムよりも&amp;rdquo;強い&amp;rdquo;学習アルゴリズムをつくることです．
-イメージとしては，弱い学習アルゴリズムを&amp;rdquo;boost&amp;rdquo;してあげる感じでしょうか．
-そもそもそんなことって理論的に可能なの？という問いからBoostingの歴史が始まったわけですが，
-Boostingが可能であることは，1989年にRobert E. Schapire大先生によって
-PAC Learningという枠組みで実際にBoostingを行うアルゴリズムを示す形で証明されました[1]．
-Boostingのアルゴリズムで大きな成功を収めたもののひとつが，[2]で提案されたAdaBoostで
-以降のBoostingアルゴリズムはAdaBoostに大きな影響を受けています．
-なんとなくBoostingと言えば逐次的に学習器を構築して，その和をとる，
-というようなイメージがありますが，それもAdaBoost由来だと思います．たぶん．
-$t$ 回目の反復で&amp;rdquo;弱い&amp;rdquo;学習アルゴリズムにより構築された学習器(弱学習器)を $f_t$とすると，
-よく使われているBoostingアルゴリズムのほとんどは次のような形で表されます．
+目次  Boosting Gradient Descent (Steepest Descent) Gradient Boosting Regression Tree Gradient Tree Boosting Learning rate Newton Boosting XGBoost Generalization Error Conclusion Reference  Boosting Boostingとは，ランダムより少し良い程度の&amp;rdquo;弱い&amp;rdquo;学習アルゴリズムを使って， そのアルゴリズムよりも&amp;rdquo;強い&amp;rdquo;学習アルゴリズムをつくることです． イメージとしては，弱い学習アルゴリズムを&amp;rdquo;boost&amp;rdquo;してあげる感じでしょうか．
+そもそもそんなことって理論的に可能なの？という問いからBoostingの歴史が始まったわけですが， Boostingが可能であることは，1989年にRobert E. Schapire大先生によって PAC Learningという枠組みで実際にBoostingを行うアルゴリズムを示す形で証明されました[1]．
+Boostingのアルゴリズムで大きな成功を収めたもののひとつが，[2]で提案されたAdaBoostで 以降のBoostingアルゴリズムはAdaBoostに大きな影響を受けています． なんとなくBoostingと言えば逐次的に学習器を構築して，その和をとる， というようなイメージがありますが，それもAdaBoost由来だと思います．たぶん．
+$t$ 回目の反復で&amp;rdquo;弱い&amp;rdquo;学習アルゴリズムにより構築された学習器(弱学習器)を $f_t$とすると， よく使われているBoostingアルゴリズムのほとんどは次のような形で表されます．
 $$F_T(x)=\sum_{t=1}^{T}\alpha_t f_t(x)$$
 ここで $F_T(x)$ がBoostingアルゴリズムの出力で，$\alpha_t$ は適当に設定された係数です．
-Gradient Descent (Steepest Descent) Gradiet Boostingの説明をする前に
-Gradiet Boosting非常に関連の強いGradient descent (勾配降下法)に触れておきます．
-Steepest Descent (最急降下法)とも呼ばれているアレです．</description>
+Gradient Descent (Steepest Descent) Gradiet Boostingの説明をする前に Gradiet Boosting非常に関連の強いGradient descent (勾配降下法)に触れておきます． Steepest Descent (最急降下法)とも呼ばれているアレです．</description>
     </item>
     
   </channel>

@@ -1,80 +1,85 @@
-
 <!DOCTYPE html>
-<html lang="ja">
-<head>
-
-  
-  <meta charset="UTF-8">
-  <title>
-    OpenCV for Android で特定の色を抽出 (NDK) | ZABURO app
-  </title>
-
-  
-  <meta name="twitter:card" content="summary" />
-  <meta name="og:title" content="OpenCV for Android で特定の色を抽出 (NDK)" />
-  <meta name="og:description" content="書きました。
+<html prefix="og: http://ogp.me/ns#">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>OpenCV for Android で特定の色を抽出 (NDK) &middot; ZABURO</title>
+        <meta name="description" content="書きました。
 ・ネイティブメソッドの記述
 //色抽出 public static native void colorExtract(long matAddr,int code, int lowH,int highH, int lowS,int highS, int lowV,int highV); ・ネイティブコード
-JNIEXPORT void JNICALL Java_com_fc2_blog_zaburoapp_markerdetection_MainActivity_colorExtract (JNIEnv * jenv, jclass, jlong matAddr, jint code, jint lowH, jint highH, jint lowS, jint highS, jint lowV, jint highV){ Mat inputImg; inputImg = (Mat) matAddr; int height = inputImg-&gt;rows; int width = inputImg-&gt;cols; Mat hsvImg = Mat(height,width,CV_8UC3); cvtColor(*inputImg,hsvImg,code); vector singleCh; split(hsvImg,singleCh); Mat h1,h2,h,s1,s2,s,v1,v2,v,hs,mask; if(lowH&lt;=highH){ threshold((Mat)singleCh[0],h1,lowH,255,CV_THRESH_BINARY); threshold((Mat)singleCh[0],h2,highH,255,CV_THRESH_BINARY_INV); bitwise_and(h1,h2,h); }else{ threshold((Mat)singleCh[0],h1,lowH,255,CV_THRESH_BINARY); threshold((Mat)singleCh[0],h2,highH,255,CV_THRESH_BINARY_INV); bitwise_or(h1,h2,h); } if(lowS&lt;=highS){ threshold((Mat)singleCh[1],s1,lowS,255,CV_THRESH_BINARY); threshold((Mat)singleCh[1],s2,highS,255,CV_THRESH_BINARY_INV); bitwise_and(s1,s2,s); }else{ threshold((Mat)singleCh[1],s1,lowS,255,CV_THRESH_BINARY); threshold((Mat)singleCh[1],s2,highS,255,CV_THRESH_BINARY_INV); bitwise_or(s1,s2,s); } if(lowH&lt;=highH){ threshold((Mat)singleCh[2],v1,lowV,255,CV_THRESH_BINARY); threshold((Mat)singleCh[2],v2,highV,255,CV_THRESH_BINARY_INV); bitwise_and(v1,v2,v); }else{ threshold((Mat)singleCh[2],v1,lowV,255,CV_THRESH_BINARY); threshold((Mat)singleCh[2],v2,highV,255,CV_THRESH_BINARY_INV); bitwise_or(v1,v2,v); } bitwise_and(h,s,hs); bitwise_and(hs,v,mask); Mat dstImg = Mat(height,width,inputImg-&gt;type(),Scalar(0,0,0)); inputImg-&gt;copyTo(dstImg,mask); dstImg." />
-  <meta name="twitter:url" content="https://zaburo-ch.github.io/post/20140202_1/" />
-  <meta name="twitter:site" content="@musharna000" />
-
-
-  
-  <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
-
-
-  
-  <link rel="stylesheet" href="/css/sanitize.css">
-  <link rel="stylesheet" href="/css/responsive.css">
-  <link rel="stylesheet" href="/css/highlight_monokai.css">
-  
-  <link rel="stylesheet" href="/css/custom.css">
-  <link rel="stylesheet" href="/css/theme.css">
-
-
-  
-  
-
-
-</head>
-
-
-
-<body>
-<div class="container">
-
-  
-  <header role="banner">
-    <div class="row gutters">
-      <div id="site-title" class="col span_6">
-        <h1><a href="/">ZABURO app</a></h1>
-        <h2>アプリ作ったり、なんやかんや</h2>
-      </div>
-      <div id="social" class="col span_6">
-        <ul>
-          <li><a href="/about/">About</a></li>
-          <li><a href="/product/">Product</a></li>
-          
-          
-          <li><a href="https://github.com/zaburo-ch" target="_blank">GitHub</a></li>
-        </ul>
-      </div>
-    </div>
-  </header>
-
-
-  
-  <main id="single" role="main">
-    <div class="article-header">
-      <h1>OpenCV for Android で特定の色を抽出 (NDK)</h1>
-      <div class="meta">
-        Feb 2, 2014 &nbsp;
+JNIEXPORT void JNICALL Java_com_fc2_blog_zaburoapp_markerdetection_MainActivity_colorExtract (JNIEnv * jenv, jclass, jlong matAddr, jint code, jint lowH, jint highH, jint lowS, jint highS, jint lowV, jint highV){ Mat inputImg; inputImg = (Mat) matAddr; int height = inputImg-&gt;rows; int width = inputImg-&gt;cols; Mat hsvImg = Mat(height,width,CV_8UC3); cvtColor(*inputImg,hsvImg,code); vector singleCh; split(hsvImg,singleCh); Mat h1,h2,h,s1,s2,s,v1,v2,v,hs,mask; if(lowH&lt;=highH){ threshold((Mat)singleCh[0],h1,lowH,255,CV_THRESH_BINARY); threshold((Mat)singleCh[0],h2,highH,255,CV_THRESH_BINARY_INV); bitwise_and(h1,h2,h); }else{ threshold((Mat)singleCh[0],h1,lowH,255,CV_THRESH_BINARY); threshold((Mat)singleCh[0],h2,highH,255,CV_THRESH_BINARY_INV); bitwise_or(h1,h2,h); } if(lowS&lt;=highS){ threshold((Mat)singleCh[1],s1,lowS,255,CV_THRESH_BINARY); threshold((Mat)singleCh[1],s2,highS,255,CV_THRESH_BINARY_INV); bitwise_and(s1,s2,s); }else{ threshold((Mat)singleCh[1],s1,lowS,255,CV_THRESH_BINARY); threshold((Mat)singleCh[1],s2,highS,255,CV_THRESH_BINARY_INV); bitwise_or(s1,s2,s); } if(lowH&lt;=highH){ threshold((Mat)singleCh[2],v1,lowV,255,CV_THRESH_BINARY); threshold((Mat)singleCh[2],v2,highV,255,CV_THRESH_BINARY_INV); bitwise_and(v1,v2,v); }else{ threshold((Mat)singleCh[2],v1,lowV,255,CV_THRESH_BINARY); threshold((Mat)singleCh[2],v2,highV,255,CV_THRESH_BINARY_INV); bitwise_or(v1,v2,v); } bitwise_and(h,s,hs); bitwise_and(hs,v,mask); Mat dstImg = Mat(height,width,inputImg-&gt;type(),Scalar(0,0,0)); inputImg-&gt;copyTo(dstImg,mask); dstImg.">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="generator" content="Hugo 0.41" />
+        <meta name="robots" content="index,follow">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta property="og:title" content="OpenCV for Android で特定の色を抽出 (NDK)">
+<meta property="og:description" content="書きました。
+・ネイティブメソッドの記述
+//色抽出 public static native void colorExtract(long matAddr,int code, int lowH,int highH, int lowS,int highS, int lowV,int highV); ・ネイティブコード
+JNIEXPORT void JNICALL Java_com_fc2_blog_zaburoapp_markerdetection_MainActivity_colorExtract (JNIEnv * jenv, jclass, jlong matAddr, jint code, jint lowH, jint highH, jint lowS, jint highS, jint lowV, jint highV){ Mat inputImg; inputImg = (Mat) matAddr; int height = inputImg-&gt;rows; int width = inputImg-&gt;cols; Mat hsvImg = Mat(height,width,CV_8UC3); cvtColor(*inputImg,hsvImg,code); vector singleCh; split(hsvImg,singleCh); Mat h1,h2,h,s1,s2,s,v1,v2,v,hs,mask; if(lowH&lt;=highH){ threshold((Mat)singleCh[0],h1,lowH,255,CV_THRESH_BINARY); threshold((Mat)singleCh[0],h2,highH,255,CV_THRESH_BINARY_INV); bitwise_and(h1,h2,h); }else{ threshold((Mat)singleCh[0],h1,lowH,255,CV_THRESH_BINARY); threshold((Mat)singleCh[0],h2,highH,255,CV_THRESH_BINARY_INV); bitwise_or(h1,h2,h); } if(lowS&lt;=highS){ threshold((Mat)singleCh[1],s1,lowS,255,CV_THRESH_BINARY); threshold((Mat)singleCh[1],s2,highS,255,CV_THRESH_BINARY_INV); bitwise_and(s1,s2,s); }else{ threshold((Mat)singleCh[1],s1,lowS,255,CV_THRESH_BINARY); threshold((Mat)singleCh[1],s2,highS,255,CV_THRESH_BINARY_INV); bitwise_or(s1,s2,s); } if(lowH&lt;=highH){ threshold((Mat)singleCh[2],v1,lowV,255,CV_THRESH_BINARY); threshold((Mat)singleCh[2],v2,highV,255,CV_THRESH_BINARY_INV); bitwise_and(v1,v2,v); }else{ threshold((Mat)singleCh[2],v1,lowV,255,CV_THRESH_BINARY); threshold((Mat)singleCh[2],v2,highV,255,CV_THRESH_BINARY_INV); bitwise_or(v1,v2,v); } bitwise_and(h,s,hs); bitwise_and(hs,v,mask); Mat dstImg = Mat(height,width,inputImg-&gt;type(),Scalar(0,0,0)); inputImg-&gt;copyTo(dstImg,mask); dstImg.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://zaburo-ch.github.io/post/20140202_1/">
+        <link rel="stylesheet" href="https://zaburo-ch.github.io/dist/styles.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300&subset=latin,cyrillic-ext,latin-ext,cyrillic">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
         
-      </div>
-    </div>
-    <article>
-      <p>書きました。</p>
+        
+        
+    </head>
+    <body>
+        
+
+        <div id="wrapper">
+            <header class="site-header">
+                <div class="container">
+                    
+
+                    <ul class="site-nav">
+                        
+    <li class="site-nav-item">
+        <a title="Blog" href="/">Blog</a>
+    </li>
+
+    <li class="site-nav-item">
+        <a title="About" href="/about/">About</a>
+    </li>
+
+    <li class="site-nav-item">
+        <a title="Product" href="/product/">Product</a>
+    </li>
+
+    <li class="site-nav-item">
+        <a title="Github" href="https://github.com/zaburo-ch">Github</a>
+    </li>
+
+                    </ul>
+                </div>
+            </header>
+
+            <div id="container">
+
+
+<div class="container">
+    <article class="post-container" itemscope="" itemtype="http://schema.org/BlogPosting">
+        <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">OpenCV for Android で特定の色を抽出 (NDK)</h1>
+    
+    <p class="post-date">
+        <span>Published <time datetime="2014-02-02" itemprop="datePublished">Sun, Feb 2, 2014</time></span>
+        <span>by</span>
+        <span itemscope="" itemprop="author" itemtype="https://schema.org/Person">
+            <span itemprop="name">
+                <a href="https://zaburo-ch.github.io/" itemprop="url" rel="author">ZABURO</a>
+            </span>
+        </span>
+    </p>
+</header>
+
+        <div class="post-content clearfix" itemprop="articleBody">
+    
+
+    <p>書きました。</p>
 
 <p>・ネイティブメソッドの記述<br />
 <pre><code>//色抽出
@@ -147,34 +152,81 @@ mImageView.setImageBitmap(bmp);</code></pre>って感じで使えば<br />
 たぶん範囲外の値を渡すと落ちます。<br />
 例外投げる部分かけばよかったんですけど、めんどうでした。</p>
 
-    </article>
-
-    
-    <div style="margin: 60px 0 10px;">
-      <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="vertical-normal" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-      <a href="https://twitter.com/share" class="twitter-share-button" data-via="musharna000">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-    </div>
-    
-    
-  </main>
-
-
-  
-  <footer role="contentinfo">
-    <div style="text-align:center;">
-      
-      Written by ZABURO
-    </div>
-  </footer>
-
-
 </div>
 
-<script src="/js/highlight.pack.js"></script>
-<script>hljs.initHighlightingOnLoad();</script>
+        <footer class="post-footer clearfix">
+    
+
+    <div class="share">
+        
+            <a class="icon-twitter" href="https://twitter.com/share?text=OpenCV%20for%20Android%20%e3%81%a7%e7%89%b9%e5%ae%9a%e3%81%ae%e8%89%b2%e3%82%92%e6%8a%bd%e5%87%ba%20%28NDK%29&url=https%3a%2f%2fzaburo-ch.github.io%2fpost%2f20140202_1%2f"
+                onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                <i class="fa fa-twitter"></i>
+                <span class="hidden">Twitter</span>
+            </a>
+        
+
+        
+            <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fzaburo-ch.github.io%2fpost%2f20140202_1%2f"
+                onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                <i class="fa fa-facebook"></i>
+                <span class="hidden">Facebook</span>
+            </a>
+        
+
+        
+            <a class="icon-google-plus" href="https://plus.google.com/share?url=https%3a%2f%2fzaburo-ch.github.io%2fpost%2f20140202_1%2f"
+              onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+              <i class="fa fa-google-plus"></i>
+                <span class="hidden">Google+</span>
+            </a>
+        
+        
+    </div>
+</footer>
 
 
 
-</body>
+        
+    <div class="comments">
+        
+    </div>
+
+    </article>
+</div>
+
+            </div>
+        </div>
+
+        <footer class="footer">
+            <div class="container">
+                <div class="site-title-wrapper">
+                    <h1 class="site-title">
+                        <a title="ZABURO app" href="https://zaburo-ch.github.io/">ZABURO app</a>
+                    </h1>
+                    <a class="button-square button-jump-top js-jump-top" href="#">
+                        <i class="fa fa-angle-up"></i>
+                    </a>
+                </div>
+
+                <p class="footer-copyright">
+                    <span>&copy; 2018 / Powered by <a href="https://gohugo.io/">Hugo</a></span>
+                </p>
+                <p class="footer-copyright">
+                    <span><a href="https://github.com/roryg/ghostwriter">Ghostwriter theme</a> By <a href="http://jollygoodthemes.com">JollyGoodThemes</a></span>
+                    <span>/ <a href="https://github.com/jbub/ghostwriter">Ported</a> to Hugo By <a href="https://github.com/jbub">jbub</a></span>
+                </p>
+            </div>
+        </footer>
+
+        <script src="https://zaburo-ch.github.io/js/jquery-1.11.3.min.js"></script>
+        <script src="https://zaburo-ch.github.io/js/jquery.fitvids.js"></script>
+        
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        
+        
+        <script src="https://zaburo-ch.github.io/js/scripts.js"></script>
+    </body>
 </html>
 

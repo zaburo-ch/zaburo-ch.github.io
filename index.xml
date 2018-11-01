@@ -5,12 +5,43 @@
     <link>https://zaburo-ch.github.io/</link>
     <description>Recent content on ZABURO app</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>ja</language>
-    <copyright>Written by ZABURO</copyright>
-    <lastBuildDate>Sat, 06 May 2017 03:02:50 +0900</lastBuildDate>
+    <language>ja-jp</language>
+    <copyright>ZABURO</copyright>
+    <lastBuildDate>Thu, 01 Nov 2018 03:16:24 +0900</lastBuildDate>
     
 	<atom:link href="https://zaburo-ch.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>SIGNATE 134 台風コンペのメモ</title>
+      <link>https://zaburo-ch.github.io/post/signate-134/</link>
+      <pubDate>Thu, 01 Nov 2018 03:16:24 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/post/signate-134/</guid>
+      <description>CNNを使ってやりたいことがあったのでその練習に参加．
+10月13日に始めて2週間くらいちょこちょこやってた．
+5位/210チーム，Publicが13位だったので実質そのくらいだと思う．
+Overview CNNの上にGBDTを載せてStackingした．
+閾値の決め方とValidation時の評価  validation dataで一番条件付きPrecisionが高くなる閾値を使う
+ 出力した確率が合っていると仮定してその確率に従って正解ラベルをランダムに決めて各閾値での条件付きPrecisionを計算．10000回繰り返して平均とかmedianを取って一番良い物を使う．全データだと10000回で2分くらいかかって遅い．  1.の決め方をvalidationに使って，2.のmedianのやつをsubmissionに使った． 最終的な手元のスコアは1.が0.58307，2.のmeanが0.57491，medianが0.58627．閾値はそれぞれ0.20716, 0.19939, 0.21035
+CNN Data Augmentation  cropping (64x64-&amp;gt;54x54)
+ 44x44 も1回やったけど精度が落ちたので以降やらなかった
+  flip (水平，垂直，両方(180度回転))
+ 90, 270度が抜けてることに今気づいた
+  rotation (±12度)
+ ちょっとくらい回転してもええやろという気持ち
+ 良いのかどうかは知らない
+   TTA 10回
+Subsampling 正例の1倍，4倍，8倍を試したが8倍は遅かったので結局使わなかった．
+不例を多めにした方が良くなる傾向があったが，上に載せるGBDTがなんとかしてくれるやろという気持ち．
+Architecture  普通のCNN
+convが[32, 48, 64]，denseが[64, 32]の普通のCNN
+色々試そうと思ってたけど適当に試してResNet50が良かったのでほかは試してない
+ ResNet50
+このレポジトリの実装を使った．CIFAR向けに最初のpooling or strideが無かったりBottleNeckのAddの後にreluが無かったりする．
+ SEResNet50
+ChainerCVのSEBlockを上のResNet50に使った．コンペ期間中，まだSENetはReleaseに無かったがmasterにはあったので使った．  Optimization だいたい全部 Adam, lr 1e-3, 40 epochでやった．</description>
+    </item>
     
     <item>
       <title>Gradient Boosting と XGBoost</title>
@@ -20,23 +51,13 @@
       <guid>https://zaburo-ch.github.io/post/xgboost/</guid>
       <description>Gradient Boosting や XGBoostについて調べたことをまとめました．
 Gradient Descent や Newton法と絡めて説明していきたいと思います．
-目次  Boosting Gradient Descent (Steepest Descent) Gradient Boosting Regression Tree Gradient Tree Boosting Learning rate Newton Boosting XGBoost Generalization Error Conclusion Reference  Boosting Boostingとは，ランダムより少し良い程度の&amp;rdquo;弱い&amp;rdquo;学習アルゴリズムを使って，
-そのアルゴリズムよりも&amp;rdquo;強い&amp;rdquo;学習アルゴリズムをつくることです．
-イメージとしては，弱い学習アルゴリズムを&amp;rdquo;boost&amp;rdquo;してあげる感じでしょうか．
-そもそもそんなことって理論的に可能なの？という問いからBoostingの歴史が始まったわけですが，
-Boostingが可能であることは，1989年にRobert E. Schapire大先生によって
-PAC Learningという枠組みで実際にBoostingを行うアルゴリズムを示す形で証明されました[1]．
-Boostingのアルゴリズムで大きな成功を収めたもののひとつが，[2]で提案されたAdaBoostで
-以降のBoostingアルゴリズムはAdaBoostに大きな影響を受けています．
-なんとなくBoostingと言えば逐次的に学習器を構築して，その和をとる，
-というようなイメージがありますが，それもAdaBoost由来だと思います．たぶん．
-$t$ 回目の反復で&amp;rdquo;弱い&amp;rdquo;学習アルゴリズムにより構築された学習器(弱学習器)を $f_t$とすると，
-よく使われているBoostingアルゴリズムのほとんどは次のような形で表されます．
+目次  Boosting Gradient Descent (Steepest Descent) Gradient Boosting Regression Tree Gradient Tree Boosting Learning rate Newton Boosting XGBoost Generalization Error Conclusion Reference  Boosting Boostingとは，ランダムより少し良い程度の&amp;rdquo;弱い&amp;rdquo;学習アルゴリズムを使って， そのアルゴリズムよりも&amp;rdquo;強い&amp;rdquo;学習アルゴリズムをつくることです． イメージとしては，弱い学習アルゴリズムを&amp;rdquo;boost&amp;rdquo;してあげる感じでしょうか．
+そもそもそんなことって理論的に可能なの？という問いからBoostingの歴史が始まったわけですが， Boostingが可能であることは，1989年にRobert E. Schapire大先生によって PAC Learningという枠組みで実際にBoostingを行うアルゴリズムを示す形で証明されました[1]．
+Boostingのアルゴリズムで大きな成功を収めたもののひとつが，[2]で提案されたAdaBoostで 以降のBoostingアルゴリズムはAdaBoostに大きな影響を受けています． なんとなくBoostingと言えば逐次的に学習器を構築して，その和をとる， というようなイメージがありますが，それもAdaBoost由来だと思います．たぶん．
+$t$ 回目の反復で&amp;rdquo;弱い&amp;rdquo;学習アルゴリズムにより構築された学習器(弱学習器)を $f_t$とすると， よく使われているBoostingアルゴリズムのほとんどは次のような形で表されます．
 $$F_T(x)=\sum_{t=1}^{T}\alpha_t f_t(x)$$
 ここで $F_T(x)$ がBoostingアルゴリズムの出力で，$\alpha_t$ は適当に設定された係数です．
-Gradient Descent (Steepest Descent) Gradiet Boostingの説明をする前に
-Gradiet Boosting非常に関連の強いGradient descent (勾配降下法)に触れておきます．
-Steepest Descent (最急降下法)とも呼ばれているアレです．</description>
+Gradient Descent (Steepest Descent) Gradiet Boostingの説明をする前に Gradiet Boosting非常に関連の強いGradient descent (勾配降下法)に触れておきます． Steepest Descent (最急降下法)とも呼ばれているアレです．</description>
     </item>
     
     <item>
@@ -104,6 +125,39 @@ Luminance-only Transferを実装します．コードはこちら
 これは英語版WikipediaのYIQの記事にYIQとRGBの相互変換が載っているので
 これを実装すればほとんどおしまいです．
 あとは，RGB -&amp;gt; YIQ -&amp;gt; YチャンネルはそのままでIQチャンネルを全て0にしたもの -&amp;gt; RGB</description>
+    </item>
+    
+    <item>
+      <title>About</title>
+      <link>https://zaburo-ch.github.io/about/</link>
+      <pubDate>Sun, 06 Nov 2016 20:21:01 +0900</pubDate>
+      
+      <guid>https://zaburo-ch.github.io/about/</guid>
+      <description>このサイトについて こんにちは。中鉢魁三郎と申します。
+このサイトでは私がつくったもの、書いたものを公開しています。
+自己紹介 ものをつくるのが好きです。特にプログラミングが好きで、時々、ざぶろうとかZABUROという名前でアプリを公開しています。身内用のコードをこっそり書いていたりもします。競技プログラミングもちょっとだけやります。
+現在は東北大学工学部でコンピュータサイエンスの勉強をしています。
+プログラミング言語 Python
+最近では一番使っています。Numpyとかも使います。
+Go
+このごろ少しハマっています。GAE上で簡単なWebアプリをつくるくらいならできます。
+C++
+ほぼ競技プログラミングでのみ使っています。書いた量だけなら一番多いかも
+JavaScript
+クールでないコードでよければ書けます。Node.jsもググりながらならなんとか書けます。
+Java
+Androidのアプリの開発経験はあります。他のフレームワークはまだ勉強していません。
+Objective-C, SML
+勉強したことはありますが、だいたい忘れました。
+連絡先 こちらで公開しているメールアドレスに連絡頂ければ一番早くお返事できると思います。
+Webサービス ASOBI+
+昔ながらのあそびに最新の技術をプラスして最高に楽しくするWebアプリです。WebRTCを用いてブラウザ上でP2P通信を実現します。
+Androidアプリ うまコレ
+うまかったものをコレクションしていくアプリです。諸事情により現在開発停止しています。
+Don&amp;rsquo;t touch the wall
+端末を傾けて操作するイライラ棒風のゲームです。
+その他アプリ MyPoker
+PokerStars用ヘッズアップディスプレイ(HUD)です。</description>
     </item>
     
     <item>

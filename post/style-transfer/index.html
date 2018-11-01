@@ -1,18 +1,10 @@
-
 <!DOCTYPE html>
-<html lang="ja">
-<head>
-
-  
-  <meta charset="UTF-8">
-  <title>
-    Style Transfer いろいろ | ZABURO app
-  </title>
-
-  
-  <meta name="twitter:card" content="summary" />
-  <meta name="og:title" content="Style Transfer いろいろ" />
-  <meta name="og:description" content="研究室のゼミでStyle Transferに関して論文紹介を行った際に使用したスライドを
+<html prefix="og: http://ogp.me/ns#">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Style Transfer いろいろ &middot; ZABURO</title>
+        <meta name="description" content="研究室のゼミでStyle Transferに関して論文紹介を行った際に使用したスライドを
 少し修正してslide shareにアップロードしました．
   Style transfer  from zaburo 
 TensorFlowの練習も兼ねて実装してみたので
@@ -44,70 +36,108 @@ slimを使うと数行でVGG16が実装できるので非常に便利でした�
 Luminance-only Transferを実装します．コードはこちら
 これは英語版WikipediaのYIQの記事にYIQとRGBの相互変換が載っているので
 これを実装すればほとんどおしまいです．
-あとは，RGB -&gt; YIQ -&gt; YチャンネルはそのままでIQチャンネルを全て0にしたもの -&gt; RGB" />
-  <meta name="twitter:url" content="https://zaburo-ch.github.io/post/style-transfer/" />
-  <meta name="twitter:site" content="@musharna000" />
+あとは，RGB -&gt; YIQ -&gt; YチャンネルはそのままでIQチャンネルを全て0にしたもの -&gt; RGB">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="generator" content="Hugo 0.41" />
+        <meta name="robots" content="index,follow">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta property="og:title" content="Style Transfer いろいろ">
+<meta property="og:description" content="研究室のゼミでStyle Transferに関して論文紹介を行った際に使用したスライドを
+少し修正してslide shareにアップロードしました．
+  Style transfer  from zaburo 
+TensorFlowの練習も兼ねて実装してみたので
+この記事では，実装するときに悩んだところなどついていくつか取り上げたいと思います．
+下記の実装を参考にさせていただきました．
+https://github.com/cysmith/neural-style-tf
+https://github.com/tensorflow/magenta/tree/master/magenta/models/image_stylization
+まずはスライド中でGatys et al. 2016aとして紹介している
+もっとも基本的なStyle Transferを実装します．コードはこちら．
+基本的には論文の式を実装するだけですが
+コンテンツの損失の式がピクセル数で割るような形になっていないのに
+論文に入力画像のサイズが書いていないので(見逃しているだけ？)，
+論文のalphaとbetaの比をそのままつかってもうまくいきませんでした．
+そこでJohnson et al. 2016に書かれている式を使うことにしました．
+具体的にはコンテンツの損失で二乗和をとっているところを二乗平均にしました．
+ついでに，スタイルの損失についてもJohnson et al. 2016に従って修正します．
+ここはGram matrixをheight * widthで割って二乗平均をとる形にしました．
+(Gram matrixをchannel * height * widthで割るのと等価なはずです)
+VGGについてはTensorFlow-Slimを使ってサクッと書きました．
+基本はslimの下にあるvgg_16から全結合層を除いたものになっています．
+endpointはそのままだとkeyがvgg_16/convN/convN_Mのような形になるので，
+使いやすいようにkeyを変更して使っています．
+slimを使うと数行でVGG16が実装できるので非常に便利でした．
+また，損失の定義する方法としては，コンテンツ・スタイル画像をテンソルとして別々に定義し
+最適化の際にそれらをVGGに入力した値などを計算させるような方法も考えられますが，
+損失を定義する段階でコンテンツ・スタイル画像を入力した場合の計算しておき，
+それを定数として扱った方が高速に動作したのでそのように書きました．
+次にGatys et al. 2016bで提案された色を保存したままStyle Transferを行う手法の1つである
+Luminance-only Transferを実装します．コードはこちら
+これは英語版WikipediaのYIQの記事にYIQとRGBの相互変換が載っているので
+これを実装すればほとんどおしまいです．
+あとは，RGB -&gt; YIQ -&gt; YチャンネルはそのままでIQチャンネルを全て0にしたもの -&gt; RGB">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://zaburo-ch.github.io/post/style-transfer/">
+        <link rel="stylesheet" href="https://zaburo-ch.github.io/dist/styles.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300&subset=latin,cyrillic-ext,latin-ext,cyrillic">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        
+        
+        
+    </head>
+    <body>
+        
+
+        <div id="wrapper">
+            <header class="site-header">
+                <div class="container">
+                    
+
+                    <ul class="site-nav">
+                        
+    <li class="site-nav-item">
+        <a title="Blog" href="/">Blog</a>
+    </li>
+
+    <li class="site-nav-item">
+        <a title="About" href="/about/">About</a>
+    </li>
+
+    <li class="site-nav-item">
+        <a title="Product" href="/product/">Product</a>
+    </li>
+
+    <li class="site-nav-item">
+        <a title="Github" href="https://github.com/zaburo-ch">Github</a>
+    </li>
+
+                    </ul>
+                </div>
+            </header>
+
+            <div id="container">
 
 
-  
-  <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
-
-
-  
-  <link rel="stylesheet" href="/css/sanitize.css">
-  <link rel="stylesheet" href="/css/responsive.css">
-  <link rel="stylesheet" href="/css/highlight_monokai.css">
-  
-  <link rel="stylesheet" href="/css/custom.css">
-  <link rel="stylesheet" href="/css/theme.css">
-
-
-  
-  
-
-
-</head>
-
-
-
-<body>
 <div class="container">
+    <article class="post-container" itemscope="" itemtype="http://schema.org/BlogPosting">
+        <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Style Transfer いろいろ</h1>
+    
+    <p class="post-date">
+        <span>Published <time datetime="2016-12-17" itemprop="datePublished">Sat, Dec 17, 2016</time></span>
+        <span>by</span>
+        <span itemscope="" itemprop="author" itemtype="https://schema.org/Person">
+            <span itemprop="name">
+                <a href="https://zaburo-ch.github.io/" itemprop="url" rel="author">ZABURO</a>
+            </span>
+        </span>
+    </p>
+</header>
 
-  
-  <header role="banner">
-    <div class="row gutters">
-      <div id="site-title" class="col span_6">
-        <h1><a href="/">ZABURO app</a></h1>
-        <h2>アプリ作ったり、なんやかんや</h2>
-      </div>
-      <div id="social" class="col span_6">
-        <ul>
-          <li><a href="/about/">About</a></li>
-          <li><a href="/product/">Product</a></li>
-          
-          
-          <li><a href="https://github.com/zaburo-ch" target="_blank">GitHub</a></li>
-        </ul>
-      </div>
-    </div>
-  </header>
+        <div class="post-content clearfix" itemprop="articleBody">
+    
 
-
-  
-  <main id="single" role="main">
-    <div class="article-header">
-      <h1>Style Transfer いろいろ</h1>
-      <div class="meta">
-        Dec 17, 2016 &nbsp;
-        
-          #<a href="/tags/python">Python</a>&nbsp;
-        
-          #<a href="/tags/tensorflow">TensorFlow</a>&nbsp;
-        
-      </div>
-    </div>
-    <article>
-      <p>研究室のゼミでStyle Transferに関して論文紹介を行った際に使用したスライドを<br />
+    <p>研究室のゼミでStyle Transferに関して論文紹介を行った際に使用したスライドを<br />
 少し修正してslide shareにアップロードしました．</p>
 
 <p><iframe src="//www.slideshare.net/slideshow/embed_code/key/crr96NXhlx6ow9" width="595" height="485" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe> <div style="margin-bottom:5px"> <strong> <a href="//www.slideshare.net/zaburo/style-transfer" title="Style transfer" target="_blank">Style transfer</a> </strong> from <strong><a target="_blank" href="//www.slideshare.net/zaburo">zaburo</a></strong> </div></p>
@@ -178,34 +208,91 @@ Luminance-only Transferを実装します．コードは<a href="https://github.
  - Johnson et al. 2016 <a href="https://arxiv.org/abs/1603.08155">Perceptual Losses for Real-Time Style Transfer and Super-Resolution</a><br />
  - Chen &amp; Schmidt 2016 <a href="https://arxiv.org/abs/1612.04337">Fast Patch-based Style Transfer of Arbitrary Style</a></p>
 
-    </article>
-
-    
-    <div style="margin: 60px 0 10px;">
-      <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="vertical-normal" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-      <a href="https://twitter.com/share" class="twitter-share-button" data-via="musharna000">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-    </div>
-    
-    
-  </main>
-
-
-  
-  <footer role="contentinfo">
-    <div style="text-align:center;">
-      
-      Written by ZABURO
-    </div>
-  </footer>
-
-
 </div>
 
-<script src="/js/highlight.pack.js"></script>
-<script>hljs.initHighlightingOnLoad();</script>
+        <footer class="post-footer clearfix">
+    
+        <p class="post-tags">
+            <span>Tagged:</span>
+            
+            
+                <a href="/tags/python/">Python</a>, 
+            
+                <a href="/tags/tensorflow/">TensorFlow</a>
+            
+        </p>
+    
+
+    <div class="share">
+        
+            <a class="icon-twitter" href="https://twitter.com/share?text=Style%20Transfer%20%e3%81%84%e3%82%8d%e3%81%84%e3%82%8d&url=https%3a%2f%2fzaburo-ch.github.io%2fpost%2fstyle-transfer%2f"
+                onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                <i class="fa fa-twitter"></i>
+                <span class="hidden">Twitter</span>
+            </a>
+        
+
+        
+            <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fzaburo-ch.github.io%2fpost%2fstyle-transfer%2f"
+                onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                <i class="fa fa-facebook"></i>
+                <span class="hidden">Facebook</span>
+            </a>
+        
+
+        
+            <a class="icon-google-plus" href="https://plus.google.com/share?url=https%3a%2f%2fzaburo-ch.github.io%2fpost%2fstyle-transfer%2f"
+              onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+              <i class="fa fa-google-plus"></i>
+                <span class="hidden">Google+</span>
+            </a>
+        
+        
+    </div>
+</footer>
 
 
 
-</body>
+        
+    <div class="comments">
+        
+    </div>
+
+    </article>
+</div>
+
+            </div>
+        </div>
+
+        <footer class="footer">
+            <div class="container">
+                <div class="site-title-wrapper">
+                    <h1 class="site-title">
+                        <a title="ZABURO app" href="https://zaburo-ch.github.io/">ZABURO app</a>
+                    </h1>
+                    <a class="button-square button-jump-top js-jump-top" href="#">
+                        <i class="fa fa-angle-up"></i>
+                    </a>
+                </div>
+
+                <p class="footer-copyright">
+                    <span>&copy; 2018 / Powered by <a href="https://gohugo.io/">Hugo</a></span>
+                </p>
+                <p class="footer-copyright">
+                    <span><a href="https://github.com/roryg/ghostwriter">Ghostwriter theme</a> By <a href="http://jollygoodthemes.com">JollyGoodThemes</a></span>
+                    <span>/ <a href="https://github.com/jbub/ghostwriter">Ported</a> to Hugo By <a href="https://github.com/jbub">jbub</a></span>
+                </p>
+            </div>
+        </footer>
+
+        <script src="https://zaburo-ch.github.io/js/jquery-1.11.3.min.js"></script>
+        <script src="https://zaburo-ch.github.io/js/jquery.fitvids.js"></script>
+        
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        
+        
+        <script src="https://zaburo-ch.github.io/js/scripts.js"></script>
+    </body>
 </html>
 
